@@ -44,10 +44,7 @@ class Pad extends Phaser.GameObjects.Sprite
 
     SetPadZones()
     {
-        this.getTopLeft();   // -> go left-up (diagonal) -> affect velocity.x & velocity.y
-        this.getTopCenter(); // -> go up (straight) -> affect only velocity.y
-        this.getTopRight();  // -> go right-up (diagonal) -> affect velocity.x & velocity.y
-
+        //TODO: Reconsider pad zones
         var distanceLeftToCenter = CalculateDistance(this.getTopLeft().x, this.getTopLeft().y, this.getTopCenter().x, this.getTopCenter().y);
         var distanceCenterToRight = CalculateDistance(this.getTopCenter().x, this.getTopCenter().y, this.getTopRight().x, this.getTopRight().y);
 
