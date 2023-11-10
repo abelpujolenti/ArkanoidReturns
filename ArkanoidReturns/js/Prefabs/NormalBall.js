@@ -36,4 +36,11 @@ class NormalBall extends Ball
         this.body.setVelocity(_velocityX, 0);
     }
 
+    Reset(_positionX, _positionY)
+    {
+        this.idle = true;
+        this.body.setVelocity(0, 0);
+        this.setPosition(_positionX, _positionY);
+    }
+
 }

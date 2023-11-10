@@ -20,8 +20,8 @@ class TestLevel extends Phaser.Scene
         this.loadAnimations();
 
         this.cameras.main.setBackgroundColor("003");
-        this.ball = new NormalBall(this, config.width/2, config.height - 16);
-        this.pad = new Pad(this, config.width/2, config.height, 'pad', 'padAnim').setScale(0.5);
+        this.ball = new NormalBall(this, gamePrefs.INITIAL_NORMAL_BALL_POSITION_X, gamePrefs.INITIAL_NORMAL_BALL_POSITION_Y);
+        this.pad = new Pad(this, gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y, 'pad', 'padAnim').setScale(0.5);
 
         this.block1 = new BlockPrefab(this, config.width/2, config.height/4, 'silverBlock', 'silverBlockAnim', 2, this.ball).setScale(0.5);
         this.block2 = new BlockPrefab(this, config.width/2 + 22, config.height/4, 'silverBlock', null, 1, this.ball).setScale(0.5);
@@ -61,6 +61,8 @@ class TestLevel extends Phaser.Scene
         {
             this.pad.DecrementLives();
             this.livesDisplay.setText("x "+this.pad.lives);
+            this.pad.Reset(gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y);
+            this.ball.Reset(gamePrefs.INITIAL_NORMAL_BALL_POSITION_X, gamePrefs.INITIAL_NORMAL_BALL_POSITION_Y);
 
             if(this.pad.lives < 0)
             {

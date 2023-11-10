@@ -113,7 +113,13 @@ class Pad extends Phaser.GameObjects.Sprite
     {
         this.lives--;
     }
-    
+
+    Reset(_positionX, _positionY)
+    {
+        this.idle = true;
+        this.body.setVelocity(0, 0);
+        this.setPosition(_positionX, _positionY);
+    }
 }
 
 function CalculateDistance (x1, y1, x2, y2) {
