@@ -45,6 +45,7 @@ class Pad extends Phaser.GameObjects.Sprite
     SetPadZones()
     {
         //TODO: Reconsider pad zones
+        //Comment
         var distanceLeftToCenter = CalculateDistance(this.getTopLeft().x, this.getTopLeft().y, this.getTopCenter().x, this.getTopCenter().y);
         var distanceCenterToRight = CalculateDistance(this.getTopCenter().x, this.getTopCenter().y, this.getTopRight().x, this.getTopRight().y);
 
