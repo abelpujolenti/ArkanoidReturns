@@ -61,7 +61,7 @@ class TestLevel extends Phaser.Scene
         this.anims.create(
         {
             key: 'padAnim',
-            frames:this.anims.generateFrameNumbers('pad', {start:0, end: 4}),
+            frames:this.anims.generateFrameNumbers('pad', {start:0, end: 3}),
             frameRate: 15,
             repeat: -1
         });
