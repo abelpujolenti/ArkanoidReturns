@@ -7,8 +7,8 @@ class TestLevel extends Phaser.Scene
 
     preload()
     {
-        this.load.setPath("assets/img");
-        this.load.image("normalBall", "bird.png");
+        this.load.setPath("assets/img/projectile");
+        this.load.image("normalBall", "cyan.png");
     }
 
     create()
