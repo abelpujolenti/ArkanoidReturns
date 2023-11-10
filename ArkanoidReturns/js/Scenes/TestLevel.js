@@ -12,6 +12,8 @@ class TestLevel extends Phaser.Scene
         this.load.image("normalBall", "cyan.png");
         this.load.setPath("assets/img/block");
         this.load.spritesheet("silverBlock", "silver_animated.png", {frameWidth: 44, frameHeight: 22});
+        this.load.setPath("assets/img/pad")
+        this.load.spritesheet("pad", "default.png", {frameWidth: 88, frameHeight:22});
     }
 
     create()
@@ -20,6 +22,7 @@ class TestLevel extends Phaser.Scene
 
         this.cameras.main.setBackgroundColor("003");
         this.ball = new NormalBall(this, config.width / 2, 2* config.height / 3);
+        this.pad = new Pad(this, config.width/2, config.height, 'pad', 'padAnim').setScale(0.5);
 
         this.block1 = new BlockPrefab(this, config.width/2, config.height/4, 'silverBlock', 'silverBlockAnim', 2, this.ball).setScale(0.5);
         this.block2 = new BlockPrefab(this, config.width/2 + 22, config.height/4, 'silverBlock', null, 1, this.ball).setScale(0.5);
