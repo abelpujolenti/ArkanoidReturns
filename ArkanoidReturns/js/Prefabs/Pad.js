@@ -7,6 +7,7 @@ class Pad extends Phaser.GameObjects.Sprite
         _scene.physics.world.enable(this);
         this.body.collideWorldBounds = true;
         this.body.setBounce(1, 1);
+        this.body.setImmovable(true);
         this.scene = _scene;
         this.lives = gamePrefs.PLAYER_LIVES;
         this.cursors = _scene.input.keyboard.createCursorKeys();

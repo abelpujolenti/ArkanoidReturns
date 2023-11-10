@@ -20,11 +20,17 @@ class TestLevel extends Phaser.Scene
         this.loadAnimations();
 
         this.cameras.main.setBackgroundColor("003");
-        this.ball = new NormalBall(this, gamePrefs.INITIAL_NORMAL_BALL_POSITION_X, gamePrefs.INITIAL_NORMAL_BALL_POSITION_Y);
+        this.ball = new NormalBall(this, gamePrefs.INITIAL_NORMAL_BALL_POSITION_X, gamePrefs.INITIAL_NORMAL_BALL_POSITION_Y).setScale(.75);
         this.pad = new Pad(this, gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y, 'pad', 'padAnim').setScale(0.5);
 
-        this.block1 = new BlockPrefab(this, config.width/2, config.height/4, 'silverBlock', 'silverBlockAnim', 2, this.ball).setScale(0.5);
-        this.block2 = new BlockPrefab(this, config.width/2 + 22, config.height/4, 'silverBlock', null, 1, this.ball).setScale(0.5);
+        var numBlocks = 11
+        this.blocks = [];
+        for (var i = 0 ; i < numBlocks; i++) {
+            this.blocks[i] = new BlockPrefab(this, 50 + i * 22, config.height/4, 'silverBlock', null, 1, this.ball).setScale(0.5);
+        }
+        this.blocks[11] = new BlockPrefab(this, config.width/2, config.height/4 - 12, 'silverBlock', 'silverBlockAnim', 2, this.ball).setScale(0.5);
+        //this.block1 = new BlockPrefab(this, config.width/2, config.height/4, 'silverBlock', 'silverBlockAnim', 2, this.ball).setScale(0.5);
+        //this.block2 = new BlockPrefab(this, config.width/2 + 22, config.height/4, 'silverBlock', null, 1, this.ball).setScale(0.5);
 
         this.livesIcon = this.add.sprite(22, config.width / 2 - 35, 'pad', 0).setScale(.3);
         this.livesDisplay = this.add.text(
