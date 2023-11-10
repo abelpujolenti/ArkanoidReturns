@@ -15,8 +15,6 @@ class NormalBall extends Ball
 
     preUpdate(time, delta)
     {
-        console.log(this.x);
-        console.log(this.y);
         super.preUpdate(time, delta);
     }
 
@@ -45,16 +43,12 @@ class NormalBall extends Ball
 
     UpdatePositionX(_positionX)
     {
-        console.log("func param: " + _positionX);
-        this.x = _positionX;
-        this.y = gamePrefs.INITIAL_NORMAL_BALL_POSITION_Y
-        //this.setPosition(_positionX, gamePrefs.INITIAL_NORMAL_BALL_POSITION_Y);
-        console.log("Updated position x " + this.x);
+        this.body.setVelocity(0, 0);
+        this.setPosition(_positionX, gamePrefs.INITIAL_NORMAL_BALL_POSITION_Y);
     }
 
     Reset(_positionX, _positionY)
     {
-        console.log("reset");
         this.idle = true;
         this.body.setVelocity(0, 0);
         this.setPosition(_positionX, _positionY);

@@ -61,7 +61,6 @@ class TestLevel extends Phaser.Scene
         }
         else if(this.ball.getBottomCenter().y == config.height)
         {
-            console.log("patata");
             this.pad.DecrementLives();
             this.livesDisplay.setText("x "+this.pad.lives);
             this.pad.Reset(gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y);
