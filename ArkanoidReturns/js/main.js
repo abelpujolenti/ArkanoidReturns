@@ -1,27 +1,35 @@
-var gamePrefs=
+var gamePrefs = 
 {
-    PAD_VELOCITY: 500,
+    BALL_SPEED: 120,
+    INITIAL_NORMAL_BALL_MAX_VELOCITY_X: 1,
+    INITIAL_NORMAL_BALL_MIN_VELOCITY_X: -1,
+    INITIAL_NORMAL_BALL_VELOCITY_Y: -1
+
 }
 
 var config = 
 {
     type: Phaser.AUTO,
-    width: 370,
-    height: 550,
-    scene:[gameState], //array con las escenas
+    width: 320,
+    height: 232,
+    scene:[TestLevel], 
     render:
     {
-        pixelArt:true
+        pixelArt : true
+    },
+    scale:
+    {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH
     },
     physics:
     {
-        default:'arcade',
+        default: "arcade",
         arcade:
         {
-            gravity:{y:0},
-            debug:true      //Pinta los box colliders...
+            gravity:{y: 0}
         }
     }
 };
 
-var juego = new Phaser.Game(config);
+var game = new Phaser.Game(config);
