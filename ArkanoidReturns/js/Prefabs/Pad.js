@@ -8,10 +8,8 @@ class Pad extends Phaser.GameObjects.Sprite
         this.body.collideWorldBounds = true;
         this.body.setBounce(1, 1);
         this.scene = _scene;
-
-        this.cursors = _scene.input.keyboard.createCursorKeys();
-
         this.lives = gamePrefs.PLAYER_LIVES;
+        this.cursors = _scene.input.keyboard.createCursorKeys();
 
         if(_animTag != null)
         {
@@ -37,6 +35,14 @@ class Pad extends Phaser.GameObjects.Sprite
         else
         {
             this.body.setVelocityX(0);
+        }
+
+        if(this.cursors.up.isDown)
+        {
+            if(this.scene.ball.idle)
+            {
+                this.scene.ball.StartMoving();
+            }
         }
 
         super.preUpdate(time, delta); 
@@ -76,7 +82,7 @@ class Pad extends Phaser.GameObjects.Sprite
     SetColliders()
     {
         /*
-        this.scene.physics.add.overlap
+        this.scene.physics.add.collider
         (
             this,
             this.scene.ball,

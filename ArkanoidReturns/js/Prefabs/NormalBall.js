@@ -4,12 +4,21 @@ class NormalBall extends Ball
     {
         super(scene, positionX, positionY, "normalBall");
         scene.add.existing(this);
+
+        this.idle = true;
     }    
 
     Start(){
 
+        
+    }
+
+    StartMoving()
+    {
+        this.idle = false;
+
         this.velocityX = Math.random() * (gamePrefs.INITIAL_NORMAL_BALL_MAX_VELOCITY_X - (gamePrefs.INITIAL_NORMAL_BALL_MIN_VELOCITY_X))
-                        + (gamePrefs.INITIAL_NORMAL_BALL_MIN_VELOCITY_X);
+        + (gamePrefs.INITIAL_NORMAL_BALL_MIN_VELOCITY_X);
         this.velocityY = gamePrefs.INITIAL_NORMAL_BALL_VELOCITY_Y;
 
         this.normalizedVelocity = Math.sqrt(Math.pow(this.velocityX, 2) + Math.pow(this.velocityY, 2));
@@ -21,4 +30,10 @@ class NormalBall extends Ball
 
         this.body.setVelocity(this.velocityX, this.velocityY);
     }
+
+    UpdateVelocityX(_velocityX)
+    {
+        this.body.setVelocity(_velocityX, 0);
+    }
+
 }

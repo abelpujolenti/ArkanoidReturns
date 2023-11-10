@@ -7,7 +7,6 @@ class TestLevel extends Phaser.Scene
 
     preload()
     {
-        this.load.spritesheet("pad", "assets/img/pad/default.png", {frameWidth: 88, frameHeight: 22});
         this.load.setPath("assets/img/projectile");
         this.load.image("normalBall", "cyan.png");
         this.load.setPath("assets/img/block");
@@ -21,7 +20,7 @@ class TestLevel extends Phaser.Scene
         this.loadAnimations();
 
         this.cameras.main.setBackgroundColor("003");
-        this.ball = new NormalBall(this, config.width / 2, 2* config.height / 3);
+        this.ball = new NormalBall(this, config.width/2, config.height - 16);
         this.pad = new Pad(this, config.width/2, config.height, 'pad', 'padAnim').setScale(0.5);
 
         this.block1 = new BlockPrefab(this, config.width/2, config.height/4, 'silverBlock', 'silverBlockAnim', 2, this.ball).setScale(0.5);
@@ -54,6 +53,10 @@ class TestLevel extends Phaser.Scene
 
     update()
     {
+        if(this.ball.idle)
+        {
+            this.ball.UpdateVelocityX(this.pad.body.velocity.x);
+        }
         if(this.ball.getBottomCenter().y == config.height)
         {
             this.pad.DecrementLives();
