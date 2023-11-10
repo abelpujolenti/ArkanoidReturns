@@ -24,25 +24,9 @@ class Pad extends Phaser.GameObjects.Sprite
 
     preUpdate(time, delta)
     {
-        if(this.cursors.left.isDown)
+        if(this.lives > 0)
         {
-            this.body.setVelocityX(-gamePrefs.PAD_SPEED);
-        }
-        else if(this.cursors.right.isDown)
-        {
-            this.body.setVelocityX(gamePrefs.PAD_SPEED);
-        }
-        else
-        {
-            this.body.setVelocityX(0);
-        }
-
-        if(this.cursors.up.isDown)
-        {
-            if(this.scene.ball.idle)
-            {
-                this.scene.ball.StartMoving();
-            }
+            this.CheckInput();
         }
 
         super.preUpdate(time, delta); 
@@ -106,7 +90,26 @@ class Pad extends Phaser.GameObjects.Sprite
 
     CheckInput()
     {
+        if(this.cursors.left.isDown)
+        {
+            this.body.setVelocityX(-gamePrefs.PAD_SPEED);
+        }
+        else if(this.cursors.right.isDown)
+        {
+            this.body.setVelocityX(gamePrefs.PAD_SPEED);
+        }
+        else
+        {
+            this.body.setVelocityX(0);
+        }
 
+        if(this.cursors.up.isDown)
+        {
+            if(this.scene.ball.idle)
+            {
+                this.scene.ball.StartMoving();
+            }
+        }
     }
 
     DecrementLives()

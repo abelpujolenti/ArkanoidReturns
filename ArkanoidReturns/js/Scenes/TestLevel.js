@@ -64,9 +64,10 @@ class TestLevel extends Phaser.Scene
             this.pad.Reset(gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y);
             this.ball.Reset(gamePrefs.INITIAL_NORMAL_BALL_POSITION_X, gamePrefs.INITIAL_NORMAL_BALL_POSITION_Y);
 
-            if(this.pad.lives < 0)
+            if(this.pad.lives <= 0)
             {
-
+                console.log("Game over. Please refresh the page.");
+                this.ball.idle = true;
             }
         }
     }
