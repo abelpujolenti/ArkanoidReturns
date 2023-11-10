@@ -2,7 +2,7 @@ class Pad extends Phaser.GameObjects.Sprite
 {
     constructor(_scene, _positionX, _positionY, _spriteTag, _animTag){
         
-        super(_scene, _positionX, _positionY, _spriteTag);
+        super(_scene, _positionX, _positionY /*, _spriteTag*/);
         _scene.add.existing(this);
         _scene.physics.world.enable(this);
         this.body.collideWorldBounds = true;
@@ -26,6 +26,7 @@ class Pad extends Phaser.GameObjects.Sprite
             this.CheckInput();
         }
 
+        console.log("pad: " + this.y);
         super.preUpdate(time, delta); 
     }
     

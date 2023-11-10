@@ -27,4 +27,13 @@ class Ball extends Phaser.GameObjects.Sprite
 
         this.body.setVelocity(this.velocityX, this.velocityY);
     }
+
+    /*
+    UpdatePositionX(positionX)
+    {
+        console.log("func param: " + positionX);
+        this.positionX = positionX;
+        console.log("Updated position x " + this.positionX);
+    }
+    */
 }

@@ -55,10 +55,13 @@ class TestLevel extends Phaser.Scene
     {
         if(this.ball.idle)
         {
-            this.ball.UpdateVelocityX(this.pad.body.velocity.x);
+            this.ball.UpdatePositionX(this.pad.getBottomCenter().x);
+            //this.ball.UpdatePositionX(this.pad.positionX);
+            //this.ball.UpdateVelocityX(this.pad.body.velocity.x);
         }
-        if(this.ball.getBottomCenter().y == config.height)
+        else if(this.ball.getBottomCenter().y == config.height)
         {
+            console.log("patata");
             this.pad.DecrementLives();
             this.livesDisplay.setText("x "+this.pad.lives);
             this.pad.Reset(gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y);
