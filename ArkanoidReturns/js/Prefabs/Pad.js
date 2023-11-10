@@ -65,26 +65,33 @@ class Pad extends Phaser.GameObjects.Sprite
     
     SetColliders()
     {
-        /*
+        
         this.scene.physics.add.collider
         (
             this,
             this.scene.ball,
-            this.ApplyBounce,
+            this.ApplyBounce(this.scene.ball),
             null,
             this
         );
-        */
-
+        
+        /*
         this.scene.physics.add.collider(
             this,
             this.scene.ball    
         );
+        */
     }
 
-    ApplyBounce(_ball, velocityMultiplier)
+    ApplyBounce(_ball)
     {
-        _ball.ChangeVelocity(velocityMultiplier);
+        var rel=(this.positionX +(this.width/2))-(_ball.x+(gamePrefs.SIZE/2));
+		var norm=rel/(this.width/2);
+		var bounce = norm * (5*gamePrefs.PI/12);
+		var velocityMultiplierY = Math.cos(bounce);
+		var velocityMultiplierX = -Math.sin(bounce);
+
+        _ball.ChangeVelocity(velocityMultiplierX, velocityMultiplierY);
         console.log("bounce");
     }
 

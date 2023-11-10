@@ -25,6 +25,9 @@ var config =
 
 var gamePrefs = 
 {
+    PI: 3.1416,
+    SIZE: 16,
+    
     PAD_SPEED: 150,
     BALL_SPEED: 120,
     INITIAL_NORMAL_BALL_MAX_VELOCITY_X: 1,

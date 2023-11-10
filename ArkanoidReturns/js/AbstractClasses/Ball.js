@@ -18,4 +18,13 @@ class Ball extends Phaser.GameObjects.Sprite
 
         this.body.setVelocity(this.velocityX, this.velocityY);
     }
+
+    ChangeVelocity(velocityMultiplierX, velocityMultiplierY)
+    {
+        var velocity = this.body.velocity;
+        this.velocityX = velocity.x * velocityMultiplierX;
+        this.velocityY = velocity.y * velocityMultiplierY;        
+
+        this.body.setVelocity(this.velocityX, this.velocityY);
+    }
 }
