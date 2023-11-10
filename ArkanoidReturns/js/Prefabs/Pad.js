@@ -51,29 +51,17 @@ class Pad extends Phaser.GameObjects.Sprite
         var distanceLeftToCenter = CalculateDistance(this.getTopLeft().x, this.getTopLeft().y, this.getTopCenter().x, this.getTopCenter().y);
         var distanceCenterToRight = CalculateDistance(this.getTopCenter().x, this.getTopCenter().y, this.getTopRight().x, this.getTopRight().y);
 
-        var leftBound = [
-            this.getTopLeft().x + distanceLeftToCenter/2,
-            this.getTopLeft().y
-        ];
+        var leftBound = this.getTopLeft().x + distanceLeftToCenter/2;
         
-        var centerBound_left = [
-            this.getTopCenter().x - distanceLeftToCenter/2,
-            this.getTopCenter().y
-        ]; 
+        var centerBound_left = this.getTopCenter().x - distanceLeftToCenter/2; 
 
-        var centerBound_right = [
-            this.getTopCenter().x + distanceCenterToRight/2,
-            this.getTopCenter().y
-        ];
+        var centerBound_right =this.getTopCenter().x + distanceCenterToRight/2;
 
-        var rightBound = [
-            this.getTopRight().x - distanceCenterToRight/2,
-            this.getTopRight().y
-        ];
+        var rightBound = this.getTopRight().x - distanceCenterToRight/2;
 
         this.leftZone = [
-            this.getTopLeft(),
-            leftBound
+            this.getTopLeft().x,
+            leftBound.x
         ];
 
         this.centerZone = [
@@ -83,7 +71,7 @@ class Pad extends Phaser.GameObjects.Sprite
 
         this.rightZone = [
             rightBound,
-            this.getTopRight()
+            this.getTopRight().x
         ];
     }
     
@@ -105,37 +93,37 @@ class Pad extends Phaser.GameObjects.Sprite
             this.scene.ball,
             function overlap(pad, ball) {
               //ball.setFrame(5).disableBody();
-              var { x, y } = ball.body.center;                   
-              var ballLocalPoint = ball.getLocalPoint(x, y, this.localPoint);
+              //var { x, y } = ball.body.center;                   
+              //var ballLocalPoint = ball.getLocalPoint(x, y, this.localPoint);
 
                 //Compare ballLocalPoint to pad thresholds
                 //Apply bounce with multiplier according to comparison
 
-                if(ballLocalPoint.x >= this.leftZone[0] && ballLocalPoint < this.leftZone[1])
+                if(ball.getBottomCenter().x >= this.leftZone[0] && ball.getBottomCenter().x < this.leftZone[1])
                 {
-                    ApplyBounce(ball, -1)
+                    this.ApplyBounce(ball, -1)
                 }
 
-                else if(ballLocalPoint.x >= this.centerZone[0] && ballLocalPoint < this.centerZone[1])
+                else if(ball.getBottomCenter().x >= this.centerZone[0] && ball.getBottomCenter().x < this.centerZone[1])
                 {
-                    ApplyBounce(ball, -3)
+                    this.ApplyBounce(ball, -3)
                 }
 
-                else if(ballLocalPoint.x >= this.rightZone[0] && ballLocalPoint < this.rightZone[1])
+                else if(ball.getBottomCenter().x >= this.rightZone[0] && ball.getBottomCenter().x < this.rightZone[1])
                 {
-                    ApplyBounce(ball, -1)
+                    this.ApplyBounce(ball, -1)
                 }
 
             },
             null,
             this
           );
-
     }
 
     ApplyBounce(_ball, velocityMultiplier)
     {
-        ball.ChangeVelocity(velocityMultiplier);
+        _ball.ChangeVelocity(velocityMultiplier);
+        console.log("bounce");
     }
 
     CheckInput()
