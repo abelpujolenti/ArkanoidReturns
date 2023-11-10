@@ -88,36 +88,10 @@ class Pad extends Phaser.GameObjects.Sprite
         );
         */
 
-        this.scene.physics.add.overlap(
+        this.scene.physics.add.collider(
             this,
-            this.scene.ball,
-            function overlap(pad, ball) {
-              //ball.setFrame(5).disableBody();
-              //var { x, y } = ball.body.center;                   
-              //var ballLocalPoint = ball.getLocalPoint(x, y, this.localPoint);
-
-                //Compare ballLocalPoint to pad thresholds
-                //Apply bounce with multiplier according to comparison
-
-                if(ball.getBottomCenter().x >= this.leftZone[0] && ball.getBottomCenter().x < this.leftZone[1])
-                {
-                    this.ApplyBounce(ball, -1)
-                }
-
-                else if(ball.getBottomCenter().x >= this.centerZone[0] && ball.getBottomCenter().x < this.centerZone[1])
-                {
-                    this.ApplyBounce(ball, -3)
-                }
-
-                else if(ball.getBottomCenter().x >= this.rightZone[0] && ball.getBottomCenter().x < this.rightZone[1])
-                {
-                    this.ApplyBounce(ball, -1)
-                }
-
-            },
-            null,
-            this
-          );
+            this.scene.ball    
+        );
     }
 
     ApplyBounce(_ball, velocityMultiplier)
