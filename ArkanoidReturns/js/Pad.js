@@ -9,8 +9,13 @@ class Pad extends Phaser.GameObjects.Sprite
         this.body.setBounce(1, 1);
         this.scene = _scene;
 
-        this.cursors = scene.input.keyboard.createCursorKeys();
-        
+        this.cursors = _scene.input.keyboard.createCursorKeys();
+
+        this.localPoint = new Phaser.Math.Vector2();
+
+        this.SetPadZones();
+        this.SetColliders();
+
         //this.Start();
     }
 
@@ -38,19 +43,28 @@ class Pad extends Phaser.GameObjects.Sprite
         this.getTopCenter(); // -> go up (straight) -> affect only velocity.y
         this.getTopRight();  // -> go right-up (diagonal) -> affect velocity.x & velocity.y
 
-        distanceLeftToCenter = Phaser.Math.Distance(this.getTopLeft(), this.getTopCenter);
-        distanceCenterToRight = Phaser.Math.Distance(this.getTopCenter(), this.getTopRight());
+        var distanceLeftToCenter = CalculateDistance(this.getTopLeft().x, this.getTopLeft().y, this.getTopCenter().x, this.getTopCenter().y);
+        var distanceCenterToRight = CalculateDistance(this.getTopCenter().x, this.getTopCenter().y, this.getTopRight().x, this.getTopRight().y);
 
-        leftBound.x = this.getTopLeft().x + distanceLeftToCenter/2;
-        leftBound.y = this.getTopLeft().y;
+        var leftBound = [
+            this.getTopLeft().x + distanceLeftToCenter/2,
+            this.getTopLeft().y
+        ];
         
-        centerBound_left.x = this.getTopCenter().x - distanceLeftToCenter/2;
-        centerBound_left.y = this.getTopCenter().y; 
-        centerBound_right.x = this.getTopCenter().x + distanceCenterToRight/2;
-        centerBound_right.y = this.getTopCenter().y;
+        var centerBound_left = [
+            this.getTopCenter().x - distanceLeftToCenter/2,
+            this.getTopCenter().y
+        ]; 
 
-        rightBound.x = this.getTopRight().x - distanceCenterToRight/2;
-        rightBound.y = this.getTopRight().y;
+        var centerBound_right = [
+            this.getTopCenter().x + distanceCenterToRight/2,
+            this.getTopCenter().y
+        ];
+
+        var rightBound = [
+            this.getTopRight().x - distanceCenterToRight/2,
+            this.getTopRight().y
+        ];
 
         this.leftZone = [
             this.getTopLeft(),
@@ -81,28 +95,28 @@ class Pad extends Phaser.GameObjects.Sprite
         );
         */
 
-        this.physics.add.overlap(
+        this.scene.physics.add.overlap(
             this,
             this.scene.ball,
             function overlap(pad, ball) {
               //ball.setFrame(5).disableBody();
               var { x, y } = ball.body.center;                   
-              ballLocalPoint = ball.getLocalPoint(x, y, localPoint);
+              var ballLocalPoint = ball.getLocalPoint(x, y, this.localPoint);
 
                 //Compare ballLocalPoint to pad thresholds
                 //Apply bounce with multiplier according to comparison
 
-                if(ballLocalPoint.x >= leftZone[0] && ballLocalPoint < leftZone[1])
+                if(ballLocalPoint.x >= this.leftZone[0] && ballLocalPoint < this.leftZone[1])
                 {
                     ApplyBounce(ball, -1)
                 }
 
-                else if(ballLocalPoint.x >= centerZone[0] && ballLocalPoint < centerZone[1])
+                else if(ballLocalPoint.x >= this.centerZone[0] && ballLocalPoint < this.centerZone[1])
                 {
                     ApplyBounce(ball, -3)
                 }
 
-                else if(ballLocalPoint.x >= rightZone[0] && ballLocalPoint < rightZone[1])
+                else if(ballLocalPoint.x >= this.rightZone[0] && ballLocalPoint < this.rightZone[1])
                 {
                     ApplyBounce(ball, -1)
                 }
@@ -124,4 +138,13 @@ class Pad extends Phaser.GameObjects.Sprite
 
     }
     
+}
+
+function CalculateDistance (x1, y1, x2, y2) {
+
+    var dx = x1 - x2;
+    var dy = y1 - y2;
+
+    return Math.sqrt(dx * dx + dy * dy);
+
 }

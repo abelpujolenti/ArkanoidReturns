@@ -1,6 +1,6 @@
 var gamePrefs=
 {
-    PAD_VELOCITY: 500
+    PAD_VELOCITY: 500,
 }
 
 var config = 
@@ -18,7 +18,7 @@ var config =
         default:'arcade',
         arcade:
         {
-            gravity:{y:gamePrefs.HERO_GRAVITY},
+            gravity:{y:0},
             debug:true      //Pinta los box colliders...
         }
     }
