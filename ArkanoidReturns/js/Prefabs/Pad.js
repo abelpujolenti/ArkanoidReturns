@@ -11,7 +11,7 @@ class Pad extends Phaser.GameObjects.Sprite
 
         this.cursors = _scene.input.keyboard.createCursorKeys();
 
-        this.localPoint = new Phaser.Math.Vector2();
+        this.lives = gamePrefs.PLAYER_LIVES;
 
         if(_animTag != null)
         {
@@ -101,6 +101,11 @@ class Pad extends Phaser.GameObjects.Sprite
     CheckInput()
     {
 
+    }
+
+    DecrementLives()
+    {
+        this.lives--;
     }
     
 }

@@ -31,7 +31,7 @@ class TestLevel extends Phaser.Scene
         this.livesDisplay = this.add.text(
             this.livesIcon.width * this.livesIcon.scale + this.livesIcon.x - 5,
             config.height / 2,
-            "x 4",
+            "x " + gamePrefs.PLAYER_LIVES,
             {
                 fontFamily: 'Arial',
                 fill: '#FFFFFF',
@@ -50,6 +50,20 @@ class TestLevel extends Phaser.Scene
                 loop: true
             }
         )*/
+    }
+
+    update()
+    {
+        if(this.ball.getBottomCenter().y == config.height)
+        {
+            this.pad.DecrementLives();
+            this.livesDisplay.setText("x "+this.pad.lives);
+
+            if(this.pad.lives < 0)
+            {
+
+            }
+        }
     }
 
     loadAnimations()
