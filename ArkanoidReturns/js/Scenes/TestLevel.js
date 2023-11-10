@@ -38,17 +38,6 @@ class TestLevel extends Phaser.Scene
             }
         )
         this.livesDisplay.setTint(0x40ff80, 0x40ff80, 0xffb000, 0xffb000);
-
-        /*this.time.addEvent
-        (
-            {
-                delay: 1000,
-                callback: this.ball.ChangeVelocity,
-                args: [1.5],
-                callbackScope: this.ball,
-                loop: true
-            }
-        )*/
     }
 
     update()
@@ -56,8 +45,6 @@ class TestLevel extends Phaser.Scene
         if(this.ball.idle)
         {
             this.ball.UpdatePositionX(this.pad.getBottomCenter().x);
-            //this.ball.UpdatePositionX(this.pad.positionX);
-            //this.ball.UpdateVelocityX(this.pad.body.velocity.x);
         }
         else if(this.ball.getBottomCenter().y == config.height)
         {
