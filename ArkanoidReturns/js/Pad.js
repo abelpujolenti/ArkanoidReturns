@@ -94,17 +94,17 @@ class Pad extends Phaser.GameObjects.Sprite
 
                 if(ballLocalPoint.x >= leftZone[0] && ballLocalPoint < leftZone[1])
                 {
-                    ball.ApplyBounce('diagonal to up left')
+                    ApplyBounce(ball, -1)
                 }
 
                 else if(ballLocalPoint.x >= centerZone[0] && ballLocalPoint < centerZone[1])
                 {
-                    ball.ApplyBounce('up')
+                    ApplyBounce(ball, -3)
                 }
 
                 else if(ballLocalPoint.x >= rightZone[0] && ballLocalPoint < rightZone[1])
                 {
-                    ball.ApplyBounce('diagonal to up right')
+                    ApplyBounce(ball, -1)
                 }
 
             },
@@ -114,9 +114,9 @@ class Pad extends Phaser.GameObjects.Sprite
 
     }
 
-    ApplyBounce(_ball)
+    ApplyBounce(_ball, velocityMultiplier)
     {
-        ball.ChangeVelocity(2);
+        ball.ChangeVelocity(velocityMultiplier);
     }
 
     CheckInput()
