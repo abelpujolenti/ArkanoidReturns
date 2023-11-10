@@ -1,6 +1,6 @@
 class Pad extends Phaser.GameObjects.Sprite
 {
-    constructor(_scene, _positionX, _positionY, _spriteTag){
+    constructor(_scene, _positionX, _positionY, _spriteTag, _animTag){
         
         super(_scene, _positionX, _positionY, _spriteTag);
         _scene.add.existing(this);
@@ -13,6 +13,11 @@ class Pad extends Phaser.GameObjects.Sprite
 
         this.localPoint = new Phaser.Math.Vector2();
 
+        if(_animTag != null)
+        {
+            this.anims.play(_animTag);
+        }
+
         this.SetPadZones();
         this.SetColliders();
 
@@ -23,11 +28,11 @@ class Pad extends Phaser.GameObjects.Sprite
     {
         if(this.cursors.left.isDown)
         {
-            this.body.setVelocityX(-gamePrefs.PAD_VELOCITY);
+            this.body.setVelocityX(-gamePrefs.PAD_SPEED);
         }
         else if(this.cursors.right.isDown)
         {
-            this.body.setVelocityX(gamePrefs.PAD_VELOCITY);
+            this.body.setVelocityX(gamePrefs.PAD_SPEED);
         }
         else
         {
