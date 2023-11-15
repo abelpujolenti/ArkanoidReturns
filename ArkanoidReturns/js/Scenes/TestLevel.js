@@ -7,6 +7,8 @@ class TestLevel extends Phaser.Scene
 
     preload()
     {
+        this.load.setPath("assets/data/level");
+        this.load.text("test", "test.txt")
         this.load.setPath("assets/img/projectile");
         this.load.image("normalBall", "cyan.png");
         this.load.setPath("assets/img/block");
@@ -23,14 +25,8 @@ class TestLevel extends Phaser.Scene
         this.ball = new NormalBall(this, gamePrefs.INITIAL_NORMAL_BALL_POSITION_X, gamePrefs.INITIAL_NORMAL_BALL_POSITION_Y).setScale(.75);
         this.pad = new Pad(this, gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y, 'pad', 'padAnim').setScale(0.5);
 
-        var numBlocks = 11
         this.blocks = [];
-        for (var i = 0 ; i < numBlocks; i++) {
-            this.blocks[i] = new BlockPrefab(this, 50 + i * 22, config.height/4, 'silverBlock', null, 1, this.ball).setScale(0.5);
-        }
-        this.blocks[11] = new BlockPrefab(this, config.width/2, config.height/4 - 12, 'silverBlock', 'silverBlockAnim', 2, this.ball).setScale(0.5);
-        //this.block1 = new BlockPrefab(this, config.width/2, config.height/4, 'silverBlock', 'silverBlockAnim', 2, this.ball).setScale(0.5);
-        //this.block2 = new BlockPrefab(this, config.width/2 + 22, config.height/4, 'silverBlock', null, 1, this.ball).setScale(0.5);
+        this.createLevel(20, 44, 40, "test");
 
         this.livesIcon = this.add.sprite(22, config.width / 2 - 35, 'pad', 0).setScale(.3);
         this.livesDisplay = this.add.text(
@@ -44,6 +40,33 @@ class TestLevel extends Phaser.Scene
             }
         )
         this.livesDisplay.setTint(0x40ff80, 0x40ff80, 0xffb000, 0xffb000);
+    }
+
+    createLevel(size, rootX, rootY, level)
+    {
+        var str = this.cache.text.get(level);
+        var width = 44;
+        var x = 0;
+        var y = 0;
+        for (let i = 0; i < str.length; i++) { 
+            var char = str.charCodeAt(i);
+            if (char >= 65)
+            {
+                var posX = rootX + x * size;
+                var posY = rootY + y * size * 0.5;
+                this.blocks[i] = new BlockPrefab(this, posX, posY, 'silverBlock', null, 2, this.ball).setScale(size / width);
+                x++;
+            }
+            else if (char == 32)
+            {
+                x++;
+            }
+            else if (char == 10)
+            {
+                x = 0;
+                y++;
+            }
+        }
     }
 
     update()
