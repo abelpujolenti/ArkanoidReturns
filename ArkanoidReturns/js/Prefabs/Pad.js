@@ -22,12 +22,14 @@ class Pad extends Phaser.GameObjects.Sprite
 
     preUpdate(time, delta)
     {
+        super.preUpdate(time, delta); 
+
         if(this.lives > 0)
         {
             this.CheckInput();
-        }
-
-        super.preUpdate(time, delta); 
+            return;
+        }        
+        this._scene.LoadGameOver();
     }
 
     UpdateScore(blockScore)
@@ -38,13 +40,13 @@ class Pad extends Phaser.GameObjects.Sprite
 
     ApplyBounce(_ball)
     {
-        var rel = (this.positionX + this.width / 2) - (_ball.x + gamePrefs.SIZE / 2);
+        /*var rel = (this.positionX + this.width / 2) - (_ball.x + gamePrefs.SIZE / 2);
 		var norm = rel / (this.width / 2);
 		var bounce = norm * (5 * gamePrefs.PI / 12);
 		var velocityMultiplierY = Math.cos(bounce);
 		var velocityMultiplierX = -Math.sin(bounce);
 
-        _ball.ChangeVelocity(velocityMultiplierX, velocityMultiplierY);
+        _ball.ChangeVelocity(velocityMultiplierX, velocityMultiplierY);*/
     }
 
     CheckInput()

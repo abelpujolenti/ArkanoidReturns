@@ -51,7 +51,7 @@ class TestLevel extends Phaser.Scene
 
         this.ballsCounter = 0;
         
-        this.ball = new NormalBall(this, gamePrefs.INITIAL_NORMAL_BALL_POSITION_X, gamePrefs.INITIAL_NORMAL_BALL_POSITION_Y, this.pad, this.ballsCounter).setScale(.75);
+        this.ball = new NormalBall(this, this.pad.x, this.pad.getTopCenter().y, this.pad, this.ballsCounter).setScale(.75);
         this.ballPool.add(this.ball);
         
 
@@ -106,23 +106,7 @@ class TestLevel extends Phaser.Scene
 
     update()
     {
-        if(this.ball.idle)
-        {
-            this.ball.UpdatePositionX(this.pad.getBottomCenter().x);
-        }
-        else if(this.ball.getBottomCenter().y == config.height)
-        {
-            this.pad.DecrementLives();
-            
-            this.pad.Reset(gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y);
-            this.ball.Reset(gamePrefs.INITIAL_NORMAL_BALL_POSITION_X, gamePrefs.INITIAL_NORMAL_BALL_POSITION_Y);
 
-            if(this.pad.lives <= 0)
-            {
-                console.log("Game over. Please refresh the page.");
-                this.ball.idle = true;
-            }
-        }
     }
 
     UpdateLivesUI()
@@ -159,5 +143,10 @@ class TestLevel extends Phaser.Scene
             frameRate: 15,
             repeat: -1
         });
+    }
+
+    LoadGameOver()
+    {
+        this.scene.start("GameOver", {score: this.scoreUI.text})
     }
 }

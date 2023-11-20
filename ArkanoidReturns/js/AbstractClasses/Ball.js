@@ -1,15 +1,15 @@
 class Ball extends Phaser.GameObjects.Sprite
 {
-    constructor(scene, positionX, positionY, spriteTag, pad, ballsCounter){
+    constructor(scene, positionX, positionY, pad, ballsCounter, spriteTag){
         
         super(scene, positionX, positionY, spriteTag);
         scene.physics.add.existing(this);
         this._scene = scene;
         this.body.setBounce(1, 1);
-        this.body.collideWorldBounds = true;
         this._ballsCounter = ballsCounter;
+        this.body.collideWorldBounds = true;
+        this.wor
         this._pad = pad;
-        console.log(pad)
 
         this.scene.UpdateBallsCounter(1);
 
@@ -20,34 +20,33 @@ class Ball extends Phaser.GameObjects.Sprite
     {
         super.preUpdate(time, delta); 
 
-        /*if(this.idle)
+        if(this.idle)
         {
-            this.UpdatePositionX(this._pad.getBottomCenter.x);
+            this.ResetPosition(this._pad.x, this._pad.getTopCenter().y);
         }
         else if(this.getTopCenter().y > config.height)
         {    
-            if(_ballsCounter > 1)        
+            if(this._ballsCounter > 1)        
             {
                 return;
             }
             this._pad.DecrementLives();
-            this.scene.UpdateLivesUI();
-            
-            this._pad.Reset(gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y);
-            this.Reset(gamePrefs.INITIAL_NORMAL_BALL_POSITION_X, gamePrefs.INITIAL_NORMAL_BALL_POSITION_Y);
-        }*/
+            this.scene.UpdateLivesUI();            
+            this.body.setVelocity(0, 0);
+            this.idle = true;
+        }
     }
 
     SetColliders()
     {
-        /*this._scene.physics.add.collider
+        this._scene.physics.add.collider
         (
             this,
             this._pad,
             this._pad.ApplyBounce,
             null,
             this._pad
-        );*/
+        );
     }
 
     ChangeVelocity(velocityMultiplier)
