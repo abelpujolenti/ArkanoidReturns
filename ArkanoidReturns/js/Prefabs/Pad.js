@@ -1,6 +1,6 @@
 class Pad extends Phaser.GameObjects.Sprite
 {
-    constructor(_scene, _positionX, _positionY, _spriteTag, _animTag){
+    constructor(_scene, _positionX, _positionY, _spriteTag, _animTag, _score, _multiplier){
         
         super(_scene, _positionX, _positionY, _spriteTag);
         _scene.add.existing(this);
@@ -9,6 +9,8 @@ class Pad extends Phaser.GameObjects.Sprite
         this.body.setBounce(1, 1);
         this.body.setImmovable(true);
         this.scene = _scene;
+        this.score = _score;
+        this.multiplier = _multiplier
         this.lives = gamePrefs.PLAYER_LIVES;
         this.cursors = _scene.input.keyboard.createCursorKeys();
 
@@ -16,8 +18,6 @@ class Pad extends Phaser.GameObjects.Sprite
         {
             this.anims.play(_animTag);
         }
-
-        this.SetColliders();
     }
 
     preUpdate(time, delta)
@@ -29,25 +29,18 @@ class Pad extends Phaser.GameObjects.Sprite
 
         super.preUpdate(time, delta); 
     }
-    
-    SetColliders()
+
+    UpdateScore(blockScore)
     {
-        
-        this.scene.physics.add.collider
-        (
-            this,
-            this.scene.ball,
-            this.ApplyBounce(this.scene.ball),
-            null,
-            this
-        );
+        this.score += (blockScore * this.multiplier);
+        this.scene.UpdateScoreUI(this.score);
     }
 
     ApplyBounce(_ball)
     {
-        var rel=(this.positionX +(this.width/2))-(_ball.x+(gamePrefs.SIZE/2));
-		var norm=rel/(this.width/2);
-		var bounce = norm * (5*gamePrefs.PI/12);
+        var rel = (this.positionX + this.width / 2) - (_ball.x + gamePrefs.SIZE / 2);
+		var norm = rel / (this.width / 2);
+		var bounce = norm * (5 * gamePrefs.PI / 12);
 		var velocityMultiplierY = Math.cos(bounce);
 		var velocityMultiplierX = -Math.sin(bounce);
 
