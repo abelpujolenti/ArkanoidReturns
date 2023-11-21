@@ -3,6 +3,8 @@ class MenuScene extends Phaser.Scene
     constructor()
     {
         super({key: 'MenuScene'});
+        this.defaultColor = '#2E29D6'
+        this.hoverColor = '#D632DC'
     }
 
     preload()
@@ -21,8 +23,8 @@ class MenuScene extends Phaser.Scene
 
         //Button
         this.playButton = this.add.text(config.width/2, 150, 'PLAY', {
-            fontFamily: 'retro_stereo_wide',
-            fill: '#8282BA'
+            fontFamily: 'ARCADEPI',
+            fill: this.defaultColor
         })
         .setOrigin(0.5)
         .setInteractive()
@@ -55,12 +57,12 @@ class MenuScene extends Phaser.Scene
 
     enterButtonHoverState()
     {
-        this.playButton.setStyle({ fill: '#7777ED'});
+        this.playButton.setStyle({ fill: this.hoverColor});
     }
 
     enterButtonRestState()
     {
-        this.playButton.setStyle({ fill: '#8282BA' });
+        this.playButton.setStyle({ fill: this.defaultColor });
     }
 
     
