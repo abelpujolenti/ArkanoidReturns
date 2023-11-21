@@ -5,10 +5,17 @@ class EndScene extends Phaser.Scene
         super({key: 'EndScene'});
         this.lightGrey = '#B9B9B7'
         this.darkYellow = '#D7AF29'
+        this.lightYellow = '#EADA81'
     }
 
     preload()
     {
+        /*
+        console.log('to json');
+        this.highscoreArray = JSON.parse(localStorage.getItem('highscores'))
+        console.log(this.highscoreArray);
+        */
+
         this.load.setPath('assets/img/backgrounds');
         this.load.image('bg_tile','end_background_tile.png');
     }
@@ -44,8 +51,9 @@ class EndScene extends Phaser.Scene
         {
             this.add.text
             (config.width/2, 125 + i * 10, this.scoreArray[i], {
-                fontFamily: 'zekton',
-            }).setFontSize(11)
+                fontFamily: 'RoundBold',
+                fill: this.lightYellow
+            }).setFontSize(16)
             .setOrigin(0.5);
         }
         */
