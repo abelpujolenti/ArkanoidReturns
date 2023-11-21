@@ -25,18 +25,17 @@ class EndScene extends Phaser.Scene
         .setOrigin(0.5)
         .setFontSize(24);
 
+        //this.score = this.scene.get('TestLevel').pad.score;
+        this.score = 0;
+        this.playerScoreTitle = this.add.text(config.width/2, 195, 'YOUR SCORE: ' + this.score, {
+            fontFamily: 'RoundBold',
+            fill: this.lightGrey
+        })
+        .setOrigin(0.5)
+        .setFontSize(16);
+
+
         /*
-        this.playerScoreTitle = this.add.text(37, 60, 'Your score: ', {
-            fontFamily: 'zekton',
-        }).setFontSize(11);
-
-        this.score = this.scene.get('gameState').score;
-        this.playerScoreValue = this.add.text(config.width/2, 80, this.score, {
-            fontFamily: 'zekton',
-            fill: '#8282BA'
-        }).setFontSize(11)
-        .setOrigin(0.5);
-
         this.scoreArray = []
         this.sortScores(this.scoreArray, this.highscoreArray);
         //this.highscoresToJson(scoreArray);
@@ -68,12 +67,6 @@ class EndScene extends Phaser.Scene
     {
         //Update stuff
     }
-
-
-
-    ////////////////////////////
-    //Non-inherited functions //
-    ////////////////////////////
 
     sortScores(scoreArray,array)
     {
