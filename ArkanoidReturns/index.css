@@ -3,3 +3,16 @@ body{
     margin: 0px;
     padding: 0px;
 }
+
+		@font-face {
+		  font-family: ARCADEPI;
+		  src: url('assets/fonts/ARCADEPI.ttf');
+		  font-weight:400;
+		  font-weight:normal;
+		}
+		@font-face {
+		  font-family: RoundBold;
+		  src: url('assets/fonts/RoundBold.ttf');
+		  font-weight:400;
+		  font-weight:normal;
+		}

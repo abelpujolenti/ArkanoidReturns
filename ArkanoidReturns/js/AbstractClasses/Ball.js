@@ -24,7 +24,7 @@ class Ball extends Phaser.GameObjects.Sprite
         {
             this.ResetPosition(this._pad.x, this._pad.getTopCenter().y);
         }
-        else if(this.getTopCenter().y > config.height)
+        else if(this.getBottomCenter().y == config.height)
         {    
             if(this._ballsCounter > 1)        
             {

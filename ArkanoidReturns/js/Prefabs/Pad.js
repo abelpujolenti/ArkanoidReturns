@@ -8,7 +8,7 @@ class Pad extends Phaser.GameObjects.Sprite
         this.body.collideWorldBounds = true;
         this.body.setBounce(1, 1);
         this.body.setImmovable(true);
-        this.scene = _scene;
+        this._scene = _scene;
         this.score = _score;
         this.multiplier = _multiplier
         this.lives = gamePrefs.PLAYER_LIVES;
@@ -35,7 +35,7 @@ class Pad extends Phaser.GameObjects.Sprite
     UpdateScore(blockScore)
     {
         this.score += (blockScore * this.multiplier);
-        this.scene.UpdateScoreUI(this.score);
+        this._scene.UpdateScoreUI(this.score);
     }
 
     ApplyBounce(_ball)
@@ -66,9 +66,9 @@ class Pad extends Phaser.GameObjects.Sprite
 
         if(this.cursors.up.isDown)
         {
-            if(this.scene.ball.idle)
+            if(this._scene.ball.idle)
             {
-                this.scene.ball.StartMoving();
+                this._scene.ball.StartMoving();
             }
         }
     }
