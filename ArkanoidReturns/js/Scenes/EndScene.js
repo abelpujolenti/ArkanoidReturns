@@ -8,6 +8,11 @@ class EndScene extends Phaser.Scene
         this.lightYellow = '#EADA81'
     }
 
+    init(data)
+    {
+        this.score = data.score;
+    }
+
     preload()
     {
         /*
@@ -32,8 +37,6 @@ class EndScene extends Phaser.Scene
         .setOrigin(0.5)
         .setFontSize(24);
 
-        //this.score = this.scene.get('TestLevel').pad.score;
-        this.score = 0;
         this.playerScoreTitle = this.add.text(config.width/2, 195, 'YOUR SCORE: ' + this.score, {
             fontFamily: 'RoundBold',
             fill: this.lightGrey

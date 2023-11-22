@@ -147,6 +147,6 @@ class TestLevel extends Phaser.Scene
 
     LoadGameOver()
     {
-        this.scene.start("GameOver", {score: this.scoreUI.text})
+        this.scene.start("EndScene", {score: this.scoreUI.text})
     }
 }
