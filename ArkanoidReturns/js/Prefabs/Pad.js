@@ -1,23 +1,30 @@
 class Pad extends Phaser.GameObjects.Sprite
 {
-    constructor(_scene, _positionX, _positionY, _spriteTag, _animTag, _score, _multiplier){
+    constructor(_scene, _positionX, _positionY, _spriteTag, _animTag, _score, _multiplier, _walls){
         
         super(_scene, _positionX, _positionY, _spriteTag);
         _scene.add.existing(this);
-        _scene.physics.world.enable(this);
-        this.body.collideWorldBounds = true;
+        _scene.physics.world.enable(this);        
         this.body.setBounce(1, 1);
         this.body.setImmovable(true);
-        this._scene = _scene;
+        this.scene = _scene;
         this.score = _score;
-        this.multiplier = _multiplier
+        this.multiplier = _multiplier;
+        this.walls = _walls;
         this.lives = gamePrefs.PLAYER_LIVES;
         this.cursors = _scene.input.keyboard.createCursorKeys();
+
+        this.SetColliders();
 
         if(_animTag != null)
         {
             this.anims.play(_animTag);
         }
+    }
+
+    SetColliders()
+    {
+        this.scene.physics.add.collider(this, this.walls);
     }
 
     preUpdate(time, delta)
@@ -29,13 +36,13 @@ class Pad extends Phaser.GameObjects.Sprite
             this.CheckInput();
             return;
         }        
-        this._scene.LoadGameOver();
+        this.scene.LoadGameOver();
     }
 
     UpdateScore(blockScore)
     {
         this.score += (blockScore * this.multiplier);
-        this._scene.UpdateScoreUI(this.score);
+        this.scene.UpdateScoreUI(this.score);
     }
 
     ApplyBounce(_ball)
@@ -66,9 +73,9 @@ class Pad extends Phaser.GameObjects.Sprite
 
         if(this.cursors.up.isDown)
         {
-            if(this._scene.ball.idle)
+            if(this.scene.ball.idle)
             {
-                this._scene.ball.StartMoving();
+                this.scene.ball.StartMoving();
             }
         }
     }

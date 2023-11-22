@@ -8,68 +8,45 @@ class TestLevel extends Phaser.Scene
     preload()
     {
         this.load.setPath("assets/data/level");
-        this.load.text("test", "test.txt")
+        this.load.text("test", "test.txt");
+
         this.load.setPath("assets/img/projectile");
         this.load.image("normalBall", "cyan.png");
+        
         this.load.setPath("assets/img/block");
         this.load.spritesheet("silverBlock", "silver_animated.png", {frameWidth: 44, frameHeight: 22});
-        this.load.setPath("assets/img/pad")
+        
+        this.load.setPath("assets/img/pad");
         this.load.spritesheet("pad", "default.png", {frameWidth: 88, frameHeight:22});
+
+        this.load.setPath("assets/img/border");
+        this.load.image("verticalPipeTileset", "vertical.png");
+        this.load.image("horizontalPipeTileset", "horizontal.png");
+
+        this.load.setPath("assets/map");
+        this.load.tilemapTiledJSON("map", "map.json")
     }
 
     create()
     {
         this.loadAnimations();
+        
         this.LoadPools();
+        
+        this.LoadMap();
+        
+        this.LoadUI();
 
-        this.cameras.main.setBackgroundColor("003");
-        this.scoreText = this.add.text(
-            10,
-            config.height / 2 - 40,
-            "Score",
-            {
-                fontFamily: 'Arial',
-                fill: '#FFFFFF',
-                fontSize: 12,
-                align: "right"
-            }
-        )
-        this.scoreText.setTint(0x40ff80, 0x40ff80, 0xffb000, 0xffb000);
-
-        this.scoreUI = this.add.text(
-            30,
-            config.height / 2 - 20,
-            0,
-            {
-                fontFamily: 'Arial',
-                fill: '#FFFFFF',
-                fontSize: 12
-            }
-        )
-
-        this.pad = new Pad(this, gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y, 'pad', 'padAnim', 0, 1).setScale(0.5);
+        this.pad = new Pad(this, gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y, 'pad', 'padAnim', 0, 1, this.walls).setScale(0.5);
 
         this.ballsCounter = 0;
         
-        this.ball = new NormalBall(this, this.pad.x, this.pad.getTopCenter().y, this.pad, this.ballsCounter).setScale(.75);
+        this.ball = new NormalBall(this, this.pad.x, this.pad.getTopCenter().y, this.pad, this.walls, this.ballsCounter).setScale(.75);
         this.ballPool.add(this.ball);
         
 
         this.blocks = [];
         this.createLevel(20, 44, 40, "test");
-
-        this.livesIcon = this.add.sprite(22, config.width / 2 - 35, 'pad', 0).setScale(.3);
-        this.livesDisplay = this.add.text(
-            this.livesIcon.width * this.livesIcon.scale + this.livesIcon.x - 5,
-            config.height / 2,
-            "x " + gamePrefs.PLAYER_LIVES,
-            {
-                fontFamily: 'Arial',
-                fill: '#FFFFFF',
-                fontSize: 12
-            }
-        )
-        this.livesDisplay.setTint(0x40ff80, 0x40ff80, 0xffb000, 0xffb000);
     }
 
     LoadPools()
@@ -143,6 +120,65 @@ class TestLevel extends Phaser.Scene
             frameRate: 15,
             repeat: -1
         });
+    }
+
+    LoadMap()
+    {
+        this.map = this.add.tilemap("map");
+
+        this.map.addTilesetImage("verticalPipeTileset");
+        this.map.addTilesetImage("horizontalPipeTileset");
+
+        var tilesets = ["verticalPipeTileset", "horizontalPipeTileset"]
+
+        this.walls = this.map.createLayer("layer_walls", tilesets);
+        this.map.createLayer("layer_outer_walls", tilesets);
+
+        var indexToCollide = [3, 26]
+
+        this.map.setCollision(indexToCollide, true, true, "layer_walls");
+    }
+
+    LoadUI()
+    {
+        this.cameras.main.setBackgroundColor("003");
+        this.scoreText = this.add.text(
+            30,
+            config.height / 2 - 80,
+            "Score",
+            {
+                fontFamily: 'Arial',
+                fill: '#FFFFFF',
+                fontSize: 12,
+                align: "right"
+            }
+        ).setFontSize(32)
+        this.scoreText.setTint(0x40ff80, 0x40ff80, 0xffb000, 0xffb000);
+
+        this.scoreUI = this.add.text(
+            120,
+            config.height / 2 - 50,
+            0,
+            {
+                fontFamily: 'Arial',
+                fill: '#FFFFFF',
+                fontSize: 12
+            }
+        ).setFontSize(32);
+        
+
+        this.livesIcon = this.add.sprite(60, config.height / 2 + 18, 'pad', 0).setScale(.7);
+        this.livesDisplay = this.add.text(
+            100,
+            config.height / 2,
+            "x " + gamePrefs.PLAYER_LIVES,
+            {
+                fontFamily: 'Arial',
+                fill: '#FFFFFF',
+                fontSize: 12
+            }
+        ).setFontSize(32);
+        this.livesDisplay.setTint(0x40ff80, 0x40ff80, 0xffb000, 0xffb000);
     }
 
     LoadGameOver()

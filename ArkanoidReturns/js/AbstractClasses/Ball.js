@@ -1,14 +1,13 @@
 class Ball extends Phaser.GameObjects.Sprite
 {
-    constructor(scene, positionX, positionY, pad, ballsCounter, spriteTag){
+    constructor(scene, positionX, positionY, pad, walls, ballsCounter, spriteTag){
         
         super(scene, positionX, positionY, spriteTag);
         scene.physics.add.existing(this);
         this._scene = scene;
         this.body.setBounce(1, 1);
         this._ballsCounter = ballsCounter;
-        this.body.collideWorldBounds = true;
-        this.wor
+        this._walls = walls;
         this._pad = pad;
 
         this.scene.UpdateBallsCounter(1);
@@ -24,7 +23,7 @@ class Ball extends Phaser.GameObjects.Sprite
         {
             this.ResetPosition(this._pad.x, this._pad.getTopCenter().y);
         }
-        else if(this.getBottomCenter().y == config.height)
+        else if(this.getTopCenter().y > config.height)
         {    
             if(this._ballsCounter > 1)        
             {
@@ -39,6 +38,8 @@ class Ball extends Phaser.GameObjects.Sprite
 
     SetColliders()
     {
+        this._scene.physics.add.collider(this, this._walls)
+
         this._scene.physics.add.collider
         (
             this,
