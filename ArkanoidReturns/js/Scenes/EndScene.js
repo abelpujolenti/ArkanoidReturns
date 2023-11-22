@@ -28,21 +28,21 @@ class EndScene extends Phaser.Scene
     create()
     {
         this.bg = this.add.tileSprite
-        (0,0,config.width,config.height,'bg_tile').setOrigin(0);
+        (0,0,config.width,config.height,'bg_tile').setOrigin(0).setScale(2);
 
-        this.rankingTitleText = this.add.text(config.width/2, 20, 'BEST 5 RANKING', {
+        this.rankingTitleText = this.add.text(config.width / 2, 50, 'BEST 5 RANKING', {
             fontFamily: 'RoundBold',
             fill: this.lightGrey
         })
         .setOrigin(0.5)
-        .setFontSize(24);
+        .setFontSize(48);
 
-        this.playerScoreTitle = this.add.text(config.width/2, 195, 'YOUR SCORE: ' + this.score, {
+        this.playerScoreTitle = this.add.text(config.width / 2, config.height - 100, 'YOUR SCORE: ' + this.score, {
             fontFamily: 'RoundBold',
             fill: this.lightGrey
         })
         .setOrigin(0.5)
-        .setFontSize(16);
+        .setFontSize(32);
 
 
         /*
@@ -62,16 +62,16 @@ class EndScene extends Phaser.Scene
         */
 
         //Button
-        this.playAgainButton = this.add.text(config.width/2, 215, 'PLAY AGAIN', {
+        this.playAgainButton = this.add.text(config.width/2, config.height - 50, 'PLAY AGAIN', {
             fontFamily: 'RoundBold',
             fill: this.lightGrey
         })
         .setOrigin(0.5)
-        .setFontSize(16)
+        .setFontSize(32)
         .setInteractive()
         .on('pointerdown', () => this.enterButtonClickState())
         .on('pointerover', () => this.enterButtonHoverState())
-        .on('pointerout', () => this.enterButtonRestState() );
+        .on('pointerout', () => this.enterButtonRestState());
     }
     
     update()
@@ -131,7 +131,7 @@ class EndScene extends Phaser.Scene
     fadeOutText()
     {
         this.tweens.add({
-            targets: [this.bg, this.rankingTitleText, this.playAgainButton],
+            targets: [this.bg, this.rankingTitleText, this.playerScoreTitle, this.playAgainButton],
             alpha: 0,
             duration: 300,
             ease: 'Power2'

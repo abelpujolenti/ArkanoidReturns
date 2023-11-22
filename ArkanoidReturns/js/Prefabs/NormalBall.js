@@ -1,8 +1,8 @@
 class NormalBall extends Ball
 {
-    constructor(scene, positionX, positionY, pad, ballsCounter)
+    constructor(scene, positionX, positionY, pad, walls, ballsCounter)
     {
-        super(scene, positionX, positionY, pad, ballsCounter, "normalBall");
+        super(scene, positionX, positionY, pad, walls, ballsCounter, "normalBall");
         scene.add.existing(this);
 
         this.idle = true;

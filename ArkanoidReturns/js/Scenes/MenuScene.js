@@ -19,13 +19,14 @@ class MenuScene extends Phaser.Scene
     create()
     {
         //Show assets on screen
-        this.bg = this.add.image(0,0,'bg').setOrigin(0);
+        this.bg = this.add.image(0,0,'bg').setOrigin(0).setScale(2.5);
 
         //Button
-        this.playButton = this.add.text(config.width/2, 150, 'PLAY', {
+        this.playButton = this.add.text(config.width/2, config.height / 2 + 100, 'PLAY', {
             fontFamily: 'ARCADEPI',
             fill: this.defaultColor
         })
+        .setFontSize(32)
         .setOrigin(0.5)
         .setInteractive()
         .on('pointerdown', () => this.enterButtonClickState())

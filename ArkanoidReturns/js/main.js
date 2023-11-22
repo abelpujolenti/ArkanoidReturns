@@ -1,8 +1,8 @@
 var config = 
 {
     type: Phaser.AUTO,
-    width: 320,
-    height: 232, 
+    width: 800,
+    height: 560, 
     scene:[MenuScene, TestLevel, EndScene], 
     render:
     {
