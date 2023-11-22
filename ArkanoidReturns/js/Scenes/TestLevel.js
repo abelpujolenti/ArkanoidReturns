@@ -20,10 +20,40 @@ class TestLevel extends Phaser.Scene
     create()
     {
         this.loadAnimations();
+        this.LoadPools();
 
         this.cameras.main.setBackgroundColor("003");
-        this.ball = new NormalBall(this, gamePrefs.INITIAL_NORMAL_BALL_POSITION_X, gamePrefs.INITIAL_NORMAL_BALL_POSITION_Y).setScale(.75);
-        this.pad = new Pad(this, gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y, 'pad', 'padAnim').setScale(0.5);
+        this.scoreText = this.add.text(
+            10,
+            config.height / 2 - 40,
+            "Score",
+            {
+                fontFamily: 'Arial',
+                fill: '#FFFFFF',
+                fontSize: 12,
+                align: "right"
+            }
+        )
+        this.scoreText.setTint(0x40ff80, 0x40ff80, 0xffb000, 0xffb000);
+
+        this.scoreUI = this.add.text(
+            30,
+            config.height / 2 - 20,
+            0,
+            {
+                fontFamily: 'Arial',
+                fill: '#FFFFFF',
+                fontSize: 12
+            }
+        )
+
+        this.pad = new Pad(this, gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y, 'pad', 'padAnim', 0, 1).setScale(0.5);
+
+        this.ballsCounter = 0;
+        
+        this.ball = new NormalBall(this, this.pad.x, this.pad.getTopCenter().y, this.pad, this.ballsCounter).setScale(.75);
+        this.ballPool.add(this.ball);
+        
 
         this.blocks = [];
         this.createLevel(20, 44, 40, "test");
@@ -42,6 +72,11 @@ class TestLevel extends Phaser.Scene
         this.livesDisplay.setTint(0x40ff80, 0x40ff80, 0xffb000, 0xffb000);
     }
 
+    LoadPools()
+    {
+        this.ballPool = this.add.group();
+    }
+
     createLevel(size, rootX, rootY, level)
     {
         var str = this.cache.text.get(level);
@@ -54,7 +89,7 @@ class TestLevel extends Phaser.Scene
             {
                 var posX = rootX + x * size;
                 var posY = rootY + y * size * 0.5;
-                this.blocks[i] = new BlockPrefab(this, posX, posY, 'silverBlock', null, 2, this.ball).setScale(size / width);
+                this.blocks[i] = new BlockPrefab(this, posX, posY, 'silverBlock', null, 2, this.ball, this.pad, 1).setScale(size / width);
                 x++;
             }
             else if (char == 32)
@@ -71,22 +106,24 @@ class TestLevel extends Phaser.Scene
 
     update()
     {
-        if(this.ball.idle)
-        {
-            this.ball.UpdatePositionX(this.pad.getBottomCenter().x);
-        }
-        else if(this.ball.getBottomCenter().y == config.height)
-        {
-            this.pad.DecrementLives();
-            this.livesDisplay.setText("x "+this.pad.lives);
-            this.pad.Reset(gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y);
-            this.ball.Reset(gamePrefs.INITIAL_NORMAL_BALL_POSITION_X, gamePrefs.INITIAL_NORMAL_BALL_POSITION_Y);
 
-            if(this.pad.lives <= 0)
-            {
-                console.log("Game over. Please refresh the page.");
-                this.ball.idle = true;
-            }
+    }
+
+    UpdateLivesUI()
+    {
+        this.livesDisplay.setText("x "+this.pad.lives);
+    }
+
+    UpdateScoreUI(score)
+    {
+        this.scoreUI.setText(score);
+    }
+
+    UpdateBallsCounter(number)
+    {
+        this.ballsCounter += number;
+        for (let index = 0; index < this.ballPool.getLength(); index++) {
+            this.ballPool[i].ModifyBallsCounter(number);
         }
     }
 
@@ -106,5 +143,10 @@ class TestLevel extends Phaser.Scene
             frameRate: 15,
             repeat: -1
         });
+    }
+
+    LoadGameOver()
+    {
+        this.scene.start("GameOver", {score: this.scoreUI.text})
     }
 }

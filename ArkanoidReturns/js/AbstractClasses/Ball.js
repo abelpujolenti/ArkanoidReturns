@@ -1,13 +1,52 @@
 class Ball extends Phaser.GameObjects.Sprite
 {
-    constructor(scene, positionX, positionY, spriteTag){
+    constructor(scene, positionX, positionY, pad, ballsCounter, spriteTag){
         
         super(scene, positionX, positionY, spriteTag);
         scene.physics.add.existing(this);
+        this._scene = scene;
         this.body.setBounce(1, 1);
+        this._ballsCounter = ballsCounter;
         this.body.collideWorldBounds = true;
+        this.wor
+        this._pad = pad;
 
-        this.Start();
+        this.scene.UpdateBallsCounter(1);
+
+        this.SetColliders();
+    }
+
+    preUpdate(time, delta)
+    {
+        super.preUpdate(time, delta); 
+
+        if(this.idle)
+        {
+            this.ResetPosition(this._pad.x, this._pad.getTopCenter().y);
+        }
+        else if(this.getTopCenter().y > config.height)
+        {    
+            if(this._ballsCounter > 1)        
+            {
+                return;
+            }
+            this._pad.DecrementLives();
+            this.scene.UpdateLivesUI();            
+            this.body.setVelocity(0, 0);
+            this.idle = true;
+        }
+    }
+
+    SetColliders()
+    {
+        this._scene.physics.add.collider
+        (
+            this,
+            this._pad,
+            this._pad.ApplyBounce,
+            null,
+            this._pad
+        );
     }
 
     ChangeVelocity(velocityMultiplier)
@@ -26,6 +65,12 @@ class Ball extends Phaser.GameObjects.Sprite
         this.velocityY = velocity.y * velocityMultiplierY;        
 
         this.body.setVelocity(this.velocityX, this.velocityY);
+    }
+
+    ModifyBallsCounter(number)
+    {
+        this._ballsCounter += number;
+        console.log(this._ballsCounter)
     }
 
     /*
