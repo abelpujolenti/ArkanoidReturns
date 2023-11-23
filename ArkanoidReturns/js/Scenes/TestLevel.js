@@ -66,7 +66,7 @@ class TestLevel extends Phaser.Scene
             {
                 var posX = rootX + x * size;
                 var posY = rootY + y * size * 0.5;
-                this.blocks[i] = new BlockPrefab(this, posX, posY, 'silverBlock', null, 2, this.ball, this.pad, 1).setScale(size / width).setOrigin(-11.5, -5);
+                this.blocks[i] = new BlockPrefab(this, posX, posY, 'silverBlock', null, 1, this.ball, this.pad, 1).setScale(size / width).setOrigin(-11.5, -5);
                 x++;
             }
             else if (char == 32)

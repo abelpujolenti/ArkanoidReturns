@@ -10,6 +10,7 @@ class Pad extends Phaser.GameObjects.Sprite
         this.scene = _scene;
         this.score = _score;
         this.multiplier = _multiplier;
+        this.streak = 0;
         this.walls = _walls;
         this.lives = gamePrefs.PLAYER_LIVES;
         this.cursors = _scene.input.keyboard.createCursorKeys();
@@ -83,6 +84,12 @@ class Pad extends Phaser.GameObjects.Sprite
     DecrementLives()
     {
         this.lives--;
+    }
+
+    IncreaseStreak()
+    {
+        this.streak++;
+        this.multiplier = 1 + (0.25 * Math.floor(this.streak / 5));
     }
 
     Reset(_positionX, _positionY)
