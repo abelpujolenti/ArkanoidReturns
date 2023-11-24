@@ -15,11 +15,16 @@ class EndScene extends Phaser.Scene
 
     preload()
     {
-        /*
-        console.log('to json');
-        this.highscoreArray = JSON.parse(localStorage.getItem('highscores'))
-        console.log(this.highscoreArray);
-        */
+        if(!localStorage.hasOwnProperty('highscores'))
+        {
+            var emptyArray = [];
+            localStorage.setItem('highscores', emptyArray);
+        }
+        else
+        {
+            this.highscoreArray = JSON.parse(localStorage.getItem('highscores'))
+            console.log(this.highscoreArray);
+        }
 
         this.load.setPath('assets/img/backgrounds');
         this.load.image('bg_tile','end_background_tile.png');
@@ -45,21 +50,19 @@ class EndScene extends Phaser.Scene
         .setFontSize(32);
 
 
-        /*
         this.scoreArray = []
         this.sortScores(this.scoreArray, this.highscoreArray);
-        //this.highscoresToJson(scoreArray);
         
+        this.scoreNumberTexts = [];
         for(var i = 0; i < this.scoreArray.length; i++)
         {
-            this.add.text
-            (config.width/2, 125 + i * 10, this.scoreArray[i], {
+            this.scoreNumberTexts[i] = this.add.text
+            (config.width/2, 125 + i * 30, this.scoreArray[i], {
                 fontFamily: 'RoundBold',
                 fill: this.lightYellow
-            }).setFontSize(16)
+            }).setFontSize(32)
             .setOrigin(0.5);
         }
-        */
 
         //Button
         this.playAgainButton = this.add.text(config.width/2, config.height - 50, 'PLAY AGAIN', {
@@ -81,6 +84,7 @@ class EndScene extends Phaser.Scene
 
     sortScores(scoreArray,array)
     {
+        console.log(array);
         for(var i = 0; i < array.length; i++)
         {
             scoreArray.push(array[i])
@@ -131,7 +135,7 @@ class EndScene extends Phaser.Scene
     fadeOutText()
     {
         this.tweens.add({
-            targets: [this.bg, this.rankingTitleText, this.playerScoreTitle, this.playAgainButton],
+            targets: [this.bg, this.rankingTitleText, this.playerScoreTitle, this.playAgainButton, this.scoreNumberTexts],
             alpha: 0,
             duration: 300,
             ease: 'Power2'
@@ -140,9 +144,9 @@ class EndScene extends Phaser.Scene
 
     changeScene()
     {
-        //this.scoreArray.push(this.score);
-        //console.log(this.scoreArray);
-        //this.saveToLocalStorage(this.scoreArray);
+        this.scoreArray.push(this.score);
+        console.log(this.scoreArray);
+        this.saveToLocalStorage(this.scoreArray);
         this.scene.start('TestLevel');
     }
 
