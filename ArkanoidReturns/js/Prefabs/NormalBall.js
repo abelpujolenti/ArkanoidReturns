@@ -1,22 +1,12 @@
 class NormalBall extends Ball
 {
-    constructor(scene, positionX, positionY)
+    constructor(scene, positionX, positionY, pad, walls, ballsCounter)
     {
-        super(scene, positionX, positionY, "normalBall");
+        super(scene, positionX, positionY, pad, walls, ballsCounter, "normalBall");
         scene.add.existing(this);
 
         this.idle = true;
     }    
-
-    Start(){
-
-        
-    }
-
-    preUpdate(time, delta)
-    {
-        super.preUpdate(time, delta);
-    }
 
     StartMoving()
     {
@@ -41,10 +31,11 @@ class NormalBall extends Ball
         this.body.setVelocity(_velocityX, 0);
     }
 
-    UpdatePositionX(_positionX)
+    ResetPosition(_positionX, _positionY)
     {
         this.body.setVelocity(0, 0);
-        this.setPosition(_positionX, gamePrefs.INITIAL_NORMAL_BALL_POSITION_Y);
+        this.setPosition(_positionX, _positionY);
+        Phaser.Display.Bounds.SetBottom(this, _positionY);
     }
 
     Reset(_positionX, _positionY)
