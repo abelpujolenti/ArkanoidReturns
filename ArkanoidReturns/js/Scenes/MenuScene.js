@@ -14,9 +14,6 @@ class MenuScene extends Phaser.Scene
         this.load.image('bg','menu_background.png');
        
         //Button
-
-        //Test
-        localStorage.clear();
     }
 
     create()

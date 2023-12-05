@@ -142,6 +142,16 @@ class EndScene extends Phaser.Scene
             duration: 300,
             ease: 'Power2'
           }, this);
+
+          for(var i = 0; i < this.scoreNumberTexts.length; i++)
+          {
+            this.tweens.add({
+                targets: [this.scoreNumberTexts[i]],
+                alpha: 0,
+                duration: 300,
+                ease: 'Power2'
+              }, this);
+          }
     }
 
     changeScene()
