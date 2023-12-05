@@ -18,6 +18,7 @@ class EndScene extends Phaser.Scene
         if(!localStorage.hasOwnProperty('highscores'))
         {
             var emptyArray = [];
+            JSON.stringify(emptyArray);
             localStorage.setItem('highscores', emptyArray);
         }
         else
