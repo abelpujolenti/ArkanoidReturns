@@ -20,6 +20,7 @@ class EndScene extends Phaser.Scene
             var emptyArray = [];
             JSON.stringify(emptyArray);
             localStorage.setItem('highscores', emptyArray);
+            this.highscoreArray = [];
         }
         else
         {
