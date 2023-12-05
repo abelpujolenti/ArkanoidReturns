@@ -6,6 +6,13 @@ class HighscoreScene extends Phaser.Scene
         this.lightGrey = '#B9B9B7'
         this.darkYellow = '#D7AF29'
         this.lightYellow = '#EADA81'
+        this.orange = '#D24E01'
+
+        this.lightGreyHex = 0xB9B9B7;
+        this.darkGreyHex = 0x6B6660;
+        this.darkYellowHex = 0xD7AF29;
+        this.lightYellowHex = 0xEADA81;
+        this.orangeHex = 0xD24E01;
     }
 
     preload()
@@ -22,10 +29,12 @@ class HighscoreScene extends Phaser.Scene
 
         this.rankingTitleText = this.add.text(config.width / 2, 50, 'BEST 5 RANKING', {
             fontFamily: 'RoundBold',
-            fill: this.lightGrey
+            fill: '#FFFFFF'
         })
         .setOrigin(0.5)
         .setFontSize(48);  
+
+        this.rankingTitleText.setTint(this.lightGreyHex, this.lightGreyHex, this.darkGreyHex, this.darkGreyHex);
         
         this.addScoreTexts();
     }
@@ -62,9 +71,10 @@ class HighscoreScene extends Phaser.Scene
             this.scoreNumberTexts[i] = this.add.text
             (config.width/2, 125 + i * 30, this.scoreArray[i], {
                 fontFamily: 'RoundBold',
-                fill: this.lightYellow
+                fill: '#FFFFFF'
             }).setFontSize(32)
             .setOrigin(0.5);
+            this.scoreNumberTexts[i].setTint(this.lightYellowHex, this.lightYellowHex, this.orangeHex, this.orangeHex);
         }
     }
 
