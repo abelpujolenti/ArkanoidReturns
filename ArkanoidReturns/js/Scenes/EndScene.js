@@ -21,10 +21,12 @@ class EndScene extends HighscoreScene
 
         this.playerScoreTitle = this.add.text(config.width / 2, config.height - 100, 'YOUR SCORE: ' + this.score, {
             fontFamily: 'RoundBold',
-            fill: this.lightGrey
+            fill: '#FFFFFF'
         })
         .setOrigin(0.5)
         .setFontSize(32);
+
+        this.playerScoreTitle.setTint(this.lightGreyHex, this.lightGreyHex, this.darkGreyHex, this.darkGreyHex);
 
         //Button
         this.playAgainButton = this.add.text(config.width/2, config.height - 50, 'PLAY AGAIN', {
