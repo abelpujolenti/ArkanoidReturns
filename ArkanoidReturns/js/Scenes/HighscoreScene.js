@@ -10,19 +10,7 @@ class HighscoreScene extends Phaser.Scene
 
     preload()
     {
-        if(!localStorage.hasOwnProperty('highscores'))
-        {
-            var emptyArray = [];
-            JSON.stringify(emptyArray);
-            localStorage.setItem('highscores', emptyArray);
-            this.highscoreArray = [];
-        }
-        else
-        {
-            this.highscoreArray = JSON.parse(localStorage.getItem('highscores'))
-            console.log(this.highscoreArray);
-        }
-
+        this.getHighscoresFromLocalStorage();
         this.load.setPath('assets/img/backgrounds');
         this.load.image('bg_tile','end_background_tile.png');
     }
@@ -37,11 +25,34 @@ class HighscoreScene extends Phaser.Scene
             fill: this.lightGrey
         })
         .setOrigin(0.5)
-        .setFontSize(48);
+        .setFontSize(48);  
+        
+        this.addScoreTexts();
+    }
+    
+    update()
+    {
+        //Update stuff
+    }
 
-      
+    getHighscoresFromLocalStorage()
+    {
+        if(!localStorage.hasOwnProperty('highscores'))
+        {
+            var emptyArray = [];
+            JSON.stringify(emptyArray);
+            localStorage.setItem('highscores', emptyArray);
+            this.highscoreArray = [];
+        }
+        else
+        {
+            this.highscoreArray = JSON.parse(localStorage.getItem('highscores'))
+            console.log(this.highscoreArray);
+        }
+    }
 
-
+    addScoreTexts()
+    {
         this.scoreArray = []
         this.sortScores(this.scoreArray, this.highscoreArray);
         
@@ -55,23 +66,6 @@ class HighscoreScene extends Phaser.Scene
             }).setFontSize(32)
             .setOrigin(0.5);
         }
-
-        //Button
-        this.playAgainButton = this.add.text(config.width/2, config.height - 50, 'PLAY AGAIN', {
-            fontFamily: 'RoundBold',
-            fill: this.lightGrey
-        })
-        .setOrigin(0.5)
-        .setFontSize(32)
-        .setInteractive()
-        .on('pointerdown', () => this.enterButtonClickState())
-        .on('pointerover', () => this.enterButtonHoverState())
-        .on('pointerout', () => this.enterButtonRestState());
-    }
-    
-    update()
-    {
-        //Update stuff
     }
 
     sortScores(scoreArray,array)
@@ -98,32 +92,6 @@ class HighscoreScene extends Phaser.Scene
         localStorage.setItem('highscores', JSON.stringify(array));
     }
 
-    enterButtonClickState()
-    {
-        this.fadeOutText();
-
-        this.time.addEvent
-        (
-            {
-                delay: 350,
-                callback: this.changeScene,
-                callbackScope: this,
-                loop: false
-            }
-            
-        )
-    }
-
-    enterButtonHoverState()
-    {
-        this.playAgainButton.setStyle({ fill: this.darkYellow});
-    }
-
-    enterButtonRestState()
-    {
-        this.playAgainButton.setStyle({ fill: this.lightGrey });
-    }
-
     fadeOutText()
     {
         this.tweens.add({
@@ -144,14 +112,17 @@ class HighscoreScene extends Phaser.Scene
           }
     }
 
-    changeScene()
+    pushToScoreArrayAndSave(_newValue)
     {
-        this.scoreArray.push(this.score);
+        this.scoreArray.push(_newValue);
         console.log(this.scoreArray);
         this.saveToLocalStorage(this.scoreArray);
-        this.scene.start('TestLevel');
     }
 
+    changeScene(_nextScene)
+    {
+        this.scene.start(_nextScene);
+    }
     
 }
 

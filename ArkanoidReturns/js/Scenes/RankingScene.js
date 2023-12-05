@@ -1,33 +1,21 @@
-class EndScene extends HighscoreScene
+class RankingScene extends HighscoreScene
 {
     constructor()
     {
-        super('EndScene');
-    }
-
-    init(data)
-    {
-        this.score = data.score;
+        super('RankingScene')
     }
 
     preload()
     {
-      super.preload();
+        super.preload();
     }
 
     create()
     {
         super.create();
-
-        this.playerScoreTitle = this.add.text(config.width / 2, config.height - 100, 'YOUR SCORE: ' + this.score, {
-            fontFamily: 'RoundBold',
-            fill: this.lightGrey
-        })
-        .setOrigin(0.5)
-        .setFontSize(32);
-
+        
         //Button
-        this.playAgainButton = this.add.text(config.width/2, config.height - 50, 'PLAY AGAIN', {
+        this.backToMenuButton = this.add.text(config.width/2, config.height - 50, 'BACK TO MENU', {
             fontFamily: 'RoundBold',
             fill: this.lightGrey
         })
@@ -62,12 +50,12 @@ class EndScene extends HighscoreScene
 
     enterButtonHoverState()
     {
-        this.playAgainButton.setStyle({ fill: this.darkYellow});
+        this.backToMenuButton.setStyle({ fill: this.darkYellow});
     }
 
     enterButtonRestState()
     {
-        this.playAgainButton.setStyle({ fill: this.lightGrey });
+        this.backToMenuButton.setStyle({ fill: this.lightGrey });
     }
 
     fadeOutText()
@@ -75,7 +63,7 @@ class EndScene extends HighscoreScene
         super.fadeOutText();
 
         this.tweens.add({
-            targets: [this.playAgainButton],
+            targets: [this.backToMenuButton],
             alpha: 0,
             duration: 300,
             ease: 'Power2'
@@ -84,7 +72,8 @@ class EndScene extends HighscoreScene
 
     changeScene()
     {
-        super.pushToScoreArrayAndSave(this.score);
-        super.changeScene('TestLevel');
+        super.changeScene('MenuScene');
     }
+
+    
 }
