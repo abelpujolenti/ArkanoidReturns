@@ -26,7 +26,7 @@ class Preloader extends Phaser.Scene
 
         this.load.on("complete", function()
         {
-            this.scene.start("EndScene");
+            this.scene.start("MenuScene");
         }, this);
     }
 
