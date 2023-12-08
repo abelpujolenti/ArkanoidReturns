@@ -27,14 +27,14 @@ class HighscoreScene extends Phaser.Scene
         this.bg = this.add.tileSprite
         (0,0,config.width,config.height,'bg_tile').setOrigin(0).setScale(2);
 
-        this.rankingTitleText = this.add.text(config.width / 2, 50, 'BEST 5 RANKING', {
-            fontFamily: 'RoundBold',
-            fill: '#FFFFFF'
-        })
-        .setOrigin(0.5)
-        .setFontSize(48);  
-
-        this.rankingTitleText.setTint(this.lightGreyHex, this.lightGreyHex, this.darkGreyHex, this.darkGreyHex);
+        this.rankingTitleText = this.add.bitmapText(
+            config.width / 2,
+            25,
+            "arkanoidFont",
+            "BEST 5 RANKING",
+            36
+        ).setOrigin(0.5)
+        .setTint(this.lightGreyHex, this.lightGreyHex, this.darkGreyHex, this.darkGreyHex);
         
         this.addScoreTexts();
     }
@@ -68,13 +68,14 @@ class HighscoreScene extends Phaser.Scene
         this.scoreNumberTexts = [];
         for(var i = 0; i < this.scoreArray.length; i++)
         {
-            this.scoreNumberTexts[i] = this.add.text
-            (config.width/2, 125 + i * 30, this.scoreArray[i], {
-                fontFamily: 'RoundBold',
-                fill: '#FFFFFF'
-            }).setFontSize(32)
-            .setOrigin(0.5);
-            this.scoreNumberTexts[i].setTint(this.lightYellowHex, this.lightYellowHex, this.orangeHex, this.orangeHex);
+            this.scoreNumberTexts[i] = this.add.bitmapText(
+                config.width / 2,
+                105 + i * 30,
+                "arkanoidFont",
+                this.scoreArray[i],
+                24
+            ).setOrigin(0.5)
+            .setTint(this.lightYellowHex, this.lightYellowHex, this.orangeHex, this.orangeHex);
         }
     }
 
