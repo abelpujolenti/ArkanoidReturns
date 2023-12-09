@@ -220,6 +220,24 @@ class TestLevel extends Phaser.Scene
             24
         ).setOrigin(1)
         .setTint(0xa71f52, 0xa71f52, 0xe4c11b, 0xe4c11b);
+
+        this.pointlessText = this.add.bitmapText(
+            655, 
+            config.height / 2,
+            "arkanoidFontBruh",
+            "Insert coin\nto play",
+            18
+        )
+        this.tweens.add(
+            {
+                targets: this.pointlessText,
+                alpha: { from: 1, to: 0},
+                duration: 1000,
+                yoyo: true,
+                loop: -1
+
+            }
+        )
     }
 
     LoadGameOver()
