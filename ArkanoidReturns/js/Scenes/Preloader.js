@@ -11,7 +11,8 @@ class Preloader extends Phaser.Scene
         this.load.image("normalBall", "cyan.png");
         
         this.load.setPath("assets/img/block");
-        this.load.spritesheet("silverBlock", "silver_animated.png", {frameWidth: 44, frameHeight: 22});   
+        this.load.spritesheet("silverBlock", "silver_animated.png", {frameWidth: 44, frameHeight: 22});
+        this.load.image("crystalBlock", "crystal.png");  
 
         this.load.setPath("assets/img/powerup");
         this.load.spritesheet("powerupB", "B.png", {frameWidth: 44, frameHeight: 22});

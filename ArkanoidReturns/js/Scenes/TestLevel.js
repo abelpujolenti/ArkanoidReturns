@@ -35,9 +35,7 @@ class TestLevel extends Phaser.Scene
         this.powerups = [];
         this.blocks = [];
 
-        this.createLevel(20, 44, 40, "test");
-
-        this.testCrystalBlock = new CrystalBlockPrefab(this, config.width / 2, config.height / 2, 'silverBlock', null, 1, this.ball, this.pad, 1);
+        this.createLevel(40, config.width / 2, 80, "test");
     }
 
     LoadPools()
@@ -47,6 +45,7 @@ class TestLevel extends Phaser.Scene
 
     createLevel(size, rootX, rootY, level)
     {
+        this.blockAmountX = 11;
         var str = this.cache.text.get(level);
         var width = 44;
         this.blockScale = size / width;
@@ -56,9 +55,18 @@ class TestLevel extends Phaser.Scene
             var char = str.charCodeAt(i);
             if (char >= 65)
             {
-                var posX = rootX + x * size;
+                var posX = rootX + (x - 5) * size;
                 var posY = rootY + y * size * 0.5;
-                this.blocks[i] = new BlockPrefab(this, posX, posY, 'silverBlock', null, 1, this.ball, this.pad, 1).setScale(this.blockScale).setOrigin(-11.5, -5);
+
+                if (char == 67)
+                {
+                    this.blocks[i] = new CrystalBlockPrefab(this, posX, posY, 'crystalBlock', null, 1, this.ball, this.pad, 1).setScale(this.blockScale);
+                }
+                else
+                {
+                    this.blocks[i] = new BlockPrefab(this, posX, posY, 'silverBlock', null, 1, this.ball, this.pad, 1).setScale(this.blockScale);
+                }
+
                 x++;
             }
             else if (char == 32)
