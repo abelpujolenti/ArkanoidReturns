@@ -31,8 +31,13 @@ class TestLevel extends Phaser.Scene
         this.ball = new NormalBall(this, this.pad.x, this.pad.getTopCenter().y, this.pad, this.walls, this.ballsCounter).setScale(.75);
         this.ballPool.add(this.ball);        
 
+        
+        this.powerups = [];
         this.blocks = [];
+
         this.createLevel(20, 44, 40, "test");
+
+        this.testCrystalBlock = new CrystalBlockPrefab(this, config.width / 2, config.height / 2, 'silverBlock', null, 1, this.ball, this.pad, 1);
     }
 
     LoadPools()
@@ -44,6 +49,7 @@ class TestLevel extends Phaser.Scene
     {
         var str = this.cache.text.get(level);
         var width = 44;
+        this.blockScale = size / width;
         var x = 0;
         var y = 0;
         for (let i = 0; i < str.length; i++) { 
@@ -52,7 +58,7 @@ class TestLevel extends Phaser.Scene
             {
                 var posX = rootX + x * size;
                 var posY = rootY + y * size * 0.5;
-                this.blocks[i] = new BlockPrefab(this, posX, posY, 'silverBlock', null, 1, this.ball, this.pad, 1).setScale(size / width).setOrigin(-11.5, -5);
+                this.blocks[i] = new BlockPrefab(this, posX, posY, 'silverBlock', null, 1, this.ball, this.pad, 1).setScale(this.blockScale).setOrigin(-11.5, -5);
                 x++;
             }
             else if (char == 32)
@@ -116,6 +122,13 @@ class TestLevel extends Phaser.Scene
             frameRate: 15,
             repeat: -1
         });
+        this.anims.create(
+            {
+                key: 'powerupAnimB',
+                frames:this.anims.generateFrameNumbers('powerupB', {start:0, end: 7}),
+                frameRate: 15,
+                repeat: -1
+            });
     }
 
     LoadMap()
@@ -204,5 +217,10 @@ class TestLevel extends Phaser.Scene
     LoadGameOver()
     {
         this.scene.start("EndScene", {score: this.scoreUI.text, round: this.roundUI.text})
+    }
+
+    SpawnPowerup(_block)
+    {
+        this.powerups[this.powerups.length] = new PowerupPrefab(this, _block.x, _block.y, "powerupB", "powerupAnimB", this.ball, this.pad, "xdd").setScale(this.blockScale);
     }
 }

@@ -57,6 +57,10 @@ class Pad extends Phaser.GameObjects.Sprite
         _ball.ChangeVelocity(velocityMultiplierX, velocityMultiplierY);*/
     }
 
+    ApplyUpgrade(_upgrade) {
+        _upgrade.deActivate();
+    }
+
     CheckInput()
     {
         if(this.cursors.left.isDown)

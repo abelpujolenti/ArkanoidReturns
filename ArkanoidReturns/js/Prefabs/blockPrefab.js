@@ -27,10 +27,14 @@ class BlockPrefab extends Phaser.GameObjects.Sprite
         this.damaged = true;
         this.health--;
         if (this.health <= 0) {
-            this.deActivate();
-            this.pad.UpdateScore(this.score);
-            this.pad.IncreaseStreak();
+            this.break();
         }
+    }
+
+    break() {
+        this.deActivate();
+        this.pad.UpdateScore(this.score);
+        this.pad.IncreaseStreak();
     }
 
     preUpdate(time, delta) {
