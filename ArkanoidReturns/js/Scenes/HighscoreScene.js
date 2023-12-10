@@ -17,7 +17,7 @@ class HighscoreScene extends Phaser.Scene
 
     preload()
     {
-        highscoreReaderInstance.getHighscoresFromLocalStorage();
+        highscoreSerializerInstance.getHighscoresFromLocalStorage();
         this.load.setPath('assets/img/backgrounds');
         this.load.image('bg_tile','end_background_tile.png');
     }
@@ -47,25 +47,20 @@ class HighscoreScene extends Phaser.Scene
     addScoreTexts()
     {
         this.scoreArray = []
-        highscoreReaderInstance.sortScores(this.scoreArray, this.highscoreArray);
+        highscoreSerializerInstance.sortScores(this.scoreArray, this.highscoreArray);
         
         this.scoreNumberTexts = [];
-        for(var i = 0; i < highscoreReaderInstance.scoreArray.length; i++)
+        for(var i = 0; i < highscoreSerializerInstance.scoreArray.length; i++)
         {
             this.scoreNumberTexts[i] = this.add.bitmapText(
                 config.width / 2,
                 105 + i * 30,
                 "arkanoidFont",
-                highscoreReaderInstance.scoreArray[i],
+                highscoreSerializerInstance.scoreArray[i],
                 24
             ).setOrigin(0.5)
             .setTint(this.lightYellowHex, this.lightYellowHex, this.orangeHex, this.orangeHex);
         }
-    }
-
-    saveToLocalStorage(array)
-    {   
-        localStorage.setItem('highscores', JSON.stringify(array));
     }
 
     fadeOutText()
@@ -86,13 +81,6 @@ class HighscoreScene extends Phaser.Scene
                 ease: 'Power2'
               }, this);
           }
-    }
-
-    pushToScoreArrayAndSave(_newValue)
-    {
-        highscoreReaderInstance.scoreArray.push(_newValue);
-        console.log(highscoreReaderInstance.scoreArray);
-        this.saveToLocalStorage(highscoreReaderInstance.scoreArray);
     }
 
     changeScene(_nextScene)

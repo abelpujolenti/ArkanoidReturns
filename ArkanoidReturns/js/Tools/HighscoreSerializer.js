@@ -1,4 +1,4 @@
-class HighscoreReader
+class HighscoreSerializer
 {
   constructor()
   {
@@ -55,10 +55,22 @@ class HighscoreReader
         this.sortScores();
         return this.scoreArray[0];
     }
+
+    saveToLocalStorage(array)
+    {   
+        localStorage.setItem('highscores', JSON.stringify(array));
+    }
+
+    pushToScoreArrayAndSave(_newValue)
+    {
+        this.scoreArray.push(_newValue);
+        console.log(this.scoreArray);
+        this.saveToLocalStorage(this.scoreArray);
+    }
 }
 
 function compareNumbers(a, b) {
     return b - a;
   }
 
-const highscoreReaderInstance = new HighscoreReader();
+const highscoreSerializerInstance = new HighscoreSerializer();
