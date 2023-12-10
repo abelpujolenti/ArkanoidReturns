@@ -12,6 +12,10 @@ class TestLevel extends Phaser.Scene
 
         this.load.setPath("assets/map");
         this.load.tilemapTiledJSON("map", "map.json");
+
+        this.getHighscoresFromLocalStorage();
+        this.scoreArray = []
+        this.sortScores(this.scoreArray, this.highscoreArray);
     }
 
     create()
@@ -23,6 +27,7 @@ class TestLevel extends Phaser.Scene
         this.LoadMap();
         
         this.LoadUI();
+        this.UpdateHighscoreUI(this.highscore);
 
         this.pad = new Pad(this, gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y, 'pad', 'padAnim', 0, 1, this.walls).setScale(0.5);
 
@@ -249,4 +254,37 @@ class TestLevel extends Phaser.Scene
     {
         this.powerups[this.powerups.length] = new PowerupPrefab(this, _block.x, _block.y, "powerupB", "powerupAnimB", this.ball, this.pad, "xdd").setScale(this.blockScale);
     }
+
+    //First version
+    getHighscoresFromLocalStorage()
+    {
+        if(!localStorage.hasOwnProperty('highscores'))
+        {
+            var emptyArray = [];
+            JSON.stringify(emptyArray);
+            localStorage.setItem('highscores', emptyArray);
+            this.highscoreArray = [];
+        }
+        else
+        {
+            this.highscoreArray = JSON.parse(localStorage.getItem('highscores'))
+        }
+    }
+
+    sortScores(scoreArray,array)
+    {
+        for(var i = 0; i < array.length; i++)
+        {
+            scoreArray.push(array[i])
+        }
+
+        scoreArray.sort(compareNumbers);
+        scoreArray.length = 10;
+        this.highscore = scoreArray[0];
+    }
 }
+
+
+function compareNumbers(a, b) {
+    return b - a;
+  }

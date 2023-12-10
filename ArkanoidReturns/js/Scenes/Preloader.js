@@ -33,5 +33,4 @@ class Preloader extends Phaser.Scene
             this.scene.start("MenuScene");
         }, this);
     }
-
 }
