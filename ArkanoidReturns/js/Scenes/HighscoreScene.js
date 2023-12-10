@@ -95,7 +95,7 @@ class HighscoreScene extends Phaser.Scene
             console.log(scoreArray[i]);
         }
 
-        scoreArray.length = 10;
+        scoreArray.length = 5;
     }
 
     saveToLocalStorage(array)
