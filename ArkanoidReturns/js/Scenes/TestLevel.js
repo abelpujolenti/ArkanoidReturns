@@ -13,9 +13,9 @@ class TestLevel extends Phaser.Scene
         this.load.setPath("assets/map");
         this.load.tilemapTiledJSON("map", "map.json");
 
-        this.getHighscoresFromLocalStorage();
-        this.scoreArray = []
-        this.sortScores(this.scoreArray, this.highscoreArray);
+        highscoreReaderInstance.getHighscoresFromLocalStorage();
+        highscoreReaderInstance.sortScores();
+        this.highscore = highscoreReaderInstance.getHighestScore();
     }
 
     create()
