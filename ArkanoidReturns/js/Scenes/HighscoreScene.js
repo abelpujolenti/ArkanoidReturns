@@ -17,7 +17,7 @@ class HighscoreScene extends Phaser.Scene
 
     preload()
     {
-        this.getHighscoresFromLocalStorage();
+        highscoreReaderInstance.getHighscoresFromLocalStorage();
         this.load.setPath('assets/img/backgrounds');
         this.load.image('bg_tile','end_background_tile.png');
     }
@@ -44,58 +44,23 @@ class HighscoreScene extends Phaser.Scene
         //Update stuff
     }
 
-    getHighscoresFromLocalStorage()
-    {
-        if(!localStorage.hasOwnProperty('highscores'))
-        {
-            var emptyArray = [];
-            JSON.stringify(emptyArray);
-            localStorage.setItem('highscores', emptyArray);
-            this.highscoreArray = [];
-        }
-        else
-        {
-            this.highscoreArray = JSON.parse(localStorage.getItem('highscores'))
-            console.log(this.highscoreArray);
-        }
-    }
-
     addScoreTexts()
     {
         this.scoreArray = []
-        this.sortScores(this.scoreArray, this.highscoreArray);
+        highscoreReaderInstance.sortScores(this.scoreArray, this.highscoreArray);
         
         this.scoreNumberTexts = [];
-        for(var i = 0; i < this.scoreArray.length; i++)
+        for(var i = 0; i < highscoreReaderInstance.scoreArray.length; i++)
         {
             this.scoreNumberTexts[i] = this.add.bitmapText(
                 config.width / 2,
                 105 + i * 30,
                 "arkanoidFont",
-                this.scoreArray[i],
+                highscoreReaderInstance.scoreArray[i],
                 24
             ).setOrigin(0.5)
             .setTint(this.lightYellowHex, this.lightYellowHex, this.orangeHex, this.orangeHex);
         }
-    }
-
-    sortScores(scoreArray,array)
-    {
-        console.log(array);
-        for(var i = 0; i < array.length; i++)
-        {
-            scoreArray.push(array[i])
-            console.log(scoreArray[i]);
-        }
-
-        scoreArray.sort(compareNumbers);
-        console.log('sorted');
-        for(var i = 0; i < scoreArray.length; i++)
-        {
-            console.log(scoreArray[i]);
-        }
-
-        scoreArray.length = 5;
     }
 
     saveToLocalStorage(array)
@@ -125,9 +90,9 @@ class HighscoreScene extends Phaser.Scene
 
     pushToScoreArrayAndSave(_newValue)
     {
-        this.scoreArray.push(_newValue);
-        console.log(this.scoreArray);
-        this.saveToLocalStorage(this.scoreArray);
+        highscoreReaderInstance.scoreArray.push(_newValue);
+        console.log(highscoreReaderInstance.scoreArray);
+        this.saveToLocalStorage(highscoreReaderInstance.scoreArray);
     }
 
     changeScene(_nextScene)
@@ -136,7 +101,3 @@ class HighscoreScene extends Phaser.Scene
     }
     
 }
-
-function compareNumbers(a, b) {
-    return b - a;
-  }

@@ -43,8 +43,16 @@ class HighscoreReader
         this.scoreArray.length = 5;
     }
 
+    getSortedHighscores()
+    {
+        this.getHighscoresFromLocalStorage();
+        this.sortScores();
+    }
+
     getHighestScore()
     {
+        this.getHighscoresFromLocalStorage();
+        this.sortScores();
         return this.scoreArray[0];
     }
 }
