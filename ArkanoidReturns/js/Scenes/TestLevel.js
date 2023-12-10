@@ -10,21 +10,10 @@ class TestLevel extends Phaser.Scene
         this.load.setPath("assets/data/level");
         this.load.text("test", "test.txt");
 
-        this.load.setPath("assets/img/projectile");
-        this.load.image("normalBall", "cyan.png");
-        
-        this.load.setPath("assets/img/block");
-        this.load.spritesheet("silverBlock", "silver_animated.png", {frameWidth: 44, frameHeight: 22});
-        
-        this.load.setPath("assets/img/pad");
-        this.load.spritesheet("pad", "default.png", {frameWidth: 88, frameHeight:22});
-
-        this.load.setPath("assets/img/border");
-        this.load.image("verticalPipeTileset", "vertical.png");
-        this.load.image("horizontalPipeTileset", "horizontal.png");
-
         this.load.setPath("assets/map");
-        this.load.tilemapTiledJSON("map", "map.json")
+        this.load.tilemapTiledJSON("map", "map.json");
+
+        this.highscore = highscoreSerializerInstance.getHighestScore();
     }
 
     create()
@@ -36,17 +25,20 @@ class TestLevel extends Phaser.Scene
         this.LoadMap();
         
         this.LoadUI();
+        this.UpdateHighscoreUI(this.highscore);
 
         this.pad = new Pad(this, gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y, 'pad', 'padAnim', 0, 1, this.walls).setScale(0.5);
 
         this.ballsCounter = 0;
         
         this.ball = new NormalBall(this, this.pad.x, this.pad.getTopCenter().y, this.pad, this.walls, this.ballsCounter).setScale(.75);
-        this.ballPool.add(this.ball);
-        
+        this.ballPool.add(this.ball);        
 
+        
+        this.powerups = [];
         this.blocks = [];
-        this.createLevel(20, 44, 40, "test");
+
+        this.createLevel(40, config.width / 2, 80, "test");
     }
 
     LoadPools()
@@ -56,17 +48,28 @@ class TestLevel extends Phaser.Scene
 
     createLevel(size, rootX, rootY, level)
     {
+        this.blockAmountX = 11;
         var str = this.cache.text.get(level);
         var width = 44;
+        this.blockScale = size / width;
         var x = 0;
         var y = 0;
         for (let i = 0; i < str.length; i++) { 
             var char = str.charCodeAt(i);
             if (char >= 65)
             {
-                var posX = rootX + x * size;
+                var posX = rootX + (x - 5) * size;
                 var posY = rootY + y * size * 0.5;
-                this.blocks[i] = new BlockPrefab(this, posX, posY, 'silverBlock', null, 1, this.ball, this.pad, 1).setScale(size / width).setOrigin(-11.5, -5);
+
+                if (char == 67)
+                {
+                    this.blocks[i] = new CrystalBlockPrefab(this, posX, posY, 'crystalBlock', null, 1, this.ball, this.pad, 1).setScale(this.blockScale);
+                }
+                else
+                {
+                    this.blocks[i] = new BlockPrefab(this, posX, posY, 'silverBlock', null, 1, this.ball, this.pad, 1).setScale(this.blockScale);
+                }
+
                 x++;
             }
             else if (char == 32)
@@ -86,6 +89,11 @@ class TestLevel extends Phaser.Scene
 
     }
 
+    UpdateRoundUI(round)
+    {
+        this.roundUI.text = round;
+    }
+
     UpdateLivesUI()
     {
         this.livesDisplay.setText("x "+this.pad.lives);
@@ -93,7 +101,12 @@ class TestLevel extends Phaser.Scene
 
     UpdateScoreUI(score)
     {
-        this.scoreUI.setText(score);
+        this.scoreUI.text = score;
+    }
+
+    UpdateHighscoreUI(score)
+    {
+        this.highscoreUI.text = score;
     }
 
     UpdateBallsCounter(number)
@@ -120,6 +133,13 @@ class TestLevel extends Phaser.Scene
             frameRate: 15,
             repeat: -1
         });
+        this.anims.create(
+            {
+                key: 'powerupAnimB',
+                frames:this.anims.generateFrameNumbers('powerupB', {start:0, end: 7}),
+                frameRate: 15,
+                repeat: -1
+            });
     }
 
     LoadMap()
@@ -142,47 +162,94 @@ class TestLevel extends Phaser.Scene
     LoadUI()
     {
         this.cameras.main.setBackgroundColor("003");
-        this.scoreText = this.add.text(
-            30,
-            config.height / 2 - 80,
-            "Score",
-            {
-                fontFamily: 'Arial',
-                fill: '#FFFFFF',
-                fontSize: 12,
-                align: "right"
-            }
-        ).setFontSize(32)
-        this.scoreText.setTint(0x40ff80, 0x40ff80, 0xffb000, 0xffb000);
 
-        this.scoreUI = this.add.text(
-            120,
-            config.height / 2 - 50,
-            0,
-            {
-                fontFamily: 'Arial',
-                fill: '#FFFFFF',
-                fontSize: 12
-            }
-        ).setFontSize(32);
+        this.roundText = this.add.bitmapText(
+            40, 
+            20,
+            "arkanoidFontBruh",
+            "ROUND",
+            24
+        )
         
+        this.roundUI = this.add.bitmapText(
+            105,
+            60, 
+            "arkanoidFontBruh",
+            1,
+            24
+        ).setOrigin(1);
+
+        this.scoreText = this.add.bitmapText(
+            30, 
+            config.height / 2 - 90,
+            "arkanoidFont",
+            "SCORE",
+            20
+        )
+        .setTint(0x40ff80, 0x40ff80, 0xffb000, 0xffb000);
+
+        this.scoreUI = this.add.bitmapText(
+            143,
+            config.height / 2 - 30,
+            "arkanoidFont",
+            0,
+            24
+        ).setOrigin(1)
+        .setTint(0xe755b0, 0xe755b0, 0xe7e5f2,  0xe7e5f2);
 
         this.livesIcon = this.add.sprite(60, config.height / 2 + 18, 'pad', 0).setScale(.7);
-        this.livesDisplay = this.add.text(
-            100,
-            config.height / 2,
+
+        this.livesDisplay = this.add.bitmapText(
+            100, 
+            config.height / 2 - 10,
+            "arkanoidFont",
             "x " + gamePrefs.PLAYER_LIVES,
+            24
+        ).setTint(0x40ff80, 0x40ff80, 0xffb000, 0xffb000);
+
+        this.highscoreText = this.add.bitmapText(
+            config.width - config.width / 5 + 5, 
+            config.height / 7.7,
+            "arkanoidFont",
+            "HIGHSCORE",
+            20
+        ).setTint(0x40ff80, 0x40ff80, 0xffb000, 0xffb000);
+
+        this.highscoreUI = this.add.bitmapText(
+            config.width - 20, 
+            config.height / 4.5,
+            "arkanoidFont",
+            0,
+            24
+        ).setOrigin(1)
+        .setTint(0xa71f52, 0xa71f52, 0xe4c11b, 0xe4c11b);
+
+        this.pointlessText = this.add.bitmapText(
+            655, 
+            config.height / 2,
+            "arkanoidFontBruh",
+            "Insert coin\nto play",
+            18
+        )
+        this.tweens.add(
             {
-                fontFamily: 'Arial',
-                fill: '#FFFFFF',
-                fontSize: 12
+                targets: this.pointlessText,
+                alpha: { from: 1, to: 0},
+                duration: 1000,
+                yoyo: true,
+                loop: -1
+
             }
-        ).setFontSize(32);
-        this.livesDisplay.setTint(0x40ff80, 0x40ff80, 0xffb000, 0xffb000);
+        )
     }
 
     LoadGameOver()
     {
-        this.scene.start("EndScene", {score: this.scoreUI.text})
+        this.scene.start("EndScene", {score: this.scoreUI.text, round: this.roundUI.text})
+    }
+
+    SpawnPowerup(_block)
+    {
+        this.powerups[this.powerups.length] = new PowerupPrefab(this, _block.x, _block.y, "powerupB", "powerupAnimB", this.ball, this.pad, "xdd").setScale(this.blockScale);
     }
 }

@@ -1,73 +1,63 @@
-class EndScene extends Phaser.Scene
+class EndScene extends HighscoreScene
 {
     constructor()
     {
-        super({key: 'EndScene'});
-        this.lightGrey = '#B9B9B7'
-        this.darkYellow = '#D7AF29'
-        this.lightYellow = '#EADA81'
+        super('EndScene');
     }
 
     init(data)
     {
         this.score = data.score;
+        this.round = data.round;
     }
 
     preload()
     {
-        if(!localStorage.hasOwnProperty('highscores'))
-        {
-            var emptyArray = [];
-            localStorage.setItem('highscores', emptyArray);
-        }
-        else
-        {
-            this.highscoreArray = JSON.parse(localStorage.getItem('highscores'))
-            console.log(this.highscoreArray);
-        }
-
-        this.load.setPath('assets/img/backgrounds');
-        this.load.image('bg_tile','end_background_tile.png');
+        super.preload();
     }
 
     create()
     {
-        this.bg = this.add.tileSprite
-        (0,0,config.width,config.height,'bg_tile').setOrigin(0).setScale(2);
+        super.create();
 
-        this.rankingTitleText = this.add.text(config.width / 2, 50, 'BEST 5 RANKING', {
-            fontFamily: 'RoundBold',
-            fill: this.lightGrey
-        })
-        .setOrigin(0.5)
-        .setFontSize(48);
+        this.playerScoreTitle = this.add.bitmapText(
+            config.width / 2, 
+            config.height - 170,
+            "arkanoidFont",
+            "YOUR SCORE: " + this.score,
+            24
+        ).setOrigin(0.5)
+        .setTint(this.lightGreyHex, this.lightGreyHex, this.darkGreyHex, this.darkGreyHex);
 
-        this.playerScoreTitle = this.add.text(config.width / 2, config.height - 100, 'YOUR SCORE: ' + this.score, {
-            fontFamily: 'RoundBold',
-            fill: this.lightGrey
-        })
-        .setOrigin(0.5)
-        .setFontSize(32);
+        this.roundScoreTitle = this.add.bitmapText(
+            config.width / 2, 
+            config.height - 120,
+            "arkanoidFont",
+            "ROUND: " + this.round,
+            24
+        ).setOrigin(0.5)
+        .setTint(this.lightGreyHex, this.lightGreyHex, this.darkGreyHex, this.darkGreyHex);
 
+        /*this.playAgainButton = this.add.bitmapText(
+            config.width / 2,
+            config.height - 68,
+            "arkanoidFont",
+            "PLAY AGAIN",
+            24
+        ).setOrigin(0.5)
+        .setTint(this.lightGreyHex, this.lightGreyHex, this.darkGreyHex, this.darkGreyHex)
 
-        this.scoreArray = []
-        this.sortScores(this.scoreArray, this.highscoreArray);
-        
-        this.scoreNumberTexts = [];
-        for(var i = 0; i < this.scoreArray.length; i++)
-        {
-            this.scoreNumberTexts[i] = this.add.text
-            (config.width/2, 125 + i * 30, this.scoreArray[i], {
-                fontFamily: 'RoundBold',
-                fill: this.lightYellow
-            }).setFontSize(32)
-            .setOrigin(0.5);
-        }
+        var buttonBounds = this.playAgainButton.getBounds();
+
+        var debug = this.add.graphics();
+
+        debug.lineStyle(1, 0x00ff00);
+        debug.strokeRect(buttonBounds.x, buttonBounds.y, buttonBounds.width, buttonBounds.height);*/
 
         //Button
         this.playAgainButton = this.add.text(config.width/2, config.height - 50, 'PLAY AGAIN', {
             fontFamily: 'RoundBold',
-            fill: this.lightGrey
+            fill: this.lightGrey,
         })
         .setOrigin(0.5)
         .setFontSize(32)
@@ -75,35 +65,18 @@ class EndScene extends Phaser.Scene
         .on('pointerdown', () => this.enterButtonClickState())
         .on('pointerover', () => this.enterButtonHoverState())
         .on('pointerout', () => this.enterButtonRestState());
+
+        /*var buttonBounds = this.playAgainButton.getBounds();
+
+        var debug = this.add.graphics();
+
+        debug.lineStyle(1, 0x00ff00);
+        debug.strokeRect(buttonBounds.x, buttonBounds.y, buttonBounds.width, buttonBounds.height);*/
     }
     
     update()
     {
         //Update stuff
-    }
-
-    sortScores(scoreArray,array)
-    {
-        console.log(array);
-        for(var i = 0; i < array.length; i++)
-        {
-            scoreArray.push(array[i])
-            console.log(scoreArray[i]);
-        }
-
-        scoreArray.sort(compareNumbers);
-        console.log('sorted');
-        for(var i = 0; i < scoreArray.length; i++)
-        {
-            console.log(scoreArray[i]);
-        }
-
-        scoreArray.length = 10;
-    }
-
-    saveToLocalStorage(array)
-    {   
-        localStorage.setItem('highscores', JSON.stringify(array));
     }
 
     enterButtonClickState()
@@ -134,8 +107,10 @@ class EndScene extends Phaser.Scene
 
     fadeOutText()
     {
+        super.fadeOutText();
+
         this.tweens.add({
-            targets: [this.bg, this.rankingTitleText, this.playerScoreTitle, this.playAgainButton, this.scoreNumberTexts],
+            targets: [this.playAgainButton],
             alpha: 0,
             duration: 300,
             ease: 'Power2'
@@ -144,15 +119,7 @@ class EndScene extends Phaser.Scene
 
     changeScene()
     {
-        this.scoreArray.push(this.score);
-        console.log(this.scoreArray);
-        this.saveToLocalStorage(this.scoreArray);
-        this.scene.start('TestLevel');
+        highscoreSerializerInstance.pushToScoreArrayAndSave(this.score);
+        super.changeScene('TestLevel');
     }
-
-    
 }
-
-function compareNumbers(a, b) {
-    return b - a;
-  }
