@@ -134,9 +134,16 @@ class TestLevel extends Phaser.Scene
             repeat: -1
         });
         this.anims.create(
+        {
+            key: 'powerupAnimB',
+            frames:this.anims.generateFrameNumbers('powerupB', {start:0, end: 7}),
+            frameRate: 15,
+            repeat: -1
+        });
+        this.anims.create(
             {
-                key: 'powerupAnimB',
-                frames:this.anims.generateFrameNumbers('powerupB', {start:0, end: 7}),
+                key: 'powerupAnimP',
+                frames:this.anims.generateFrameNumbers('powerupP', {start:0, end: 7}),
                 frameRate: 15,
                 repeat: -1
             });
@@ -251,5 +258,10 @@ class TestLevel extends Phaser.Scene
     SpawnPowerup(_block)
     {
         this.powerups[this.powerups.length] = new PowerupPrefab(this, _block.x, _block.y, "powerupB", "powerupAnimB", this.ball, this.pad, "xdd").setScale(this.blockScale);
+    }
+
+    SpawnPowerup(_block, type)
+    {
+        this.powerups[this.powerups.length] = new PowerupPrefab(this, _block.x, _block.y, "powerup"+ type, "powerupAnim" + type, this.ball, this.pad, "xdd").setScale(this.blockScale);
     }
 }
