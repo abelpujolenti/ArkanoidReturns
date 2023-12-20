@@ -90,6 +90,8 @@ class Pad extends Phaser.GameObjects.Sprite
     DecrementLives()
     {
         this.lives--;
+        //this.scene.UpdateLivesUI(this.lives);
+        this.scene.UpdateLivesUI();
     }
 
     IncreaseStreak()
@@ -113,6 +115,8 @@ class Pad extends Phaser.GameObjects.Sprite
     ApplyPlayerExtend()
     {
         this.lives++;
+        //this.scene.UpdateLivesUI(this.lives);
+        this.scene.UpdateLivesUI();
         console.log("Player extend");
     }
 }
