@@ -9,6 +9,7 @@ class EndScene extends HighscoreScene
     {
         this.score = data.score;
         this.round = data.round;
+        highscoreSerializerInstance.pushToScoreArrayAndSave(this.score)
     }
 
     preload()
@@ -110,7 +111,7 @@ class EndScene extends HighscoreScene
         super.fadeOutText();
 
         this.tweens.add({
-            targets: [this.playAgainButton],
+            targets: [this.playAgainButton, this.roundScoreTitle],
             alpha: 0,
             duration: 300,
             ease: 'Power2'

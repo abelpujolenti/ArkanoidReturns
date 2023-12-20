@@ -90,7 +90,6 @@ class Pad extends Phaser.GameObjects.Sprite
     DecrementLives()
     {
         this.lives--;
-        //this.scene.UpdateLivesUI(this.lives);
         this.scene.UpdateLivesUI();
     }
 
@@ -109,13 +108,12 @@ class Pad extends Phaser.GameObjects.Sprite
 
     InitPowerUpEffects()
     {
-        this.ApplyPowerUpEffect = { "P": this.ApplyPlayerExtend()};
+        this.ApplyPowerUpEffect = { "P": this.ApplyPlayerExtend};
     }
 
     ApplyPlayerExtend()
     {
         this.lives++;
-        //this.scene.UpdateLivesUI(this.lives);
         this.scene.UpdateLivesUI();
         console.log("Player extend");
     }

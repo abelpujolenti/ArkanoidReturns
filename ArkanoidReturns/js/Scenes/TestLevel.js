@@ -96,12 +96,7 @@ class TestLevel extends Phaser.Scene
 
     UpdateLivesUI()
     {
-        this.livesDisplay.setText("x "+this.pad.lives);
-    }
-
-    UpdateLivesUI(_lives)
-    {
-        this.livesDisplay.setText("x "+ _lives);
+        this.livesDisplay.setText("x " + this.pad.lives);
     }
 
     UpdateScoreUI(score)
