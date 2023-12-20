@@ -260,8 +260,8 @@ class TestLevel extends Phaser.Scene
         this.powerups[this.powerups.length] = new PowerupPrefab(this, _block.x, _block.y, "powerupB", "powerupAnimB", this.ball, this.pad, "xdd").setScale(this.blockScale);
     }
 
-    SpawnPowerup(_block, type)
+    SpawnPowerup(_block, _type)
     {
-        this.powerups[this.powerups.length] = new PowerupPrefab(this, _block.x, _block.y, "powerup"+ type, "powerupAnim" + type, this.ball, this.pad, "xdd").setScale(this.blockScale);
+        this.powerups[this.powerups.length] = new PowerupPrefab(this, _block.x, _block.y, "powerup"+ _type, "powerupAnim" + _type, this.ball, this.pad, _type).setScale(this.blockScale);
     }
 }
