@@ -60,7 +60,8 @@ class Pad extends Phaser.GameObjects.Sprite
 
     ApplyUpgrade(_upgrade) {
         _upgrade.deActivate();
-        this.ApplyPowerUpEffect[_upgrade.type];
+        console.log(_upgrade.effect);
+        this.ApplyPowerUpEffect[_upgrade.effect](this);
     }
 
     CheckInput()
@@ -111,10 +112,11 @@ class Pad extends Phaser.GameObjects.Sprite
         this.ApplyPowerUpEffect = { "P": this.ApplyPlayerExtend};
     }
 
-    ApplyPlayerExtend()
+    ApplyPlayerExtend(_player)
     {
-        this.lives++;
-        this.scene.UpdateLivesUI();
+        //This no és la pad sinó la "posició" del diccionari
+        _player.lives++;
+        _player.scene.UpdateLivesUI();
         console.log("Player extend");
     }
 }
