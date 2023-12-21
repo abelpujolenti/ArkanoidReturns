@@ -49,6 +49,7 @@ class Pad extends Phaser.GameObjects.Sprite
 
     ApplyBounce(_ball)
     {
+        //_ball.body.setVelocity(10)
         /*var rel = (this.positionX + this.width / 2) - (_ball.x + gamePrefs.SIZE / 2);
 		var norm = rel / (this.width / 2);
 		var bounce = norm * (5 * gamePrefs.PI / 12);
@@ -60,7 +61,6 @@ class Pad extends Phaser.GameObjects.Sprite
 
     ApplyUpgrade(_upgrade) {
         _upgrade.deActivate();
-        console.log(_upgrade.effect);
         this.ApplyPowerUpEffect[_upgrade.effect](this);
     }
 
@@ -109,8 +109,18 @@ class Pad extends Phaser.GameObjects.Sprite
 
     InitPowerUpEffects()
     {
-        this.ApplyPowerUpEffect = { "P": this.ApplyPlayerExtend};
-        this.ApplyPowerUpEffect = { "D": this.ApplyDisruption};
+        this.ApplyPowerUpEffect = { 
+            "E": this.SpeedDown, //placeholder
+            "B": this.SpeedDown, //placeholder
+            "L": this.SpeedDown, //placeholder
+            "G": this.SpeedDown, //placeholder
+            "D": this.SpeedDown, //placeholder
+            "M": this.SpeedDown, //placeholder
+            "T": this.SpeedDown, //placeholder
+            "P": this.ApplyPlayerExtend,
+            "S": this.SpeedDown, //placeholder
+            "C": this.SpeedDown, //placeholder
+        };
     }
 
     ApplyPlayerExtend(_player)
@@ -120,20 +130,7 @@ class Pad extends Phaser.GameObjects.Sprite
         _player.scene.UpdateLivesUI();
     }
 
-    ApplyDisruption(_player)
-    {
-        for(var i = 0; i < 3; i++)
-        {
-            console.log(_player.scene);
-            var ball = new NormalBall(_player.scene, _player.scene.pad.x, _player.scene.pad.getTopCenter().y, _player.scene.pad, _player.scene.walls, _player.scene.ballsCounter).setScale(.75);
-            _player.scene.ballPool.add(ball);
-            for(let i = 0; i < _player.scene.blocks.length; i++)
-            {
-                _player.scene.blocks[i].addCollider(ball);
-            }
-            ball.StartMoving();
-        }
-
-        console.log("Disruption");
+    SpeedDown(player){
+        player.scene.SlowDownBalls();
     }
 }
