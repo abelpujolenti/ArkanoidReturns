@@ -8,7 +8,8 @@ class BlockPrefab extends Phaser.GameObjects.Sprite
         _scene.physics.world.enable(this);
         this.body.setImmovable(true);
         this.colliders = []
-        this.addCollider(_ball);
+        this.colliders[0] = this.scene.physics.add.collider(this, _ball)
+        //this.addCollider(_ball);
         this.scene = _scene;
         this.health = _health;
         this.score = _score;
