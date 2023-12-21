@@ -16,6 +16,7 @@ class Pad extends Phaser.GameObjects.Sprite
         this.cursors = _scene.input.keyboard.createCursorKeys();
 
         this.SetColliders();
+        this.InitPowerUpEffects();
 
         if(_animTag != null)
         {
@@ -59,6 +60,7 @@ class Pad extends Phaser.GameObjects.Sprite
 
     ApplyUpgrade(_upgrade) {
         _upgrade.deActivate();
+        this.ApplyPowerUpEffect[_upgrade.type];
     }
 
     CheckInput()
@@ -88,6 +90,7 @@ class Pad extends Phaser.GameObjects.Sprite
     DecrementLives()
     {
         this.lives--;
+        this.scene.UpdateLivesUI();
     }
 
     IncreaseStreak()
@@ -101,5 +104,17 @@ class Pad extends Phaser.GameObjects.Sprite
         this.idle = true;
         this.body.setVelocity(0, 0);
         this.setPosition(_positionX, _positionY);
+    }
+
+    InitPowerUpEffects()
+    {
+        this.ApplyPowerUpEffect = { "P": this.ApplyPlayerExtend};
+    }
+
+    ApplyPlayerExtend()
+    {
+        this.lives++;
+        this.scene.UpdateLivesUI();
+        console.log("Player extend");
     }
 }

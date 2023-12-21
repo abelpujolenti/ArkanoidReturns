@@ -47,7 +47,7 @@ class HighscoreScene extends Phaser.Scene
     addScoreTexts()
     {
         this.scoreArray = []
-        highscoreSerializerInstance.sortScores(this.scoreArray, this.highscoreArray);
+        highscoreSerializerInstance.sortScores();
         
         this.scoreNumberTexts = [];
         for(var i = 0; i < highscoreSerializerInstance.scoreArray.length; i++)
