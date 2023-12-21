@@ -110,6 +110,7 @@ class Pad extends Phaser.GameObjects.Sprite
     InitPowerUpEffects()
     {
         this.ApplyPowerUpEffect = { "P": this.ApplyPlayerExtend};
+        this.ApplyPowerUpEffect = { "D": this.ApplyDisruption};
     }
 
     ApplyPlayerExtend(_player)
@@ -117,6 +118,22 @@ class Pad extends Phaser.GameObjects.Sprite
         //This no és la pad sinó la "posició" del diccionari
         _player.lives++;
         _player.scene.UpdateLivesUI();
-        console.log("Player extend");
+    }
+
+    ApplyDisruption(_player)
+    {
+        for(var i = 0; i < 3; i++)
+        {
+            console.log(_player.scene);
+            var ball = new NormalBall(_player.scene, _player.scene.pad.x, _player.scene.pad.getTopCenter().y, _player.scene.pad, _player.scene.walls, _player.scene.ballsCounter).setScale(.75);
+            _player.scene.ballPool.add(ball);
+            for(let i = 0; i < _player.scene.blocks.length; i++)
+            {
+                _player.scene.blocks[i].addCollider(ball);
+            }
+            ball.StartMoving();
+        }
+
+        console.log("Disruption");
     }
 }

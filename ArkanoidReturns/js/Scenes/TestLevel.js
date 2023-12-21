@@ -32,8 +32,7 @@ class TestLevel extends Phaser.Scene
         this.ballsCounter = 0;
         
         this.ball = new NormalBall(this, this.pad.x, this.pad.getTopCenter().y, this.pad, this.walls, this.ballsCounter).setScale(.75);
-        this.ballPool.add(this.ball);        
-
+        this.ballPool.add(this.ball);
         
         this.powerups = [];
         this.blocks = [];
@@ -112,9 +111,11 @@ class TestLevel extends Phaser.Scene
     UpdateBallsCounter(number)
     {
         this.ballsCounter += number;
-        for (let index = 0; index < this.ballPool.getLength(); index++) {
-            this.ballPool[i].ModifyBallsCounter(number);
-        }
+        console.log(this.ballPool);
+        this.ballsCounter += number;
+        this.ballPool.getChildren().forEach(ball => {
+            ball.ModifyBallsCounter(number)
+        });
     }
 
     loadAnimations()
@@ -141,12 +142,19 @@ class TestLevel extends Phaser.Scene
             repeat: -1
         });
         this.anims.create(
-            {
-                key: 'powerupAnimP',
-                frames:this.anims.generateFrameNumbers('powerupP', {start:0, end: 7}),
-                frameRate: 15,
-                repeat: -1
-            });
+        {
+            key: 'powerupAnimP',
+            frames:this.anims.generateFrameNumbers('powerupP', {start:0, end: 7}),
+            frameRate: 15,
+            repeat: -1
+        });
+        this.anims.create(
+        {
+            key: 'powerupAnimD',
+            frames:this.anims.generateFrameNumbers('powerupD', {start:0, end: 7}),
+            frameRate: 15,
+            repeat: -1
+        });
     }
 
     LoadMap()

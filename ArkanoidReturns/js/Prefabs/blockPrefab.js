@@ -7,7 +7,9 @@ class BlockPrefab extends Phaser.GameObjects.Sprite
         
         _scene.physics.world.enable(this);
         this.body.setImmovable(true);
-        this.collider = _scene.physics.add.collider(this, _ball);
+        this.colliders = []
+        this.addCollider(_ball);
+        this.scene = _scene;
         this.health = _health;
         this.score = _score;
         this.pad = _pad;
@@ -45,6 +47,10 @@ class BlockPrefab extends Phaser.GameObjects.Sprite
     deActivate() {
         this.setActive(false);
         this.destroy();
+    }
+
+    addCollider(_object) {
+        this.colliders.add(this.scene.physics.add.collider(this, _object));
     }
 
 }
