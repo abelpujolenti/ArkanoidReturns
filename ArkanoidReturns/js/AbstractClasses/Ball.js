@@ -27,6 +27,8 @@ class Ball extends Phaser.GameObjects.Sprite
         {    
             if(this._ballsCounter > 1)        
             {
+                this.active = false;
+                this.scene.UpdateBallsCounter(-1);
                 return;
             }
             this._pad.DecrementLives();
