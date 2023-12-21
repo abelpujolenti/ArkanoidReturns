@@ -32,8 +32,7 @@ class TestLevel extends Phaser.Scene
         this.ballsCounter = 0;
         
         this.ball = new NormalBall(this, this.pad.x, this.pad.getTopCenter().y, this.pad, this.walls, this.ballsCounter).setScale(.75);
-        this.ballPool.add(this.ball);        
-
+        this.ballPool.add(this.ball);     
         
         this.powerups = [];
         this.blocks = [];
@@ -110,40 +109,133 @@ class TestLevel extends Phaser.Scene
     }
 
     UpdateBallsCounter(number)
-    {
+    {        
         this.ballsCounter += number;
-        for (let index = 0; index < this.ballPool.getLength(); index++) {
-            this.ballPool[i].ModifyBallsCounter(number);
-        }
+        this.ballPool.getChildren().forEach(ball => {
+            ball.ModifyBallsCounter(number)
+        });
+    }
+
+    SlowDownBalls(){
+
+        this.ballPool.getChildren().forEach(ball => {
+            ball.ChangeVelocity(.5)
+        });
+
+        this.slowDownTimer = this.time.addEvent(
+            {
+                delay: 5000,
+                callback: this.SpeedUpBalls,
+                callbackScope: this,
+            }
+        )
+    }
+
+    SpeedUpBalls(){
+        
+        this.ballPool.getChildren().forEach(ball => {
+            ball.ChangeVelocity(2)
+        });
     }
 
     loadAnimations()
     {
         this.anims.create(
-        {
-            key: 'silverBlockAnim',
-            frames:this.anims.generateFrameNumbers('silverBlock', {start:0, end: 9}),
-            frameRate: 15,
-            repeat: -1
-        });
+            {
+                key: 'silverBlockAnim',
+                frames:this.anims.generateFrameNumbers('silverBlock', {start:0, end: 9}),
+                frameRate: 15,
+                repeat: -1
+            });
+
         this.anims.create(
-        {
-            key: 'padAnim',
-            frames:this.anims.generateFrameNumbers('pad', {start:0, end: 3}),
-            frameRate: 15,
-            repeat: -1
-        });
+            {
+                key: 'padAnim',
+                frames:this.anims.generateFrameNumbers('pad', {start:0, end: 3}),
+                frameRate: 15,
+                repeat: -1
+            });
+
         this.anims.create(
-        {
-            key: 'powerupAnimB',
-            frames:this.anims.generateFrameNumbers('powerupB', {start:0, end: 7}),
-            frameRate: 15,
-            repeat: -1
-        });
+            {
+                key: 'powerupAnimE',
+                frames:this.anims.generateFrameNumbers('powerupE', {start:0, end: 7}),
+                frameRate: 15,
+                repeat: -1
+            });
+
+        this.anims.create(
+            {
+                key: 'powerupAnimL',
+                frames:this.anims.generateFrameNumbers('powerupL', {start:0, end: 7}),
+                frameRate: 15,
+                repeat: -1
+            });
+
+        this.anims.create(
+            {
+                key: 'powerupAnimB',
+                frames:this.anims.generateFrameNumbers('powerupB', {start:0, end: 7}),
+                frameRate: 15,
+                repeat: -1
+            });
+
+        this.anims.create(
+            {
+                key: 'powerupAnimG',
+                frames:this.anims.generateFrameNumbers('powerupG', {start:0, end: 7}),
+                frameRate: 15,
+                repeat: -1
+            });
+
+        this.anims.create(
+            {
+                key: 'powerupAnimD',
+                frames:this.anims.generateFrameNumbers('powerupD', {start:0, end: 7}),
+                frameRate: 15,
+                repeat: -1
+            });
+            
+
+        this.anims.create(
+            {
+                key: 'powerupAnimM',
+                frames:this.anims.generateFrameNumbers('powerupM', {start:0, end: 7}),
+                frameRate: 15,
+                repeat: -1
+            });
+            
+
+        this.anims.create(
+            {
+                key: 'powerupAnimT',
+                frames:this.anims.generateFrameNumbers('powerupT', {start:0, end: 7}),
+                frameRate: 15,
+                repeat: -1
+            });
+
         this.anims.create(
             {
                 key: 'powerupAnimP',
                 frames:this.anims.generateFrameNumbers('powerupP', {start:0, end: 7}),
+                frameRate: 15,
+                repeat: -1
+            });
+            
+
+        this.anims.create(
+            {
+                key: 'powerupAnimS',
+                frames:this.anims.generateFrameNumbers('powerupS', {start:0, end: 7}),
+                frameRate: 15,
+                repeat: -1
+            });
+            
+
+        this.anims.create(
+            {
+                key: 'powerupAnimC',
+                frames:this.anims.generateFrameNumbers('powerupC', {start:0, end: 7}),
                 frameRate: 15,
                 repeat: -1
             });
@@ -257,11 +349,13 @@ class TestLevel extends Phaser.Scene
 
     SpawnPowerup(_block)
     {
-        this.powerups[this.powerups.length] = new PowerupPrefab(this, _block.x, _block.y, "powerupB", "powerupAnimB", this.ball, this.pad, "xdd").setScale(this.blockScale);
+        this.powerups[this.powerups.length] = 
+            new PowerupPrefab(this, _block.x, _block.y, "powerupB", "powerupAnimB", this.ball, this.pad, "xdd").setScale(this.blockScale);
     }
 
     SpawnPowerup(_block, _type)
     {
-        this.powerups[this.powerups.length] = new PowerupPrefab(this, _block.x, _block.y, "powerup"+ _type, "powerupAnim" + _type, this.ball, this.pad, _type).setScale(this.blockScale);
+        this.powerups[this.powerups.length] = 
+            new PowerupPrefab(this, _block.x, _block.y, "powerup"+ _type, "powerupAnim" + _type, this.ball, this.pad, _type).setScale(this.blockScale);
     }
 }

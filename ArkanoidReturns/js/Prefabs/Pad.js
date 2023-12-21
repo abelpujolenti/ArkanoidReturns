@@ -49,6 +49,7 @@ class Pad extends Phaser.GameObjects.Sprite
 
     ApplyBounce(_ball)
     {
+        //_ball.body.setVelocity(10)
         /*var rel = (this.positionX + this.width / 2) - (_ball.x + gamePrefs.SIZE / 2);
 		var norm = rel / (this.width / 2);
 		var bounce = norm * (5 * gamePrefs.PI / 12);
@@ -60,7 +61,6 @@ class Pad extends Phaser.GameObjects.Sprite
 
     ApplyUpgrade(_upgrade) {
         _upgrade.deActivate();
-        console.log(_upgrade.effect);
         this.ApplyPowerUpEffect[_upgrade.effect](this);
     }
 
@@ -109,7 +109,18 @@ class Pad extends Phaser.GameObjects.Sprite
 
     InitPowerUpEffects()
     {
-        this.ApplyPowerUpEffect = { "P": this.ApplyPlayerExtend};
+        this.ApplyPowerUpEffect = { 
+            "E": this.SpeedDown, //placeholder
+            "B": this.SpeedDown, //placeholder
+            "L": this.SpeedDown, //placeholder
+            "G": this.SpeedDown, //placeholder
+            "D": this.SpeedDown, //placeholder
+            "M": this.SpeedDown, //placeholder
+            "T": this.SpeedDown, //placeholder
+            "P": this.ApplyPlayerExtend,
+            "S": this.SpeedDown, //placeholder
+            "C": this.SpeedDown, //placeholder
+        };
     }
 
     ApplyPlayerExtend(_player)
@@ -117,6 +128,9 @@ class Pad extends Phaser.GameObjects.Sprite
         //This no és la pad sinó la "posició" del diccionari
         _player.lives++;
         _player.scene.UpdateLivesUI();
-        console.log("Player extend");
+    }
+
+    SpeedDown(player){
+        player.scene.SlowDownBalls();
     }
 }
