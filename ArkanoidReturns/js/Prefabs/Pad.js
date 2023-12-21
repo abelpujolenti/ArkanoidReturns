@@ -137,10 +137,15 @@ class Pad extends Phaser.GameObjects.Sprite
             console.log(_player.scene);
             var ball = new NormalBall(_player.scene, _player.scene.pad.x, _player.scene.pad.getTopCenter().y, _player.scene.pad, _player.scene.walls, _player.scene.ballsCounter).setScale(.75);
             _player.scene.ballPool.add(ball);
+            
             for(let i = 0; i < _player.scene.blocks.length; i++)
             {
-                _player.scene.blocks[i].addCollider(ball);
+                if(_player.scene.blocks[i] != undefined && _player.scene.blocks[i].scene != undefined)
+                {
+                    _player.scene.blocks[i].addCollider(_player.scene.blocks[i], ball);
+                }
             }
+            
             ball.StartMoving();
         }
 

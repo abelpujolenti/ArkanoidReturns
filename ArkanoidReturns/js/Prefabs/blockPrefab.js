@@ -50,8 +50,8 @@ class BlockPrefab extends Phaser.GameObjects.Sprite
         this.destroy();
     }
 
-    addCollider(_object) {
-        this.colliders.add(this.scene.physics.add.collider(this, _object));
+    addCollider(_block, _object) {
+        this.colliders.push(this.scene.physics.add.collider(_block, _object));
     }
 
 }
