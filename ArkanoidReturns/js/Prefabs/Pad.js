@@ -15,6 +15,9 @@ class Pad extends Phaser.GameObjects.Sprite
         this.lives = gamePrefs.PLAYER_LIVES;
         this.cursors = _scene.input.keyboard.createCursorKeys();
 
+        this.catching = false;
+        this.catchedBalls = [];
+
         this.SetColliders();
         this.InitPowerUpEffects();
 
@@ -49,6 +52,13 @@ class Pad extends Phaser.GameObjects.Sprite
 
     ApplyBounce(_ball)
     {
+        if(!this.catching)
+        {
+            return
+        }
+
+        this.catchedBalls[this.catchedBalls.length] = _ball
+        _ball.idle = true;
         //_ball.body.setVelocity(10)
         /*var rel = (this.positionX + this.width / 2) - (_ball.x + gamePrefs.SIZE / 2);
 		var norm = rel / (this.width / 2);
@@ -84,7 +94,8 @@ class Pad extends Phaser.GameObjects.Sprite
             if(this.scene.ball.idle)
             {
                 this.scene.ball.StartMoving();
-            }
+            }            
+            this.catchedBalls.length = 0
         }
     }
 
@@ -118,8 +129,8 @@ class Pad extends Phaser.GameObjects.Sprite
             "M": this.SpeedDown, //placeholder
             "T": this.SpeedDown, //placeholder
             "P": this.ApplyPlayerExtend,
-            "S": this.SpeedDown, //placeholder
-            "C": this.SpeedDown, //placeholder
+            "S": this.SpeedDown,
+            "C": this.Catch,
         };
     }
 
@@ -132,5 +143,28 @@ class Pad extends Phaser.GameObjects.Sprite
 
     SpeedDown(player){
         player.scene.SlowDownBalls();
+    }
+
+    Catch(player){
+
+        player.catching = true;
+
+        player.scene.time.removeEvent(player.scene.catchingTimer)
+
+        player.scene.catchingTimer = player.scene.time.addEvent(
+            {
+               delay: 10000,
+               callback: player.EnoughCatch,
+               callbackScope: player
+            }
+        )
+    }
+
+    EnoughCatch(){
+        this.catching = false
+        this.catchedBalls.forEach(ball => {
+            ball.StartMoving()
+        });
+        this.catchedBalls.length = 0
     }
 }
