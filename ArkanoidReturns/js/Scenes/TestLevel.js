@@ -85,7 +85,7 @@ class TestLevel extends Phaser.Scene
 
     update()
     {
-
+        
     }
 
     UpdateRoundUI(round)
@@ -109,7 +109,7 @@ class TestLevel extends Phaser.Scene
     }
 
     UpdateBallsCounter(number)
-    {        
+    {
         this.ballsCounter += number;
         this.ballPool.getChildren().forEach(ball => {
             ball.ModifyBallsCounter(number)

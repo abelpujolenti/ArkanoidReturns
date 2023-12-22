@@ -11,6 +11,7 @@ class Ball extends Phaser.GameObjects.Sprite
         this._pad = pad;
 
         this.scene.UpdateBallsCounter(1);
+        this._ballsCounter += 1;
 
         this.SetColliders();
     }
@@ -21,18 +22,22 @@ class Ball extends Phaser.GameObjects.Sprite
 
         if(this.idle)
         {
+            console.log("Reset position");
             this.ResetPosition(this._pad.x, this._pad.getTopCenter().y);
         }
         else if(this.getTopCenter().y > config.height)
-        {    
+        {
             if(this._ballsCounter > 1)        
             {
+                this.scene.UpdateBallsCounter(-1);
+                this.active = false;
                 return;
             }
             this._pad.DecrementLives();
             this.scene.UpdateLivesUI();            
             this.body.setVelocity(0, 0);
             this.idle = true;
+            this.scene.ball = this;
         }
     }
 
@@ -62,7 +67,6 @@ class Ball extends Phaser.GameObjects.Sprite
     ModifyBallsCounter(number)
     {
         this._ballsCounter += number;
-        console.log(this._ballsCounter)
     }
 
     /*

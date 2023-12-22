@@ -8,7 +8,8 @@ class CrystalBlockPrefab extends BlockPrefab
 
     break() {
         //this.scene.SpawnPowerup(this, this.GetRandomPowerUpType());
-        this.scene.SpawnPowerup(this, this.powerUpTypes[this.GetRandomPowerUpType()]);
+        //this.scene.SpawnPowerup(this, this.powerUpTypes[this.GetRandomPowerUpType()]);
+        this.scene.SpawnPowerup(this, "D");
         super.break();
     }
 

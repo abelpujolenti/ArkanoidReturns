@@ -36,6 +36,7 @@ class NormalBall extends Ball
         this.body.setVelocity(0, 0);
         this.setPosition(_positionX, _positionY);
         Phaser.Display.Bounds.SetBottom(this, _positionY);
+        console.log("idle: " + this.idle);
     }
 
     Reset(_positionX, _positionY)
