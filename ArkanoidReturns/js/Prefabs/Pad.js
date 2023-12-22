@@ -134,7 +134,6 @@ class Pad extends Phaser.GameObjects.Sprite
     {
         for(var i = 0; i < 3; i++)
         {
-            console.log(_player.scene);
             var ball = new NormalBall(_player.scene, _player.scene.pad.x, _player.scene.pad.getTopCenter().y, _player.scene.pad, _player.scene.walls, _player.scene.ballsCounter).setScale(.75);
             _player.scene.ballPool.add(ball);
             
@@ -149,7 +148,8 @@ class Pad extends Phaser.GameObjects.Sprite
             ball.StartMoving();
         }
 
-        console.log("Disruption");
+        console.log("balls count after disruption: " + _player.scene.ballsCounter);
+
     }
 
     SpeedDown(player){

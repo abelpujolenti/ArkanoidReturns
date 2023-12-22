@@ -11,6 +11,8 @@ class Ball extends Phaser.GameObjects.Sprite
         this._pad = pad;
 
         this.scene.UpdateBallsCounter(1);
+        this._ballsCounter += 1;
+        console.log("CONSTRUCTOR BALLS COUNTER: " + this._ballsCounter);
 
         this.SetColliders();
     }
@@ -24,11 +26,15 @@ class Ball extends Phaser.GameObjects.Sprite
             this.ResetPosition(this._pad.x, this._pad.getTopCenter().y);
         }
         else if(this.getTopCenter().y > config.height)
-        {    
+        {
+            console.log("pit balls: " + this._ballsCounter);
+
             if(this._ballsCounter > 1)        
             {
-                this.active = false;
+                console.log("ball count BEFORE -1: " + this._ballsCounter);
                 this.scene.UpdateBallsCounter(-1);
+                console.log("ball count after -1: " + this._ballsCounter);
+                this.active = false;
                 return;
             }
             this._pad.DecrementLives();
@@ -64,7 +70,6 @@ class Ball extends Phaser.GameObjects.Sprite
     ModifyBallsCounter(number)
     {
         this._ballsCounter += number;
-        console.log(this._ballsCounter)
     }
 
     /*
