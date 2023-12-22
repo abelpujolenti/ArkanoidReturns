@@ -193,6 +193,6 @@ class Pad extends Phaser.GameObjects.Sprite
     ApplyBreak(_player)
     {
         console.log("Apply break");
-        _player.scene.openingVertical = new OpeningVerticalPrefab(this, 10, 10, 'openingThingVertical', 'openingThingVerticalAnim').setScale(0.5)
+        _player.scene.openingVertical = new OpeningVerticalPrefab(_player.scene, 10, 10, 'openingThingVertical', 'openingThingVerticalAnim').setScale(0.5)
     }
 }

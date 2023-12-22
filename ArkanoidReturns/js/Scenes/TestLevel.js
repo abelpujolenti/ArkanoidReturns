@@ -245,7 +245,7 @@ class TestLevel extends Phaser.Scene
                 key: 'openingThingVerticalAnim',
                 frames:this.anims.generateFrameNumbers('openingThingVertical', {start:0, end: 7}),
                 frameRate: 15,
-                repeat: 0
+                //repeat: 1
             }
         )
     }
