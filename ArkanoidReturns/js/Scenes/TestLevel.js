@@ -32,7 +32,6 @@ class TestLevel extends Phaser.Scene
         this.ballsCounter = 0;
         
         this.ball = new NormalBall(this, this.pad.x, this.pad.getTopCenter().y, this.pad, this.walls, this.ballsCounter).setScale(.75);
-        console.log("balls count: " + this.ballsCounter);
         this.ballPool.add(this.ball);     
         
         this.powerups = [];
@@ -111,7 +110,6 @@ class TestLevel extends Phaser.Scene
 
     UpdateBallsCounter(number)
     {
-        console.log("Call update balls");        
         this.ballsCounter += number;
         this.ballPool.getChildren().forEach(ball => {
             ball.ModifyBallsCounter(number)
