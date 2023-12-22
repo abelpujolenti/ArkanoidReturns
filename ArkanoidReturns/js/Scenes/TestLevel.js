@@ -239,6 +239,15 @@ class TestLevel extends Phaser.Scene
                 frameRate: 15,
                 repeat: -1
             });
+        
+        this.anims.create(
+            {
+                key: 'openingThingVerticalAnim',
+                frames:this.anims.generateFrameNumbers('openingThingVertical', {start:0, end: 7}),
+                frameRate: 15,
+                repeat: 0
+            }
+        )
     }
 
     LoadMap()

@@ -122,7 +122,7 @@ class Pad extends Phaser.GameObjects.Sprite
     {
         this.ApplyPowerUpEffect = { 
             "E": this.SpeedDown, //placeholder
-            "B": this.SpeedDown, //placeholder
+            "B": this.ApplyBreak, //placeholder
             "L": this.SpeedDown, //placeholder
             "G": this.SpeedDown, //placeholder
             "D": this.ApplyDisruption, //placeholder
@@ -188,5 +188,11 @@ class Pad extends Phaser.GameObjects.Sprite
             ball.StartMoving()
         });
         this.catchedBalls.length = 0
+    }
+
+    ApplyBreak(_player)
+    {
+        console.log("Apply break");
+        _player.scene.openingVertical = new OpeningVerticalPrefab(this, 10, 10, 'openingThingVertical', 'openingThingVerticalAnim').setScale(0.5)
     }
 }
