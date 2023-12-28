@@ -14,8 +14,18 @@ class LaserPrefab extends Phaser.GameObjects.Sprite
 
         this.anims.play("laserAnim");
 
-        this.scale = 5;
+        this.scale = 5.5;
         this.setOrigin(0.5, 1);
+
+        this.scene.time.removeEvent(this.scene.laserTimer)
+
+        this.scene.laserTimer = this.scene.time.addEvent(
+            {
+               delay: this.duration,
+               callback: this.deActivate,
+               callbackScope: this
+            }
+        )
     }
 
     preUpdate(time, delta) {
