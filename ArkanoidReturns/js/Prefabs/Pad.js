@@ -123,7 +123,7 @@ class Pad extends Phaser.GameObjects.Sprite
         this.ApplyPowerUpEffect = { 
             "E": this.SpeedDown, //placeholder
             "B": this.SpeedDown, //placeholder
-            "L": this.SpeedDown, //placeholder
+            "L": this.Laser, //placeholder
             "G": this.SpeedDown, //placeholder
             "D": this.ApplyDisruption, //placeholder
             "M": this.SpeedDown, //placeholder
@@ -161,6 +161,10 @@ class Pad extends Phaser.GameObjects.Sprite
 
         console.log("balls count after disruption: " + _player.scene.ballsCounter);
 
+    }
+
+    Laser(player) {
+        this.laser = new LaserPrefab(player.scene, player.x, player.y, 300, player, this.score);
     }
 
     SpeedDown(player){

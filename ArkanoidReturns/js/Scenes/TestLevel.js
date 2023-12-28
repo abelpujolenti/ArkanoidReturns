@@ -239,6 +239,14 @@ class TestLevel extends Phaser.Scene
                 frameRate: 15,
                 repeat: -1
             });
+
+        this.anims.create(
+            {
+                key: 'laserAnim',
+                frames:this.anims.generateFrameNumbers('laser', {start:0, end: 8}),
+                frameRate: 15,
+                repeat: -1
+            });
     }
 
     LoadMap()
