@@ -32,17 +32,21 @@ class TestLevel extends Phaser.Scene
         this.ballsCounter = 0;
         
         this.ball = new NormalBall(this, this.pad.x, this.pad.getTopCenter().y, this.pad, this.walls, this.ballsCounter).setScale(.75);
-        this.ballPool.add(this.ball);     
+        this._ballPool.add(this.ball);     
         
         this.powerups = [];
-        this.blocks = [];
+
+        this.triBall = new TriBallObject(this, 300, 500, this._ballPool, this.pad, this.walls, "triBallAnimation", "triBall")
+        this.cone = new ConeObject(this, 200, 500, this._ballPool, this.pad, "coneAnimation", "cone")
+        this.saturnino = new SaturninoObject(this, 250, 180, this._ballPool, this.pad, this._blockPool, "saturninoAnimation", "saturnino")
 
         this.createLevel(40, config.width / 2, 80, "test");
     }
 
     LoadPools()
     {
-        this.ballPool = this.add.group();
+        this._ballPool = this.add.group();
+        this._blockPool = this.add.group()
     }
 
     createLevel(size, rootX, rootY, level)
@@ -62,11 +66,11 @@ class TestLevel extends Phaser.Scene
 
                 if (char == 67)
                 {
-                    this.blocks[i] = new CrystalBlockPrefab(this, posX, posY, 'crystalBlock', null, 1, this.ball, this.pad, 1).setScale(this.blockScale);
+                    this._blockPool.add(new CrystalBlockPrefab(this, posX, posY, 'crystalBlock', null, 1, this._ballPool, this.pad, 1).setScale(this.blockScale));
                 }
                 else
                 {
-                    this.blocks[i] = new BlockPrefab(this, posX, posY, 'silverBlock', null, 1, this.ball, this.pad, 1).setScale(this.blockScale);
+                    this._blockPool.add(new BlockPrefab(this, posX, posY, 'silverBlock', null, 1, this._ballPool, this.pad, 1).setScale(this.blockScale));
                 }
 
                 x++;
@@ -81,11 +85,6 @@ class TestLevel extends Phaser.Scene
                 y++;
             }
         }
-    }
-
-    update()
-    {
-        
     }
 
     UpdateRoundUI(round)
@@ -111,14 +110,14 @@ class TestLevel extends Phaser.Scene
     UpdateBallsCounter(number)
     {
         this.ballsCounter += number;
-        this.ballPool.getChildren().forEach(ball => {
+        this._ballPool.getChildren().forEach(ball => {
             ball.ModifyBallsCounter(number)
         });
     }
 
     SlowDownBalls(){
 
-        this.ballPool.getChildren().forEach(ball => {
+        this._ballPool.getChildren().forEach(ball => {
             ball.MultiplyVelocity(.5)
         });
 
@@ -133,7 +132,7 @@ class TestLevel extends Phaser.Scene
 
     SpeedUpBalls(){
         
-        this.ballPool.getChildren().forEach(ball => {
+        this._ballPool.getChildren().forEach(ball => {
             ball.MultiplyVelocity(2)
         });
     }
@@ -255,6 +254,37 @@ class TestLevel extends Phaser.Scene
                 frames:this.anims.generateFrameNumbers('laser', {start:0, end: 8}),
                 frameRate: 15,
                 repeat: -1
+            });
+
+        this.anims.create(
+            {
+                key: "coneAnimation",
+                frames: this.anims.generateFrameNumbers("cone", {start: 0, end: 24}),
+                frameRate: 15,
+                repeat: -1
+            });     
+
+        this.anims.create(
+            {
+                key: "saturninoAnimation",
+                frames: this.anims.generateFrameNumbers("saturnino", {start: 0, end: 24}),
+                frameRate: 15,
+                repeat: -1
+            });  
+
+        this.anims.create(
+            {
+                key: "triBallAnimation",
+                frames: this.anims.generateFrameNumbers("triBall", {start: 0, end: 24}),
+                frameRate: 15,
+                repeat: -1
+            }); 
+            
+        this.anims.create(
+            {
+                key: "explosionAnimation",
+                frames: this.anims.generateFrameNumbers("explosion", {start: 0, end: 5}),
+                frameRate: 15
             });
     }
 
