@@ -52,21 +52,24 @@ class Pad extends Phaser.GameObjects.Sprite
 
     ApplyBounce(_ball)
     {
-        if(!this.catching)
+        if(this.catching)
         {
+            this.catchedBalls[this.catchedBalls.length] = _ball
+            _ball.idle = true;
             return
         }
 
-        this.catchedBalls[this.catchedBalls.length] = _ball
-        _ball.idle = true;
-        //_ball.body.setVelocity(10)
-        /*var rel = (this.positionX + this.width / 2) - (_ball.x + gamePrefs.SIZE / 2);
-		var norm = rel / (this.width / 2);
-		var bounce = norm * (5 * gamePrefs.PI / 12);
-		var velocityMultiplierY = Math.cos(bounce);
-		var velocityMultiplierX = -Math.sin(bounce);
+        var ballSpeed = _ball.body.speed
+        
+        var imaginaryPoint = new Phaser.Math.Vector2(this.x, this.y + 1)
 
-        _ball.ChangeVelocity(velocityMultiplierX, velocityMultiplierY);*/
+        var vector = new Phaser.Math.Vector2(_ball.getBottomCenter().x - imaginaryPoint.x, _ball.getBottomCenter().y - imaginaryPoint.y)
+
+        var vectorNormalized = vector.normalize()
+
+        var velocity = new Phaser.Math.Vector2(vectorNormalized.x * ballSpeed, vectorNormalized.y * ballSpeed)
+
+        _ball.SetVelocity(velocity.x, velocity.y);
     }
 
     ApplyUpgrade(_upgrade) {

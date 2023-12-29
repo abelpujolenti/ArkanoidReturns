@@ -119,7 +119,7 @@ class TestLevel extends Phaser.Scene
     SlowDownBalls(){
 
         this.ballPool.getChildren().forEach(ball => {
-            ball.ChangeVelocity(.5)
+            ball.MultiplyVelocity(.5)
         });
 
         this.slowDownTimer = this.time.addEvent(
@@ -134,7 +134,7 @@ class TestLevel extends Phaser.Scene
     SpeedUpBalls(){
         
         this.ballPool.getChildren().forEach(ball => {
-            ball.ChangeVelocity(2)
+            ball.MultiplyVelocity(2)
         });
     }
 
