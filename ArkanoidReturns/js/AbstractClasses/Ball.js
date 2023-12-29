@@ -22,7 +22,6 @@ class Ball extends Phaser.GameObjects.Sprite
 
         if(this.idle)
         {
-            console.log("Reset position");
             this.ResetPosition(this._pad.x, this._pad.getTopCenter().y);
         }
         else if(this.getTopCenter().y > config.height)
@@ -55,13 +54,17 @@ class Ball extends Phaser.GameObjects.Sprite
         );
     }
 
-    ChangeVelocity(velocityMultiplier)
+    MultiplyVelocity(velocityMultiplier)
     {   
         var velocity = this.body.velocity;
         this.velocityX = velocity.x * velocityMultiplier;
         this.velocityY = velocity.y * velocityMultiplier;        
 
         this.body.setVelocity(this.velocityX, this.velocityY);
+    }
+
+    SetVelocity(velocityX, velocityY){
+        this.body.setVelocity(velocityX, velocityY)
     }
 
     ModifyBallsCounter(number)
