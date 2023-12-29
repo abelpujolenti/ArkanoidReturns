@@ -23,6 +23,8 @@ class TestLevel extends Phaser.Scene
         this.LoadPools();
         
         this.LoadMap();
+
+        this.CreateObjectMapFunctions();
         
         this.LoadUI();
         this.UpdateHighscoreUI(this.highscore);
@@ -32,17 +34,26 @@ class TestLevel extends Phaser.Scene
         this.ballsCounter = 0;
         
         this.ball = new NormalBall(this, this.pad.x, this.pad.getTopCenter().y, this.pad, this.walls, this.ballsCounter).setScale(.75);
-        this.ballPool.add(this.ball);     
+        this._ballPool.add(this.ball);     
         
         this.powerups = [];
-        this.blocks = [];
+
+        this.time.addEvent(
+            {
+                delay: 15000,
+                callback: this.SpawnObject,
+                callbackScope: this,
+                loop: true
+            }
+        )
 
         this.createLevel(40, config.width / 2, 80, "test");
     }
 
     LoadPools()
     {
-        this.ballPool = this.add.group();
+        this._ballPool = this.add.group();
+        this._blockPool = this.add.group()
     }
 
     createLevel(size, rootX, rootY, level)
@@ -62,11 +73,11 @@ class TestLevel extends Phaser.Scene
 
                 if (char == 67)
                 {
-                    this.blocks[i] = new CrystalBlockPrefab(this, posX, posY, 'crystalBlock', null, 1, this.ball, this.pad, 1).setScale(this.blockScale);
+                    this._blockPool.add(new CrystalBlockPrefab(this, posX, posY, 'crystalBlock', null, 1, this._ballPool, this.pad, 1).setScale(this.blockScale));
                 }
                 else
                 {
-                    this.blocks[i] = new BlockPrefab(this, posX, posY, 'silverBlock', null, 1, this.ball, this.pad, 1).setScale(this.blockScale);
+                    this._blockPool.add(new BlockPrefab(this, posX, posY, 'silverBlock', null, 1, this._ballPool, this.pad, 1).setScale(this.blockScale));
                 }
 
                 x++;
@@ -81,11 +92,6 @@ class TestLevel extends Phaser.Scene
                 y++;
             }
         }
-    }
-
-    update()
-    {
-        
     }
 
     UpdateRoundUI(round)
@@ -111,14 +117,14 @@ class TestLevel extends Phaser.Scene
     UpdateBallsCounter(number)
     {
         this.ballsCounter += number;
-        this.ballPool.getChildren().forEach(ball => {
+        this._ballPool.getChildren().forEach(ball => {
             ball.ModifyBallsCounter(number)
         });
     }
 
     SlowDownBalls(){
 
-        this.ballPool.getChildren().forEach(ball => {
+        this._ballPool.getChildren().forEach(ball => {
             ball.MultiplyVelocity(.5)
         });
 
@@ -133,7 +139,7 @@ class TestLevel extends Phaser.Scene
 
     SpeedUpBalls(){
         
-        this.ballPool.getChildren().forEach(ball => {
+        this._ballPool.getChildren().forEach(ball => {
             ball.MultiplyVelocity(2)
         });
     }
@@ -256,6 +262,37 @@ class TestLevel extends Phaser.Scene
                 frameRate: 15,
                 repeat: -1
             });
+
+        this.anims.create(
+            {
+                key: "coneAnimation",
+                frames: this.anims.generateFrameNumbers("cone", {start: 0, end: 24}),
+                frameRate: 15,
+                repeat: -1
+            });     
+
+        this.anims.create(
+            {
+                key: "saturninoAnimation",
+                frames: this.anims.generateFrameNumbers("saturnino", {start: 0, end: 24}),
+                frameRate: 15,
+                repeat: -1
+            });  
+
+        this.anims.create(
+            {
+                key: "triBallAnimation",
+                frames: this.anims.generateFrameNumbers("triBall", {start: 0, end: 24}),
+                frameRate: 15,
+                repeat: -1
+            }); 
+            
+        this.anims.create(
+            {
+                key: "explosionAnimation",
+                frames: this.anims.generateFrameNumbers("explosion", {start: 0, end: 5}),
+                frameRate: 15
+            });
     }
 
     LoadMap()
@@ -374,5 +411,37 @@ class TestLevel extends Phaser.Scene
     {
         this.powerups[this.powerups.length] = 
             new PowerupPrefab(this, _block.x, _block.y, "powerup"+ _type, "powerupAnim" + _type, this.ball, this.pad, _type).setScale(this.blockScale);
+    }
+
+    SpawnObject()
+    {
+        var randomNumber = Phaser.Math.Between(0, 2)
+
+        this.spawnObjects[randomNumber](this)
+    }
+
+    CreateObjectMapFunctions(){
+
+        this.spawnObjects = {
+            0: this.SpawnCone,
+            1: this.SpawnSaturnino,
+            2: this.SpawnTriBall,
+        }
+        
+    }
+
+    SpawnCone(scene)
+    {
+        new ConeObject(scene, 200, 500, scene._ballPool, scene.pad, scene._blockPool, scene.walls, "coneAnimation", "cone")
+    }
+
+    SpawnSaturnino(scene)
+    {
+        new SaturninoObject(scene, 250, 180, scene._ballPool, scene.pad, scene._blockPool, scene.walls, "saturninoAnimation", "saturnino")
+    }
+
+    SpawnTriBall(scene)
+    {
+        new TriBallObject(scene, 300, 500, scene._ballPool, scene.pad, scene._blockPool, scene.walls, "triBallAnimation", "triBall")
     }
 }
