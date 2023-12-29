@@ -1,10 +1,9 @@
 class TriBallObject extends Object
 {
-    constructor(scene, positionX, positionY, ballPool, pad, walls, animation, spriteTag)
+    constructor(scene, positionX, positionY, ballPool, pad, blockPool, walls, animation, spriteTag)
     {
-        super(scene, positionX, positionY, ballPool, pad, animation, spriteTag)
+        super(scene, positionX, positionY, ballPool, pad, blockPool, walls, animation, spriteTag)
         scene.add.existing(this);
-        this._walls = walls;
     }
 
     ObjectAction(object, ball)

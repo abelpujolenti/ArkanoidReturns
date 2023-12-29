@@ -1,6 +1,6 @@
 class BlockPrefab extends Phaser.GameObjects.Sprite
 {
-    constructor(_scene,_posX,_posY,_spriteTag, _animTag, _health, _ball, _pad, _score)
+    constructor(_scene,_posX,_posY,_spriteTag, _animTag, _health, _ballPool, _pad, _score)
     {
         super(_scene,_posX,_posY,_spriteTag);
         _scene.add.existing(this);
@@ -8,7 +8,7 @@ class BlockPrefab extends Phaser.GameObjects.Sprite
         _scene.physics.world.enable(this);
         this.body.setImmovable(true);
         this.colliders = []
-        this.colliders[0] = this.scene.physics.add.collider(this, _ball)
+        this.colliders[0] = this.scene.physics.add.collider(this, _ballPool, this.damage, null, this)
         //this.addCollider(_ball);
         this.scene = _scene;
         this.health = _health;
@@ -17,11 +17,6 @@ class BlockPrefab extends Phaser.GameObjects.Sprite
         if (_animTag != null) {
             this.anims.play(_animTag);
         }
-        
-        this.body.onCollide = true;
-        _scene.physics.world.on('collide', (gameObject1) => {
-            gameObject1.damage();
-        })
         this.damaged = false;
     }
 

@@ -23,6 +23,8 @@ class TestLevel extends Phaser.Scene
         this.LoadPools();
         
         this.LoadMap();
+
+        this.CreateObjectMapFunctions();
         
         this.LoadUI();
         this.UpdateHighscoreUI(this.highscore);
@@ -36,9 +38,14 @@ class TestLevel extends Phaser.Scene
         
         this.powerups = [];
 
-        this.triBall = new TriBallObject(this, 300, 500, this._ballPool, this.pad, this.walls, "triBallAnimation", "triBall")
-        this.cone = new ConeObject(this, 200, 500, this._ballPool, this.pad, "coneAnimation", "cone")
-        this.saturnino = new SaturninoObject(this, 250, 180, this._ballPool, this.pad, this._blockPool, "saturninoAnimation", "saturnino")
+        this.time.addEvent(
+            {
+                delay: 15000,
+                callback: this.SpawnObject,
+                callbackScope: this,
+                loop: true
+            }
+        )
 
         this.createLevel(40, config.width / 2, 80, "test");
     }
@@ -404,5 +411,37 @@ class TestLevel extends Phaser.Scene
     {
         this.powerups[this.powerups.length] = 
             new PowerupPrefab(this, _block.x, _block.y, "powerup"+ _type, "powerupAnim" + _type, this.ball, this.pad, _type).setScale(this.blockScale);
+    }
+
+    SpawnObject()
+    {
+        var randomNumber = Phaser.Math.Between(0, 2)
+
+        this.spawnObjects[randomNumber](this)
+    }
+
+    CreateObjectMapFunctions(){
+
+        this.spawnObjects = {
+            0: this.SpawnCone,
+            1: this.SpawnSaturnino,
+            2: this.SpawnTriBall,
+        }
+        
+    }
+
+    SpawnCone(scene)
+    {
+        new ConeObject(scene, 200, 500, scene._ballPool, scene.pad, scene._blockPool, scene.walls, "coneAnimation", "cone")
+    }
+
+    SpawnSaturnino(scene)
+    {
+        new SaturninoObject(scene, 250, 180, scene._ballPool, scene.pad, scene._blockPool, scene.walls, "saturninoAnimation", "saturnino")
+    }
+
+    SpawnTriBall(scene)
+    {
+        new TriBallObject(scene, 300, 500, scene._ballPool, scene.pad, scene._blockPool, scene.walls, "triBallAnimation", "triBall")
     }
 }

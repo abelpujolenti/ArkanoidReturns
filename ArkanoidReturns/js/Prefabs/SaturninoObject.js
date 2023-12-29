@@ -1,11 +1,9 @@
 class SaturninoObject extends Object
 {
-    constructor(scene, positionX, positionY, ballPool, pad, blockPool, animation, spriteTag)
+    constructor(scene, positionX, positionY, ballPool, pad, blockPool, walls, animation, spriteTag)
     {
-        super(scene, positionX, positionY, ballPool, pad, animation, spriteTag)
+        super(scene, positionX, positionY, ballPool, pad, blockPool, walls, animation, spriteTag)
         scene.add.existing(this);
-
-        this._blockPool = blockPool
     }
 
     ObjectAction(object, ball)
