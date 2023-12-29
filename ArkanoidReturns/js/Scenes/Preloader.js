@@ -31,6 +31,7 @@ class Preloader extends Phaser.Scene
 
         this.load.setPath("assets/img/pad");
         this.load.spritesheet("pad", "default.png", {frameWidth: 88, frameHeight:22});
+        this.load.spritesheet("longPad", "long_2.png", {frameWidth: 132, frameHeight:22});
 
         this.load.setPath("assets/img/border");
         this.load.image("verticalPipeTileset", "vertical.png");

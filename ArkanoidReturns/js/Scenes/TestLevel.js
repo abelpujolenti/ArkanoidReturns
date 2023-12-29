@@ -158,6 +158,15 @@ class TestLevel extends Phaser.Scene
 
         this.anims.create(
             {
+                key: "longPadAnim",
+                frames: this.anims.generateFrameNames("longPad", {start: 0, end: 3}),
+                frameRate: 15,
+                repeat: -1
+            }
+        )
+
+        this.anims.create(
+            {
                 key: 'powerupAnimE',
                 frames:this.anims.generateFrameNumbers('powerupE', {start:0, end: 7}),
                 frameRate: 15,

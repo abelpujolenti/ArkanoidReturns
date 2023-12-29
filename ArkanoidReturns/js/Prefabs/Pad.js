@@ -121,7 +121,7 @@ class Pad extends Phaser.GameObjects.Sprite
     InitPowerUpEffects()
     {
         this.ApplyPowerUpEffect = { 
-            "E": this.SpeedDown, //placeholder
+            "E": this.Expand, //placeholder
             "B": this.SpeedDown, //placeholder
             "L": this.Laser, //placeholder
             "G": this.SpeedDown, //placeholder
@@ -132,6 +132,29 @@ class Pad extends Phaser.GameObjects.Sprite
             "S": this.SpeedDown,
             "C": this.Catch,
         };
+    }
+
+    Expand(player){
+        player.setTexture("longPad")
+        player.anims.play("longPadAnim")
+        player.body.setSize(132, 22)
+
+        player.scene.time.removeEvent(player.scene.expandTimer)
+
+        player.scene.expandTimer = player.scene.time.addEvent(
+            {
+               delay: 10000,
+               callback: player.EnoughExpand,
+               callbackScope: player
+            }
+        )
+
+    }
+
+    EnoughExpand(){
+        this.texture = "pad"
+        this.anims.play("padAnim")
+        this.body.setSize(88, 22)
     }
 
     ApplyPlayerExtend(_player)
