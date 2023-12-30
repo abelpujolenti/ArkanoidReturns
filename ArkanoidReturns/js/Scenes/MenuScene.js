@@ -22,7 +22,8 @@ class MenuScene extends Phaser.Scene
         this.bg = this.add.image(0,0,'bg').setOrigin(0).setScale(2.5);
 
         this.createButtons();
-        
+
+        //this.sound.add("intro").play()        
     }
 
     update()

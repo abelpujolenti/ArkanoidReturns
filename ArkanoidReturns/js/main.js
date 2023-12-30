@@ -33,7 +33,7 @@ var gamePrefs =
     GAME_HEIGHT: config.height,
     LEVEL_WIDTH: config.width,
     LEVEL_HEIGHT: config.height + 28,
-    PAD_SPEED: 150,
+    PAD_SPEED: 200,
     BALL_SPEED: 200,
     OBJECT_CONTAINER_MIN_X_COORDINATE: 190,
     OBJECT_CONTAINER_MAX_X_COORDINATE: 610,

@@ -7,6 +7,20 @@ class Preloader extends Phaser.Scene
 
     preload()
     {        
+        this.load.setPath("assets/sounds");
+        this.load.audio("ballHitBrick", "BallHitBrick.wav")
+        this.load.audio("ballHitPad", "BallHitPad.wav")
+        this.load.audio("ballHitWalls", "BallHitWalls.wav")
+        this.load.audio("brickBreak", "BrickBreak.wav")
+        this.load.audio("enlarge", "Enlarge.wav")
+        this.load.audio("explosion", "Explosion.wav")
+        this.load.audio("extraLife", "ExtraLife.wav")
+        this.load.audio("gameOver", "GameOver.wav")
+        this.load.audio("intro", "Intro.wav")
+        //this.load.audio("Laser", "BallHitCrick.wav") //Aqui va tu laser, puto
+        this.load.audio("levelStart", "LevelStart.wav")
+        this.load.audio("objectAppears", "ObjectAppears.wav")
+
         this.load.setPath("assets/img/projectile");
         this.load.image("normalBall", "cyan.png");
         this.load.image("greenBall", "green.png");

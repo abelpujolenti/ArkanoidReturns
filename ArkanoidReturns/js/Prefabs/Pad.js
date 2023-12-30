@@ -1,6 +1,6 @@
 class Pad extends Phaser.GameObjects.Sprite
 {
-    constructor(_scene, _positionX, _positionY, _spriteTag, _animTag, _score, _multiplier, _walls){
+    constructor(_scene, _positionX, _positionY, _spriteTag, _animTag, _score, _multiplier, _walls, ballHitPadSound, enlargeSound, extraLifeSound, gameOverSound){
         
         super(_scene, _positionX, _positionY, _spriteTag);
         _scene.add.existing(this);
@@ -12,6 +12,10 @@ class Pad extends Phaser.GameObjects.Sprite
         this.multiplier = _multiplier;
         this.streak = 0;
         this.walls = _walls;
+        this._ballHitPadSound = ballHitPadSound
+        this._enlargeSound = enlargeSound
+        this._extraLifeSound = extraLifeSound
+        this._gameOverSound = gameOverSound
         this.lives = gamePrefs.PLAYER_LIVES;
         this.cursors = _scene.input.keyboard.createCursorKeys();
 
@@ -41,6 +45,7 @@ class Pad extends Phaser.GameObjects.Sprite
             this.CheckInput();
             return;
         }        
+        this._gameOverSound.play()
         this.scene.LoadGameOver();
     }
 
@@ -58,6 +63,8 @@ class Pad extends Phaser.GameObjects.Sprite
             _ball.idle = true;
             return
         }
+
+        this._ballHitPadSound.play()
 
         var ballSpeed = _ball.body.speed
         
@@ -141,6 +148,7 @@ class Pad extends Phaser.GameObjects.Sprite
         player.setTexture("longPad")
         player.anims.play("longPadAnim")
         player.body.setSize(132, 22)
+        player._enlargeSound.play()
 
         player.scene.time.removeEvent(player.scene.expandTimer)
 
@@ -165,6 +173,7 @@ class Pad extends Phaser.GameObjects.Sprite
         //This no és la pad sinó la "posició" del diccionari
         _player.lives++;
         _player.scene.UpdateLivesUI();
+        _player._extraLifeSound.play()
     }
 
     ApplyDisruption(_player)
@@ -201,9 +210,9 @@ class Pad extends Phaser.GameObjects.Sprite
 
         player.catching = true;
 
-        player.scene.time.removeEvent(player.scene.catchingTimer)
+        player.scene.time.removeEvent(player.catchingTimer)
 
-        player.scene.catchingTimer = player.scene.time.addEvent(
+        player.catchingTimer = player.scene.time.addEvent(
             {
                delay: 10000,
                callback: player.EnoughCatch,
