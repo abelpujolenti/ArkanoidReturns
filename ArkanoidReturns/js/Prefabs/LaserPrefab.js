@@ -33,16 +33,14 @@ class LaserPrefab extends Phaser.GameObjects.Sprite
 
     SetColliders()
     {
-        for (var i = 0; i < this.scene.blocks.length; i++) {
-            this.scene.physics.add.collider
-            (
-                this,
-                this.scene.blocks[i],
-                this.HitBlock,
-                null,
-                this
-            );
-        }
+        this.scene.physics.add.collider
+        (
+            this,
+            this.scene._blockPool,
+            this.HitBlock,
+            null,
+            this
+        );
     }
 
     HitBlock(lmao, block) {
