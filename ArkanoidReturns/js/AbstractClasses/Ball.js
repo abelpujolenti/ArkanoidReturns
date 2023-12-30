@@ -1,6 +1,6 @@
 class Ball extends Phaser.GameObjects.Sprite
 {
-    constructor(scene, positionX, positionY, pad, walls, spriteTag){
+    constructor(scene, positionX, positionY, pad, walls, ballHitWallsSound, spriteTag){
         
         super(scene, positionX, positionY, spriteTag);
         scene.physics.add.existing(this);
@@ -9,12 +9,19 @@ class Ball extends Phaser.GameObjects.Sprite
         this._walls = walls;
         this._pad = pad;
 
+        this._ballHitWallsSound = ballHitWallsSound
+
         this.SetColliders();
     }
 
     SetColliders()
     {
-        this._scene.physics.add.collider(this, this._walls)
+        this._scene.physics.add.collider(this, this._walls, this.HitWallsSound, null, this)
+    }
+
+    HitWallsSound()
+    {
+        this._ballHitWallsSound.play()
     }
 
     MultiplyVelocity(velocityMultiplier)

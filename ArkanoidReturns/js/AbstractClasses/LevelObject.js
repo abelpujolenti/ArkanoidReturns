@@ -1,6 +1,6 @@
-class Object extends Phaser.GameObjects.Sprite
+class LevelObject extends Phaser.GameObjects.Sprite
 {
-    constructor(scene, positionX, positionY, ballPool, pad, blockPool, walls, animation, spriteTag){
+    constructor(scene, positionX, positionY, ballPool, pad, blockPool, walls, explosionSound, animation, spriteTag){
 
         super(scene, positionX, positionY, spriteTag).setScale(0.7);
         scene.physics.add.existing(this);
@@ -10,6 +10,7 @@ class Object extends Phaser.GameObjects.Sprite
         this._pad = pad;
         this._blockPool = blockPool
         this._walls = walls
+        this._explosionSound = explosionSound
 
         this.CalculateNewPosition()
 
@@ -17,7 +18,7 @@ class Object extends Phaser.GameObjects.Sprite
 
         this.RandomVelocity()
 
-        this._scene.time.addEvent(
+        this.randomVelocityTimer = this._scene.time.addEvent(
             {
                 delay: 5000,
                 callback: this.RandomVelocity,
@@ -73,6 +74,8 @@ class Object extends Phaser.GameObjects.Sprite
     }
 
     ObjectAction(object, ball){
+        this._explosionSound.play()
+        this._scene.time.removeEvent(this.randomVelocityTimer)
         this.destroy()
     }
 }

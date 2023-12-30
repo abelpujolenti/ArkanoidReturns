@@ -1,6 +1,6 @@
 class BlockPrefab extends Phaser.GameObjects.Sprite
 {
-    constructor(_scene,_posX,_posY,_spriteTag, _animTag, _health, _ballPool, _pad, _score)
+    constructor(_scene,_posX,_posY,_spriteTag, _animTag, _health, _ballPool, _pad, _score, ballHitBrickSound)
     {
         super(_scene,_posX,_posY,_spriteTag);
         _scene.add.existing(this);
@@ -14,6 +14,7 @@ class BlockPrefab extends Phaser.GameObjects.Sprite
         this.health = _health;
         this.score = _score;
         this.pad = _pad;
+        this._ballHitBrickSound = ballHitBrickSound
         this.laserBuildup = 0;
         if (_animTag != null) {
             this.anims.play(_animTag);
@@ -25,6 +26,7 @@ class BlockPrefab extends Phaser.GameObjects.Sprite
         if (this.damaged) return;
         this.damaged = true;
         this.health--;
+        this._ballHitBrickSound.play()
         if (this.health <= 0) {
             this.break();
         }

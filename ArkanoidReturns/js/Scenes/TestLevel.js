@@ -19,8 +19,10 @@ class TestLevel extends Phaser.Scene
     create()
     {
         this.loadAnimations();
+
+        this.LoadSounds();
         
-        this.LoadPools();
+        this.LoadPools();        
         
         this.LoadMap();
 
@@ -29,11 +31,13 @@ class TestLevel extends Phaser.Scene
         this.LoadUI();
         this.UpdateHighscoreUI(this.highscore);
 
-        this.pad = new Pad(this, gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y, 'pad', 'padAnim', 0, 1, this.walls).setScale(0.5);
+        this.pad = new Pad(this, gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y, 'pad', 'padAnim', 0, 1, 
+                            this.walls, this._ballHitPadSound, this._enlargeSound, this._extraLifeSound, this._gameOverSound).setScale(0.5);
 
         this.ballsCounter = 0;
         
-        this.ball = new NormalBall(this, this.pad.x, this.pad.getTopCenter().y, this.pad, this.walls, this.ballsCounter).setScale(.75);
+        this.ball = new NormalBall(this, this.pad.x, this.pad.getTopCenter().y, this.pad, this.walls, 
+                                    this.ballsCounter, this._ballHitWallsSound).setScale(.75);
         this._ballPool.add(this.ball);     
         
         this.powerups = [];
@@ -48,6 +52,21 @@ class TestLevel extends Phaser.Scene
         )
 
         this.createLevel(40, config.width / 2, 80, "test");
+
+        this._levelStartSound.play()
+    }
+
+    LoadSounds()
+    {
+        this._ballHitBrickSound = this.sound.add("ballHitBrick")
+        this._ballHitPadSound = this.sound.add("ballHitPad")
+        this._ballHitWallsSound = this.sound.add("ballHitWalls")
+        this._enlargeSound = this.sound.add("enlarge")
+        this._explosionSound = this.sound.add("explosion")
+        this._extraLifeSound = this.sound.add("extraLife")
+        this._gameOverSound = this.sound.add("gameOver")
+        this._levelStartSound = this.sound.add("levelStart")
+        this._objectAppearsSound = this.sound.add("objectAppears")
     }
 
     LoadPools()
@@ -73,11 +92,11 @@ class TestLevel extends Phaser.Scene
 
                 if (char == 67)
                 {
-                    this._blockPool.add(new CrystalBlockPrefab(this, posX, posY, 'crystalBlock', null, 1, this._ballPool, this.pad, 1).setScale(this.blockScale));
+                    this._blockPool.add(new CrystalBlockPrefab(this, posX, posY, 'crystalBlock', null, 1, this._ballPool, this.pad, 1, this._ballHitBrickSound).setScale(this.blockScale));
                 }
                 else
                 {
-                    this._blockPool.add(new BlockPrefab(this, posX, posY, 'silverBlock', null, 1, this._ballPool, this.pad, 1).setScale(this.blockScale));
+                    this._blockPool.add(new BlockPrefab(this, posX, posY, 'silverBlock', null, 1, this._ballPool, this.pad, 1, this._ballHitBrickSound).setScale(this.blockScale));
                 }
 
                 x++;
@@ -416,7 +435,7 @@ class TestLevel extends Phaser.Scene
     SpawnObject()
     {
         var randomNumber = Phaser.Math.Between(0, 2)
-
+        this._objectAppearsSound.play()
         this.spawnObjects[randomNumber](this)
     }
 
@@ -432,16 +451,16 @@ class TestLevel extends Phaser.Scene
 
     SpawnCone(scene)
     {
-        new ConeObject(scene, 200, 500, scene._ballPool, scene.pad, scene._blockPool, scene.walls, "coneAnimation", "cone")
+        new ConeObject(scene, 200, 500, scene._ballPool, scene.pad, scene._blockPool, scene.walls, scene._explosionSound, "coneAnimation", "cone")
     }
 
     SpawnSaturnino(scene)
     {
-        new SaturninoObject(scene, 250, 180, scene._ballPool, scene.pad, scene._blockPool, scene.walls, "saturninoAnimation", "saturnino")
+        new SaturninoObject(scene, 250, 180, scene._ballPool, scene.pad, scene._blockPool, scene.walls, scene._explosionSound, "saturninoAnimation", "saturnino")
     }
 
     SpawnTriBall(scene)
     {
-        new TriBallObject(scene, 300, 500, scene._ballPool, scene.pad, scene._blockPool, scene.walls, "triBallAnimation", "triBall")
+        new TriBallObject(scene, 300, 500, scene._ballPool, scene.pad, scene._blockPool, scene.walls, scene._explosionSound, scene._ballHitWallsSound, "triBallAnimation", "triBall")
     }
 }

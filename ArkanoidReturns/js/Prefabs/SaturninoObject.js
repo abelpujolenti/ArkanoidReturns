@@ -1,8 +1,8 @@
-class SaturninoObject extends Object
+class SaturninoObject extends LevelObject
 {
-    constructor(scene, positionX, positionY, ballPool, pad, blockPool, walls, animation, spriteTag)
+    constructor(scene, positionX, positionY, ballPool, pad, blockPool, walls, explosionSound, animation, spriteTag)
     {
-        super(scene, positionX, positionY, ballPool, pad, blockPool, walls, animation, spriteTag)
+        super(scene, positionX, positionY, ballPool, pad, blockPool, walls, explosionSound, animation, spriteTag)
         scene.add.existing(this);
     }
 

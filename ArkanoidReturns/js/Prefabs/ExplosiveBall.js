@@ -1,10 +1,11 @@
 class ExplosiveBall extends Ball
 {
-    constructor(scene, positionX, positionY, ballPool, pad, walls, spriteTag)
+    constructor(scene, positionX, positionY, ballPool, pad, walls, ballHitWallsSound, explosionSound, spriteTag)
     {
-        super(scene, positionX, positionY, pad, walls, spriteTag);
+        super(scene, positionX, positionY, pad, walls, ballHitWallsSound, spriteTag);
         scene.add.existing(this).setScale(0.6);
         this._ballPool = ballPool
+        this._explosionSound = explosionSound
 
         this.RandomVelocity()
     }
@@ -19,8 +20,7 @@ class ExplosiveBall extends Ball
                 callback: this.EnableColliders,
                 callbackScope: this
             }
-        )
-        
+        )        
         
     }
 
@@ -30,6 +30,7 @@ class ExplosiveBall extends Ball
     }
 
     Explode(){
+        this._explosionSound.play()
         this._pad.UpdateScore(100)
         this.destroy()
     }
