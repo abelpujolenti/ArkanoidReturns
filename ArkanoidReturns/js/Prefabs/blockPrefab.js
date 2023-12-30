@@ -14,6 +14,7 @@ class BlockPrefab extends Phaser.GameObjects.Sprite
         this.health = _health;
         this.score = _score;
         this.pad = _pad;
+        this.laserBuildup = 0;
         if (_animTag != null) {
             this.anims.play(_animTag);
         }
@@ -31,6 +32,14 @@ class BlockPrefab extends Phaser.GameObjects.Sprite
         this.health--;
         if (this.health <= 0) {
             this.break();
+        }
+    }
+
+    AddLaserBuildup() {
+        this.laserBuildup++;
+        if (this.laserBuildup > 50) {
+            this.damage();
+            this.laserBuildup = 0;
         }
     }
 

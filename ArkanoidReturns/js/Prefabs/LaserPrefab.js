@@ -46,7 +46,9 @@ class LaserPrefab extends Phaser.GameObjects.Sprite
     }
 
     HitBlock(lmao, block) {
-        this.blockColliders[this.blockColliders.length] = block;
+        if (Math.abs(block.x - this.x) < 30) {
+            this.blockColliders[this.blockColliders.length] = block;
+        }
     }
 
     damage() {}
@@ -67,12 +69,13 @@ class LaserPrefab extends Phaser.GameObjects.Sprite
             }
         }
         var lowestY = this.blockColliders[lowest].y;
-        //this.blockColliders[lowest].damage();
+        this.blockColliders[lowest].AddLaserBuildup();
 
-        var y = ((lowestY - 80.0) / 20.0) / 25.0;
+        var y = ((lowestY) / 20.0 - 1.0) / 25.0;
+        console.log((lowestY) / 20.0);
         console.log(y);
 
-        this.setCrop(0, 88.0 * y, this.displayWidth, this.displayHeight)
+        this.setCrop(0, 87.0 * y, this.displayWidth, this.displayHeight)
 
         this.blockColliders = [];
     }

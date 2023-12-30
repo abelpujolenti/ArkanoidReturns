@@ -3,5 +3,3 @@
  AA     AA 
  C   C   C 
  AA CAC AA 
- AA
- AA
