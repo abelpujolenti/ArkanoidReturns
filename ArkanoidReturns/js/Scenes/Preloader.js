@@ -35,8 +35,8 @@ class Preloader extends Phaser.Scene
         this.load.spritesheet("powerupC", "C.png", {frameWidth: 44, frameHeight: 22});
 
         this.load.setPath("assets/img/effect");
-        this.load.spritesheet("laser", "laser.png", {frameWidth: 22, frameHeight: 86});
         this.load.spritesheet("explosion", "explosion.png", {frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet("laser", "laser.png", {frameWidth: 14, frameHeight: 86});
 
         this.load.setPath("assets/img/pad");
         this.load.spritesheet("pad", "default.png", {frameWidth: 88, frameHeight:22});

@@ -190,7 +190,7 @@ class Pad extends Phaser.GameObjects.Sprite
     }
 
     Laser(player) {
-        this.laser = new LaserPrefab(player.scene, player.x, player.y, 3000, player, this.score);
+        this.laser = new LaserPrefab(player.scene, player.x, player.y, 30000, player, this.score);
     }
 
     SpeedDown(player){
