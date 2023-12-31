@@ -27,7 +27,7 @@ class BlockPrefab extends Phaser.GameObjects.Sprite
         this.damaged = true;
         this.health--;
         this._ballHitBrickSound.play()
-        if (this.health <= 0) {
+        if (this.health == 0) {
             this.break();
         }
     }
@@ -41,6 +41,7 @@ class BlockPrefab extends Phaser.GameObjects.Sprite
     }
 
     break() {
+        if (this.health < 0) return;
         this.deActivate();
         this.pad.UpdateScore(this.score);
         this.pad.IncreaseStreak();

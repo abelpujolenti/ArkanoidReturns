@@ -77,6 +77,8 @@ class TestLevel extends Phaser.Scene
 
     createLevel(size, rootX, rootY, level)
     {
+        this.blockColors = ["magentaBlock", "redBlock", "orangeBlock", "yellowBlock", "greenBlock", "lightblueBlock", "blueBlock", "silverBlock", "goldBlock", "whiteBlock"]
+
         this.blockAmountX = 11;
         var str = this.cache.text.get(level);
         var width = 44;
@@ -85,7 +87,7 @@ class TestLevel extends Phaser.Scene
         var y = 0;
         for (let i = 0; i < str.length; i++) { 
             var char = str.charCodeAt(i);
-            if (char >= 65)
+            if (char >= 33)
             {
                 var posX = rootX + (x - 5) * size;
                 var posY = rootY + y * size * 0.5;
@@ -94,11 +96,15 @@ class TestLevel extends Phaser.Scene
                 {
                     this._blockPool.add(new CrystalBlockPrefab(this, posX, posY, 'crystalBlock', null, 1, this._ballPool, this.pad, 1, this._ballHitBrickSound).setScale(this.blockScale));
                 }
-                else
-                {
-                    this._blockPool.add(new BlockPrefab(this, posX, posY, 'silverBlock', null, 1, this._ballPool, this.pad, 1, this._ballHitBrickSound).setScale(this.blockScale));
+                else if (char == 72) {
+                    this._blockPool.add(new BlockPrefab(this, posX, posY, 'silverBlock', null, 2, this._ballPool, this.pad, 1, this._ballHitBrickSound).setScale(this.blockScale));
                 }
-
+                else if (char == 73 || char == 77) {
+                    this._blockPool.add(new BlockPrefab(this, posX, posY, 'goldBlock', null, -1, this._ballPool, this.pad, 1, this._ballHitBrickSound).setScale(this.blockScale));
+                }
+                else {
+                    this._blockPool.add(new BlockPrefab(this, posX, posY, this.blockColors[char - 48], null, 1, this._ballPool, this.pad, 1, this._ballHitBrickSound).setScale(this.blockScale));
+                }
                 x++;
             }
             else if (char == 32)
@@ -165,14 +171,6 @@ class TestLevel extends Phaser.Scene
 
     loadAnimations()
     {
-        this.anims.create(
-            {
-                key: 'silverBlockAnim',
-                frames:this.anims.generateFrameNumbers('silverBlock', {start:0, end: 9}),
-                frameRate: 15,
-                repeat: -1
-            });
-
         this.anims.create(
             {
                 key: 'padAnim',
@@ -309,7 +307,7 @@ class TestLevel extends Phaser.Scene
         this.anims.create(
             {
                 key: "explosionAnimation",
-                frames: this.anims.generateFrameNumbers("explosion", {start: 0, end: 5}),
+                frames: this.anims.generateFrameNumbers("explosion", {start: 0, end: 4}),
                 frameRate: 15
             });
     }

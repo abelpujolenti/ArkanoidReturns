@@ -28,8 +28,17 @@ class Preloader extends Phaser.Scene
         this.load.image("redBall", "red.png");
         
         this.load.setPath("assets/img/block");
-        this.load.spritesheet("silverBlock", "silver_animated.png", {frameWidth: 44, frameHeight: 22});
         this.load.image("crystalBlock", "crystal.png");  
+        this.load.image("magentaBlock", "magenta.png");  
+        this.load.image("redBlock", "red.png");  
+        this.load.image("orangeBlock", "orange.png");  
+        this.load.image("yellowBlock", "yellow.png");  
+        this.load.image("greenBlock", "green.png");  
+        this.load.image("lightblueBlock", "lightblue.png");  
+        this.load.image("blueBlock", "blue.png");  
+        this.load.image("silverBlock", "silver.png");  
+        this.load.image("goldBlock", "gold.png");  
+        this.load.image("whiteBlock", "white.png");  
 
         this.load.setPath("assets/img/item");
         this.load.spritesheet("saturnino", "Saturnino.png", {frameWidth: 44, frameHeight: 44});
