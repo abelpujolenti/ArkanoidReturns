@@ -29,6 +29,7 @@ class Preloader extends Phaser.Scene
         
         this.load.setPath("assets/img/block");
         this.load.image("crystalBlock", "crystal.png");  
+        this.load.image("brokenBlock", "broken.png");  
         this.load.image("magentaBlock", "magenta.png");  
         this.load.image("redBlock", "red.png");  
         this.load.image("orangeBlock", "orange.png");  

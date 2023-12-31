@@ -97,13 +97,19 @@ class TestLevel extends Phaser.Scene
                     this._blockPool.add(new CrystalBlockPrefab(this, posX, posY, 'crystalBlock', null, 1, this._ballPool, this.pad, 1, this._ballHitBrickSound).setScale(this.blockScale));
                 }
                 else if (char == 72) {
-                    this._blockPool.add(new BlockPrefab(this, posX, posY, 'silverBlock', null, 2, this._ballPool, this.pad, 1, this._ballHitBrickSound).setScale(this.blockScale));
+                    this._blockPool.add(new HardBlockPrefab(this, posX, posY, 'silverBlock', null, 2, this._ballPool, this.pad, 1, this._ballHitBrickSound).setScale(this.blockScale));
                 }
                 else if (char == 73 || char == 77) {
                     this._blockPool.add(new BlockPrefab(this, posX, posY, 'goldBlock', null, -1, this._ballPool, this.pad, 1, this._ballHitBrickSound).setScale(this.blockScale));
                 }
                 else {
-                    this._blockPool.add(new BlockPrefab(this, posX, posY, this.blockColors[char - 48], null, 1, this._ballPool, this.pad, 1, this._ballHitBrickSound).setScale(this.blockScale));
+                    let rand = Math.random();
+                    if (rand < .15) {
+                        this._blockPool.add(new CrystalBlockPrefab(this, posX, posY, this.blockColors[char - 48], null, 1, this._ballPool, this.pad, 1, this._ballHitBrickSound).setScale(this.blockScale));
+                    }
+                    else {
+                        this._blockPool.add(new BlockPrefab(this, posX, posY, this.blockColors[char - 48], null, 1, this._ballPool, this.pad, 1, this._ballHitBrickSound).setScale(this.blockScale));
+                    }
                 }
                 x++;
             }
