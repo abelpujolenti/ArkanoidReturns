@@ -45,6 +45,7 @@ class BlockPrefab extends Phaser.GameObjects.Sprite
         this.deActivate();
         this.pad.UpdateScore(this.score);
         this.pad.IncreaseStreak();
+        this.pad.scene.UpdateDestroyBlocks();
     }
 
     preUpdate(time, delta) {

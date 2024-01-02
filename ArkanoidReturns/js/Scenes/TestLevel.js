@@ -8,7 +8,16 @@ class TestLevel extends Phaser.Scene
     preload()
     {
         this.load.setPath("assets/data/level");
-        this.load.text("test", "test.txt");
+        this.load.text("level1", "level1.txt");
+        this.load.text("level2", "level2.txt");
+        this.load.text("level3", "level3.txt");
+        this.load.text("level4", "level4.txt");
+        this.load.text("level5", "level5.txt");
+        this.load.text("level6", "level6.txt");
+        this.load.text("level7", "level7.txt");
+        this.load.text("level8", "level8.txt");
+        this.load.text("level9", "level9.txt");
+        this.load.text("level10", "level10.txt");
 
         this.load.setPath("assets/map");
         this.load.tilemapTiledJSON("map", "map.json");
@@ -51,7 +60,9 @@ class TestLevel extends Phaser.Scene
             }
         )
 
-        this.createLevel(40, config.width / 2, 80, "test");
+        this.currentLevel = 1;
+        this.blockColors = ["magentaBlock", "redBlock", "orangeBlock", "yellowBlock", "greenBlock", "lightblueBlock", "blueBlock", "silverBlock", "goldBlock", "whiteBlock"]
+        this.createLevel(40, config.width / 2, 80, "level" + this.currentLevel);
 
         this._levelStartSound.play()
     }
@@ -75,9 +86,13 @@ class TestLevel extends Phaser.Scene
         this._blockPool = this.add.group()
     }
 
+    LoadNextLevel() {
+        console.log("load next");
+    }
+
     createLevel(size, rootX, rootY, level)
     {
-        this.blockColors = ["magentaBlock", "redBlock", "orangeBlock", "yellowBlock", "greenBlock", "lightblueBlock", "blueBlock", "silverBlock", "goldBlock", "whiteBlock"]
+        this.beatLevelThreshold = 0;
 
         this.blockAmountX = 11;
         var str = this.cache.text.get(level);
@@ -101,6 +116,7 @@ class TestLevel extends Phaser.Scene
                 }
                 else if (char == 73 || char == 77) {
                     this._blockPool.add(new BlockPrefab(this, posX, posY, 'goldBlock', null, -1, this._ballPool, this.pad, 1, this._ballHitBrickSound).setScale(this.blockScale));
+                    this.beatLevelThreshold++;
                 }
                 else {
                     let rand = Math.random();
@@ -173,6 +189,12 @@ class TestLevel extends Phaser.Scene
         this._ballPool.getChildren().forEach(ball => {
             ball.MultiplyVelocity(2)
         });
+    }
+
+    UpdateDestroyBlocks() {
+        if (this._blockPool.children.size <= this.beatLevelThreshold) {
+            this.LoadNextLevel();
+        }
     }
 
     loadAnimations()

@@ -118,7 +118,8 @@ class Pad extends Phaser.GameObjects.Sprite
     IncreaseStreak()
     {
         this.streak++;
-        this.multiplier = 1 + (0.25 * Math.floor(this.streak / 5));
+        this.multiplier = Math.floor(1.0 + (this.streak / 5.0));
+        console.log(this.multiplier);
     }
 
     Reset(_positionX, _positionY)
