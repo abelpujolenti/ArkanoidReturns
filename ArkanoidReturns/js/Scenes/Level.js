@@ -1,8 +1,13 @@
-class TestLevel extends Phaser.Scene
+class Level extends Phaser.Scene
 {
     constructor()
     {
-        super({key:"TestLevel"});
+        super({key:"Level"});
+        
+    }
+
+    init(data) {
+        this.currentLevel = data.level;
     }
 
     preload()
@@ -60,11 +65,32 @@ class TestLevel extends Phaser.Scene
             }
         )
 
-        this.currentLevel = 1;
         this.blockColors = ["magentaBlock", "redBlock", "orangeBlock", "yellowBlock", "greenBlock", "lightblueBlock", "blueBlock", "silverBlock", "goldBlock", "whiteBlock"]
         this.createLevel(40, config.width / 2, 80, "level" + this.currentLevel);
+        
 
+        this.fadeDuration = 600;
+        this.fadein = new FadePrefab(this, config.width / 2, config.height / 2);
+        this.tweens.add(
+            {
+                targets: this.fadein,
+                alpha: { from: 1, to: 0},
+                duration: this.fadeDuration
+            }
+        )
+        this.time.addEvent(
+            {
+                delay: this.fadeDuration,
+                callback: this.LevelStart,
+                callbackScope: this,
+                loop: false
+            }
+        )
+    }
+
+    LevelStart() {
         this._levelStartSound.play()
+        this.fadein.destroy();
     }
 
     LoadSounds()
@@ -87,7 +113,7 @@ class TestLevel extends Phaser.Scene
     }
 
     LoadNextLevel() {
-        console.log("load next");
+        this.scene.start("Level", {level: this.currentLevel + 1});
     }
 
     createLevel(size, rootX, rootY, level)

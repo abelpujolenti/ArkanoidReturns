@@ -3,7 +3,7 @@ var config =
     type: Phaser.AUTO,
     width: 800,
     height: 560, 
-    scene:[Preloader, MenuScene, RankingScene, TestLevel, EndScene], 
+    scene:[Preloader, MenuScene, RankingScene, Level, EndScene], 
     render:
     {
         pixelArt : true

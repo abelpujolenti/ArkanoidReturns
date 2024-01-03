@@ -67,7 +67,7 @@ class MenuScene extends Phaser.Scene
         (
             {
                 delay: 350,
-                callback: this.changeScene("TestLevel"),
+                callback: this.startGame,
                 callbackScope: this,
                 loop: false
             }
@@ -125,5 +125,9 @@ class MenuScene extends Phaser.Scene
     changeScene(_nextScene)
     {
         this.scene.start(_nextScene);
+    }
+
+    startGame() {
+        this.scene.start("Level", {level: 1});
     }
 }

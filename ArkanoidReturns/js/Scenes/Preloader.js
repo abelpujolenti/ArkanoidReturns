@@ -21,6 +21,9 @@ class Preloader extends Phaser.Scene
         this.load.audio("levelStart", "LevelStart.wav")
         this.load.audio("objectAppears", "ObjectAppears.wav")
 
+        this.load.setPath("assets/img");
+        this.load.image("fade", "fade.png");
+
         this.load.setPath("assets/img/projectile");
         this.load.image("normalBall", "cyan.png");
         this.load.image("greenBall", "green.png");
