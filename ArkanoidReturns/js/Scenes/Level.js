@@ -46,12 +46,12 @@ class Level extends Phaser.Scene
         this.UpdateHighscoreUI(this.highscore);
 
         this.pad = new Pad(this, gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y, 'pad', 'padAnim', 0, 1, 
-                            this.walls, this._ballHitPadSound, this._enlargeSound, this._extraLifeSound, this._gameOverSound).setScale(0.5);
+                            this.walls, this._ballHitPadSound, this._enlargeSound, this._extraLifeSound, this._gameOverSound).setScale(.75);
 
         this.ballsCounter = 0;
         
         this.ball = new NormalBall(this, this.pad.x, this.pad.getTopCenter().y, this.pad, this.walls, 
-                                    this.ballsCounter, this._ballHitWallsSound).setScale(.75);
+                                    this.ballsCounter, this._ballHitWallsSound).setScale(1);
         this._ballPool.add(this.ball);     
         
         this.powerups = [];

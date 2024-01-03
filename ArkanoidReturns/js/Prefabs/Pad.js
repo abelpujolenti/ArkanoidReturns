@@ -29,8 +29,6 @@ class Pad extends Phaser.GameObjects.Sprite
         {
             this.anims.play(_animTag);
         }
-
-        this.Laser(this);
     }
 
     SetColliders()
