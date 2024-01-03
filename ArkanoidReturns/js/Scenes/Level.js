@@ -104,6 +104,7 @@ class Level extends Phaser.Scene
         this._gameOverSound = this.sound.add("gameOver")
         this._levelStartSound = this.sound.add("levelStart")
         this._objectAppearsSound = this.sound.add("objectAppears")
+        this._laserSound = this.sound.add("laser");
     }
 
     LoadPools()

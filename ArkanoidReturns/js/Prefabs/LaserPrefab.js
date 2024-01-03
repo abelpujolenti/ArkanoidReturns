@@ -1,6 +1,6 @@
 class LaserPrefab extends Phaser.GameObjects.Sprite
 {
-    constructor(_scene,_posX,_posY, _duration, _pad, _score)
+    constructor(_scene,_posX,_posY, _duration, _pad, _score, _laserSound)
     {
         super(_scene,_posX,_posY,"laser");
 
@@ -12,6 +12,7 @@ class LaserPrefab extends Phaser.GameObjects.Sprite
         this.score = _score;
         this.pad = _pad;
         this.duration = _duration;
+        this.laserSound = _laserSound;
 
         this.anims.play("laserAnim");
 
@@ -29,6 +30,8 @@ class LaserPrefab extends Phaser.GameObjects.Sprite
         )
 
         this.SetColliders();
+
+        this.soundTimer = 0;
     }
 
     SetColliders()
@@ -57,6 +60,12 @@ class LaserPrefab extends Phaser.GameObjects.Sprite
         if (this.blockColliders.length > 0) {
             this.CollidersUpdate();
         }
+
+        this.soundTimer++;
+        if (this.soundTimer > 60) {
+            this.laserSound.play();
+            this.soundTimer = 0;
+        }
     }
 
     CollidersUpdate() {
@@ -70,8 +79,6 @@ class LaserPrefab extends Phaser.GameObjects.Sprite
         this.blockColliders[lowest].AddLaserBuildup();
 
         var y = ((lowestY) / 20.0 - 1.0) / 25.0;
-        console.log((lowestY) / 20.0);
-        console.log(y);
 
         this.setCrop(0, 87.0 * y, this.displayWidth, this.displayHeight)
 

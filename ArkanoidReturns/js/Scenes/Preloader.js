@@ -17,7 +17,7 @@ class Preloader extends Phaser.Scene
         this.load.audio("extraLife", "ExtraLife.wav")
         this.load.audio("gameOver", "GameOver.wav")
         this.load.audio("intro", "Intro.wav")
-        //this.load.audio("Laser", "BallHitCrick.wav") //Aqui va tu laser, puto
+        this.load.audio("laser", "Laser.wav")
         this.load.audio("levelStart", "LevelStart.wav")
         this.load.audio("objectAppears", "ObjectAppears.wav")
 
