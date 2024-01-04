@@ -5,9 +5,9 @@ class OpeningVerticalPrefab extends Phaser.GameObjects.Sprite
         super(_scene, _positionX, _positionY, _spriteTag);
         _scene.add.existing(this);
         _scene.physics.world.enable(this);
+        this.body.setImmovable(true);
         
         this.scene = _scene;
-        this.player = _scene.player;
 
         this.SetColliders();
 
@@ -19,8 +19,21 @@ class OpeningVerticalPrefab extends Phaser.GameObjects.Sprite
 
     SetColliders()
     {
-        //this.scene.physics.add.collider(this, this.walls);
-        this.scene.physics.add.collider(this, this.player);
+        //this.scene.physics.add.collider(this, this.player);
+
+        this.scene.physics.add.collider
+        (
+            this,
+            this.scene.pad,
+            this.scene.CrossOpening,
+            null,
+            this.scene
+        );
+    }
+
+    ChangeAndPlayAnim(_newAnimTag)
+    {
+        this.anims.play(_newAnimTag)
     }
 
     preUpdate(time, delta)

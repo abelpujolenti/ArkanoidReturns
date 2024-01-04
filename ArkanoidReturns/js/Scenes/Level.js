@@ -93,29 +93,16 @@ class Level extends Phaser.Scene
         this.fadein.destroy();
 
         //TODO: Remove test
-        this.rightOpening0 = new OpeningVerticalPrefab(this, 633, 400, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
+        this.rightOpening0 = new OpeningVerticalPrefab(this, 633, 530, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
         .setScale(0.71);
 
-        this.rightOpening1 = new OpeningVerticalPrefab(this, 649, 400, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
+        this.rightOpening1 = new OpeningVerticalPrefab(this, 649, 530, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
         .setScale(0.71);
 
-        this.rightOpening2 = new OpeningVerticalPrefab(this, 665, 400, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
+        this.rightOpening2 = new OpeningVerticalPrefab(this, 665, 530, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
         .setScale(0.71);
 
-        this.rightOpening3 = new OpeningVerticalPrefab(this, 681, 400, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
-        .setScale(0.71);
-
-        //Close
-        this.rightOpening4 = new OpeningVerticalPrefab(this, 633, 500, 'openingThingVertical', 'openingThingVerticalCloseAnimation')
-        .setScale(0.71);
-
-        this.rightOpening5 = new OpeningVerticalPrefab(this, 649, 500, 'openingThingVertical', 'openingThingVerticalCloseAnimation')
-        .setScale(0.71);
-
-        this.rightOpening6 = new OpeningVerticalPrefab(this, 665, 500, 'openingThingVertical', 'openingThingVerticalCloseAnimation')
-        .setScale(0.71);
-
-        this.rightOpening7 = new OpeningVerticalPrefab(this, 681, 500, 'openingThingVertical', 'openingThingVerticalCloseAnimation')
+        this.rightOpening3 = new OpeningVerticalPrefab(this, 681, 530, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
         .setScale(0.71);
     }
 
@@ -245,12 +232,34 @@ class Level extends Phaser.Scene
     }
 
     BreakEffect() {
-        console.log("Apply break");
 
         //Create opening thing vertical
-        this.rightOpening = new OpeningVerticalPrefab(this, 680, 400, 'openingThingVertical', 'openingThingVerticalAnimation')
+        /*
+        this.rightOpening0 = new OpeningVerticalPrefab(this, 633, 530, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
         .setScale(0.71);
 
+        this.rightOpening1 = new OpeningVerticalPrefab(this, 649, 530, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
+        .setScale(0.71);
+
+        this.rightOpening2 = new OpeningVerticalPrefab(this, 665, 530, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
+        .setScale(0.71);
+
+        this.rightOpening3 = new OpeningVerticalPrefab(this, 681, 530, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
+        .setScale(0.71);
+        */
+    }
+
+    CloseOpening()
+    {
+        this.rightOpening0.ChangeAndPlayAnim('openingThingVerticalCloseAnimation');
+        this.rightOpening1.ChangeAndPlayAnim('openingThingVerticalCloseAnimation');
+        this.rightOpening2.ChangeAndPlayAnim('openingThingVerticalCloseAnimation');
+        this.rightOpening3.ChangeAndPlayAnim('openingThingVerticalCloseAnimation');
+    }
+
+    CrossOpening()
+    {
+        console.log("Cross opening");
     }
 
     UpdateDestroyBlocks() {
