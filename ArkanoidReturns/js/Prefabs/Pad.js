@@ -1,6 +1,6 @@
 class Pad extends Phaser.GameObjects.Sprite
 {
-    constructor(_scene, _positionX, _positionY, _spriteTag, _animTag, _score, _multiplier, _walls){
+    constructor(_scene, _positionX, _positionY, _spriteTag, _animTag, _score, _multiplier, _walls, ballHitPadSound, enlargeSound, extraLifeSound, gameOverSound){
         
         super(_scene, _positionX, _positionY, _spriteTag);
         _scene.add.existing(this);
@@ -12,6 +12,10 @@ class Pad extends Phaser.GameObjects.Sprite
         this.multiplier = _multiplier;
         this.streak = 0;
         this.walls = _walls;
+        this._ballHitPadSound = ballHitPadSound
+        this._enlargeSound = enlargeSound
+        this._extraLifeSound = extraLifeSound
+        this._gameOverSound = gameOverSound
         this.lives = gamePrefs.PLAYER_LIVES;
         this.cursors = _scene.input.keyboard.createCursorKeys();
 
@@ -41,6 +45,7 @@ class Pad extends Phaser.GameObjects.Sprite
             this.CheckInput();
             return;
         }        
+        this._gameOverSound.play()
         this.scene.LoadGameOver();
     }
 
@@ -52,21 +57,26 @@ class Pad extends Phaser.GameObjects.Sprite
 
     ApplyBounce(_ball)
     {
-        if(!this.catching)
+        if(this.catching)
         {
+            this.catchedBalls[this.catchedBalls.length] = _ball
+            _ball.idle = true;
             return
         }
 
-        this.catchedBalls[this.catchedBalls.length] = _ball
-        _ball.idle = true;
-        //_ball.body.setVelocity(10)
-        /*var rel = (this.positionX + this.width / 2) - (_ball.x + gamePrefs.SIZE / 2);
-		var norm = rel / (this.width / 2);
-		var bounce = norm * (5 * gamePrefs.PI / 12);
-		var velocityMultiplierY = Math.cos(bounce);
-		var velocityMultiplierX = -Math.sin(bounce);
+        this._ballHitPadSound.play()
 
-        _ball.ChangeVelocity(velocityMultiplierX, velocityMultiplierY);*/
+        var ballSpeed = _ball.body.speed
+        
+        var imaginaryPoint = new Phaser.Math.Vector2(this.x, this.y + 1)
+
+        var vector = new Phaser.Math.Vector2(_ball.getBottomCenter().x - imaginaryPoint.x, _ball.getBottomCenter().y - imaginaryPoint.y)
+
+        var vectorNormalized = vector.normalize()
+
+        var velocity = new Phaser.Math.Vector2(vectorNormalized.x * ballSpeed, vectorNormalized.y * ballSpeed)
+
+        _ball.SetVelocity(velocity.x, velocity.y);
     }
 
     ApplyUpgrade(_upgrade) {
@@ -108,7 +118,8 @@ class Pad extends Phaser.GameObjects.Sprite
     IncreaseStreak()
     {
         this.streak++;
-        this.multiplier = 1 + (0.25 * Math.floor(this.streak / 5));
+        this.multiplier = Math.floor(1.0 + (this.streak / 5.0));
+        console.log(this.multiplier);
     }
 
     Reset(_positionX, _positionY)
@@ -121,9 +132,9 @@ class Pad extends Phaser.GameObjects.Sprite
     InitPowerUpEffects()
     {
         this.ApplyPowerUpEffect = { 
-            "E": this.SpeedDown, //placeholder
-            "B": this.ApplyBreak, //placeholder
-            "L": this.SpeedDown, //placeholder
+            "E": this.Expand, //placeholder
+            "B": this.SpeedDown, //placeholder
+            "L": this.Laser, //placeholder
             "G": this.SpeedDown, //placeholder
             "D": this.ApplyDisruption, //placeholder
             "M": this.SpeedDown, //placeholder
@@ -134,11 +145,36 @@ class Pad extends Phaser.GameObjects.Sprite
         };
     }
 
+    Expand(player){
+        player.setTexture("longPad")
+        player.anims.play("longPadAnim")
+        player.body.setSize(132, 22)
+        player._enlargeSound.play()
+
+        player.scene.time.removeEvent(player.scene.expandTimer)
+
+        player.scene.expandTimer = player.scene.time.addEvent(
+            {
+               delay: 10000,
+               callback: player.EnoughExpand,
+               callbackScope: player
+            }
+        )
+
+    }
+
+    EnoughExpand(){
+        this.texture = "pad"
+        this.anims.play("padAnim")
+        this.body.setSize(88, 22)
+    }
+
     ApplyPlayerExtend(_player)
     {
         //This no és la pad sinó la "posició" del diccionari
         _player.lives++;
         _player.scene.UpdateLivesUI();
+        _player._extraLifeSound.play()
     }
 
     ApplyDisruption(_player)
@@ -163,6 +199,10 @@ class Pad extends Phaser.GameObjects.Sprite
 
     }
 
+    Laser(player) {
+        this.laser = new LaserPrefab(player.scene, player.x, player.y, 3000, player, this.score, this.scene._laserSound);
+    }
+
     SpeedDown(player){
         player.scene.SlowDownBalls();
     }
@@ -171,9 +211,9 @@ class Pad extends Phaser.GameObjects.Sprite
 
         player.catching = true;
 
-        player.scene.time.removeEvent(player.scene.catchingTimer)
+        player.scene.time.removeEvent(player.catchingTimer)
 
-        player.scene.catchingTimer = player.scene.time.addEvent(
+        player.catchingTimer = player.scene.time.addEvent(
             {
                delay: 10000,
                callback: player.EnoughCatch,
@@ -188,11 +228,5 @@ class Pad extends Phaser.GameObjects.Sprite
             ball.StartMoving()
         });
         this.catchedBalls.length = 0
-    }
-
-    ApplyBreak(_player)
-    {
-        console.log("Apply break");
-        _player.scene.openingVertical = new OpeningVerticalPrefab(_player.scene, 10, 10, 'openingThingVertical', 'openingThingVerticalAnim').setScale(0.5)
     }
 }

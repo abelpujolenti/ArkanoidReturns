@@ -1,12 +1,59 @@
 class NormalBall extends Ball
 {
-    constructor(scene, positionX, positionY, pad, walls, ballsCounter)
+    constructor(scene, positionX, positionY, pad, walls, ballsCounter, ballHitWallsSound)
     {
-        super(scene, positionX, positionY, pad, walls, ballsCounter, "normalBall");
+        super(scene, positionX, positionY, pad, walls, ballHitWallsSound, "normalBall");
         scene.add.existing(this);
 
+        this._ballsCounter = ballsCounter
+
+        this.scene.UpdateBallsCounter(1);
+
         this.idle = true;
+    }        
+
+    preUpdate(time, delta)
+    {
+        super.preUpdate(time, delta); 
+
+        if(this.idle)
+        {
+            this.ResetPosition(this._pad.x, this._pad.getTopCenter().y);
+        }
+        else if(this.getTopCenter().y > config.height)
+        {
+            if(this._ballsCounter > 1)        
+            {
+                this.scene.UpdateBallsCounter(-1);
+                this.active = false;
+                return;
+            }
+            this._pad.DecrementLives();
+            this.scene.UpdateLivesUI();            
+            this.body.setVelocity(0, 0);
+            this.idle = true;
+            this.scene.ball = this;
+        }
     }    
+
+    ModifyBallsCounter(number)
+    {
+        this._ballsCounter += number;
+    }
+
+    SetColliders()
+    {
+        super.SetColliders()        
+
+        this._scene.physics.add.collider
+        (
+            this,
+            this._pad,
+            this._pad.ApplyBounce,
+            null,
+            this._pad
+        );
+    }
 
     StartMoving()
     {
@@ -36,7 +83,6 @@ class NormalBall extends Ball
         this.body.setVelocity(0, 0);
         this.setPosition(_positionX, _positionY);
         Phaser.Display.Bounds.SetBottom(this, _positionY);
-        console.log("idle: " + this.idle);
     }
 
     Reset(_positionX, _positionY)
@@ -45,5 +91,4 @@ class NormalBall extends Ball
         this.body.setVelocity(0, 0);
         this.setPosition(_positionX, _positionY);
     }
-
 }
