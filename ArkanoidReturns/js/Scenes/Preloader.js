@@ -73,8 +73,8 @@ class Preloader extends Phaser.Scene
         this.load.image("verticalPipeTileset", "vertical.png");
         this.load.image("horizontalPipeTileset", "horizontal.png");
 
-        this.load.setPath("assets/img/idkwhatthisis");
-        this.load.image("openingThingVertical", "opening_thing_vertical_2.png")
+        this.load.setPath("assets/img/opening_border");
+        this.load.spritesheet("openingThingVertical", "opening_thing_vertical_2.png", {frameWidth:22, frameHeight:90});
 
         this.load.setPath("assets/fonts");
         this.load.bitmapFont("arkanoidFont", "ArkanoidFont.png", "ArkanoidFont.xml");

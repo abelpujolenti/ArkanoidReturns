@@ -20,6 +20,7 @@ class OpeningVerticalPrefab extends Phaser.GameObjects.Sprite
     SetColliders()
     {
         //this.scene.physics.add.collider(this, this.walls);
+        this.scene.physics.add.collider(this, this.player);
     }
 
     preUpdate(time, delta)

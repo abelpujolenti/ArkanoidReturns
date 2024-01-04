@@ -132,17 +132,21 @@ class Pad extends Phaser.GameObjects.Sprite
     InitPowerUpEffects()
     {
         this.ApplyPowerUpEffect = { 
-            "E": this.Expand, //placeholder
-            "B": this.SpeedDown, //placeholder
-            "L": this.Laser, //placeholder
+            "E": this.Expand,
+            "B": this.ApplyBreak,
+            "L": this.Laser,
             "G": this.SpeedDown, //placeholder
-            "D": this.ApplyDisruption, //placeholder
+            "D": this.ApplyDisruption,
             "M": this.SpeedDown, //placeholder
             "T": this.SpeedDown, //placeholder
             "P": this.ApplyPlayerExtend,
             "S": this.SpeedDown,
             "C": this.Catch,
         };
+    }
+
+    ApplyBreak(_player) {
+        _player.scene.BreakEffect()
     }
 
     Expand(player){

@@ -91,6 +91,32 @@ class Level extends Phaser.Scene
     LevelStart() {
         this._levelStartSound.play()
         this.fadein.destroy();
+
+        //TODO: Remove test
+        this.rightOpening0 = new OpeningVerticalPrefab(this, 633, 400, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
+        .setScale(0.71);
+
+        this.rightOpening1 = new OpeningVerticalPrefab(this, 649, 400, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
+        .setScale(0.71);
+
+        this.rightOpening2 = new OpeningVerticalPrefab(this, 665, 400, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
+        .setScale(0.71);
+
+        this.rightOpening3 = new OpeningVerticalPrefab(this, 681, 400, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
+        .setScale(0.71);
+
+        //Close
+        this.rightOpening4 = new OpeningVerticalPrefab(this, 633, 500, 'openingThingVertical', 'openingThingVerticalCloseAnimation')
+        .setScale(0.71);
+
+        this.rightOpening5 = new OpeningVerticalPrefab(this, 649, 500, 'openingThingVertical', 'openingThingVerticalCloseAnimation')
+        .setScale(0.71);
+
+        this.rightOpening6 = new OpeningVerticalPrefab(this, 665, 500, 'openingThingVertical', 'openingThingVerticalCloseAnimation')
+        .setScale(0.71);
+
+        this.rightOpening7 = new OpeningVerticalPrefab(this, 681, 500, 'openingThingVertical', 'openingThingVerticalCloseAnimation')
+        .setScale(0.71);
     }
 
     LoadSounds()
@@ -216,6 +242,15 @@ class Level extends Phaser.Scene
         this._ballPool.getChildren().forEach(ball => {
             ball.MultiplyVelocity(2)
         });
+    }
+
+    BreakEffect() {
+        console.log("Apply break");
+
+        //Create opening thing vertical
+        this.rightOpening = new OpeningVerticalPrefab(this, 680, 400, 'openingThingVertical', 'openingThingVerticalAnimation')
+        .setScale(0.71);
+
     }
 
     UpdateDestroyBlocks() {
@@ -364,6 +399,20 @@ class Level extends Phaser.Scene
                 key: "explosionAnimation",
                 frames: this.anims.generateFrameNumbers("explosion", {start: 0, end: 4}),
                 frameRate: 15
+            });
+
+        this.anims.create(
+            {
+                key: "openingThingVerticalOpenAnimation",
+                frames: this.anims.generateFrameNumbers("openingThingVertical", {start: 0, end: 6}),
+                frameRate: 15,
+            });
+        
+            this.anims.create(
+            {
+                key: "openingThingVerticalCloseAnimation",
+                frames: this.anims.generateFrameNumbers("openingThingVertical", {start: 6, end: 0}),
+                frameRate: 15,
             });
     }
 
