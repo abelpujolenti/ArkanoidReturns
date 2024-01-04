@@ -121,6 +121,6 @@ class EndScene extends HighscoreScene
     changeScene()
     {
         highscoreSerializerInstance.pushToScoreArrayAndSave(this.score);
-        super.changeScene('TestLevel');
+        super.changeScene('Level');
     }
 }
