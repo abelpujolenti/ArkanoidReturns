@@ -55,6 +55,12 @@ class Pad extends Phaser.GameObjects.Sprite
         this.scene.UpdateScoreUI(this.score);
     }
 
+    UpdateScoreDefault(score)
+    {
+        this.score += score;
+        this.scene.UpdateScoreUI(this.score);
+    }
+
     ApplyBounce(_ball)
     {
         if(this.catching)

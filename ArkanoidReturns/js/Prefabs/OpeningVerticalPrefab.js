@@ -6,6 +6,7 @@ class OpeningVerticalPrefab extends Phaser.GameObjects.Sprite
         _scene.add.existing(this);
         _scene.physics.world.enable(this);
         this.body.setImmovable(true);
+        this.body.offset.x = -2;
         
         this.scene = _scene;
 

@@ -127,7 +127,10 @@ class Level extends Phaser.Scene
     }
 
     LoadNextLevel() {
-        this.scene.start("Level", {level: this.currentLevel + 1});
+        if(this.currentLevel < gamePrefs.NUM_LEVELS)
+            this.scene.start("Level", {level: this.currentLevel + 1});
+        else
+            this.scene.start("EndScene");
     }
 
     createLevel(size, rootX, rootY, level)
@@ -260,6 +263,8 @@ class Level extends Phaser.Scene
     CrossOpening()
     {
         console.log("Cross opening");
+        this.pad.UpdateScoreDefault(10000);
+        this.LoadNextLevel();
     }
 
     UpdateDestroyBlocks() {

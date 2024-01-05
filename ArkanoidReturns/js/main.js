@@ -48,7 +48,8 @@ var gamePrefs =
     INITIAL_PAD_POSITION_X: config.width / 2,
     INITIAL_PAD_POSITION_Y: config.height - 16,
     INITIAL_NORMAL_BALL_POSITION_X: config.width / 2,
-    INITIAL_NORMAL_BALL_POSITION_Y: config.height - 26
+    INITIAL_NORMAL_BALL_POSITION_Y: config.height - 26,
+    NUM_LEVELS: 10
 
 }
 
