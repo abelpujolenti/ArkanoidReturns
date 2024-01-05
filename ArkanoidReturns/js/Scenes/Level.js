@@ -463,7 +463,7 @@ class Level extends Phaser.Scene
             105,
             60, 
             "arkanoidFontBruh",
-            1,
+            this.currentLevel,
             24
         ).setOrigin(1);
 
