@@ -26,6 +26,18 @@ class Preloader extends Phaser.Scene
         this.load.setPath("assets/img");
         this.load.image("fade", "fade.png");
 
+        this.load.setPath("assets/img/backgrounds");
+        this.load.image("level1_bg", "level1_background.png");
+        this.load.image("level2_bg", "level2_background.png");
+        this.load.image("level3_bg", "level3_background.png");
+        this.load.image("level4_bg", "level4_background.png");
+        this.load.image("level5_bg", "level5_background.png");
+        this.load.image("level6_bg", "level6_background.png");
+        this.load.image("level7_bg", "level7_background.png");
+        this.load.image("level8_bg", "level8_background.png");
+        this.load.image("level9_bg", "level9_background.png");
+        this.load.image("level10_bg", "level10_background.png");
+
         this.load.setPath("assets/img/projectile");
         this.load.image("normalBall", "cyan.png");
         this.load.image("greenBall", "green.png");

@@ -37,6 +37,9 @@ class Level extends Phaser.Scene
 
     create()
     {
+        this.bgName = "level" + this.currentLevel + "_bg";
+        this.bg = this.add.image(0, 0, this.bgName).setOrigin(0).setScale(2.5);
+
         this.loadAnimations();
 
         this.LoadSounds();
@@ -258,6 +261,8 @@ class Level extends Phaser.Scene
         this.rightOpening1.ChangeAndPlayAnim('openingThingVerticalCloseAnimation');
         this.rightOpening2.ChangeAndPlayAnim('openingThingVerticalCloseAnimation');
         this.rightOpening3.ChangeAndPlayAnim('openingThingVerticalCloseAnimation');
+
+        this.rightOpening0.collider.active = false;
     }
 
     CrossOpening()

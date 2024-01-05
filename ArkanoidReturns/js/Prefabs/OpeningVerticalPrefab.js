@@ -22,7 +22,7 @@ class OpeningVerticalPrefab extends Phaser.GameObjects.Sprite
     {
         //this.scene.physics.add.collider(this, this.player);
 
-        this.scene.physics.add.collider
+        this.collider = this.scene.physics.add.collider
         (
             this,
             this.scene.pad,
