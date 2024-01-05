@@ -9,6 +9,8 @@ class EndScene extends HighscoreScene
     {
         this.score = data.score;
         this.round = data.round;
+        this.lives = data.lives;
+        highscoreSerializerInstance.pushToScoreArrayAndSave(this.score)
     }
 
     preload()
@@ -66,6 +68,8 @@ class EndScene extends HighscoreScene
         .on('pointerover', () => this.enterButtonHoverState())
         .on('pointerout', () => this.enterButtonRestState());
 
+        this.clickSound = this.sound.add("click");
+
         /*var buttonBounds = this.playAgainButton.getBounds();
 
         var debug = this.add.graphics();
@@ -81,6 +85,8 @@ class EndScene extends HighscoreScene
 
     enterButtonClickState()
     {
+        this.clickSound.play();
+        
         this.fadeOutText();
 
         this.time.addEvent
@@ -110,7 +116,7 @@ class EndScene extends HighscoreScene
         super.fadeOutText();
 
         this.tweens.add({
-            targets: [this.playAgainButton],
+            targets: [this.playAgainButton, this.roundScoreTitle],
             alpha: 0,
             duration: 300,
             ease: 'Power2'
@@ -120,6 +126,10 @@ class EndScene extends HighscoreScene
     changeScene()
     {
         highscoreSerializerInstance.pushToScoreArrayAndSave(this.score);
-        super.changeScene('TestLevel');
+
+        if(this.round < gamePrefs.NUM_LEVELS && this.lives != 0)
+            super.changeScene('Level');
+        else
+            this.scene.start('Level', {level: 1, score: 0})
     }
 }

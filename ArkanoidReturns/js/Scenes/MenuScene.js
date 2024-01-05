@@ -22,7 +22,9 @@ class MenuScene extends Phaser.Scene
         this.bg = this.add.image(0,0,'bg').setOrigin(0).setScale(2.5);
 
         this.createButtons();
-        
+
+        this.clickSound = this.sound.add("click");
+        //this.sound.add("intro").play()        
     }
 
     update()
@@ -60,13 +62,15 @@ class MenuScene extends Phaser.Scene
 
     playButtonClickState()
     {
+        this.clickSound.play();
+        
         this.fadeOutText();
 
         this.time.addEvent
         (
             {
                 delay: 350,
-                callback: this.changeScene("TestLevel"),
+                callback: this.startGame,
                 callbackScope: this,
                 loop: false
             }
@@ -86,6 +90,7 @@ class MenuScene extends Phaser.Scene
 
     rankingButtonClickState()
     {
+        this.clickSound.play();
         this.fadeOutText();
 
         this.time.addEvent
@@ -124,5 +129,9 @@ class MenuScene extends Phaser.Scene
     changeScene(_nextScene)
     {
         this.scene.start(_nextScene);
+    }
+
+    startGame() {
+        this.scene.start("Level", {level: 1});
     }
 }
