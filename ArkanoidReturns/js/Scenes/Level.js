@@ -95,20 +95,7 @@ class Level extends Phaser.Scene
 
     LevelStart() {
         this._levelStartSound.play()
-        this.fadein.destroy();
-
-        //TODO: Remove test
-        this.rightOpening0 = new OpeningVerticalPrefab(this, 633, 530, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
-        .setScale(0.71);
-
-        this.rightOpening1 = new OpeningVerticalPrefab(this, 649, 530, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
-        .setScale(0.71);
-
-        this.rightOpening2 = new OpeningVerticalPrefab(this, 665, 530, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
-        .setScale(0.71);
-
-        this.rightOpening3 = new OpeningVerticalPrefab(this, 681, 530, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
-        .setScale(0.71);
+        this.fadein.destroy();     
     }
 
     LoadSounds()
@@ -241,8 +228,6 @@ class Level extends Phaser.Scene
 
     BreakEffect() {
 
-        //Create opening thing vertical
-        /*
         this.rightOpening0 = new OpeningVerticalPrefab(this, 633, 530, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
         .setScale(0.71);
 
@@ -254,7 +239,14 @@ class Level extends Phaser.Scene
 
         this.rightOpening3 = new OpeningVerticalPrefab(this, 681, 530, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
         .setScale(0.71);
-        */
+
+        this.closeTimer = this.time.addEvent(
+            {
+                delay: 1000,
+                callback: this.CloseOpening,
+                callbackScope: this,
+            }
+        )
     }
 
     CloseOpening()
