@@ -34,6 +34,9 @@ class CongratsScene extends Phaser.Scene
         .on('pointerover', () => this.nextButtonHoverState())
         .on('pointerout', () => this.nextButtonRestState() );
 
+        this.congratsSound = this.sound.add("congrats");
+        this.congratsSound.play();
+
     }
 
     nextButtonClickState()

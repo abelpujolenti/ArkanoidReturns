@@ -67,6 +67,8 @@ class EndScene extends HighscoreScene
         .on('pointerover', () => this.enterButtonHoverState())
         .on('pointerout', () => this.enterButtonRestState());
 
+        this.clickSound = this.sound.add("click");
+
         /*var buttonBounds = this.playAgainButton.getBounds();
 
         var debug = this.add.graphics();
@@ -82,6 +84,8 @@ class EndScene extends HighscoreScene
 
     enterButtonClickState()
     {
+        this.clickSound.play();
+        
         this.fadeOutText();
 
         this.time.addEvent

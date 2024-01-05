@@ -23,6 +23,7 @@ class MenuScene extends Phaser.Scene
 
         this.createButtons();
 
+        this.clickSound = this.sound.add("click");
         //this.sound.add("intro").play()        
     }
 
@@ -61,6 +62,8 @@ class MenuScene extends Phaser.Scene
 
     playButtonClickState()
     {
+        this.clickSound.play();
+        
         this.fadeOutText();
 
         this.time.addEvent
@@ -87,6 +90,7 @@ class MenuScene extends Phaser.Scene
 
     rankingButtonClickState()
     {
+        this.clickSound.play();
         this.fadeOutText();
 
         this.time.addEvent

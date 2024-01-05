@@ -25,6 +25,8 @@ class RankingScene extends HighscoreScene
         .on('pointerdown', () => this.enterButtonClickState())
         .on('pointerover', () => this.enterButtonHoverState())
         .on('pointerout', () => this.enterButtonRestState());
+    
+        this.clickSound = this.sound.add("click");
     }
     
     update()
@@ -34,6 +36,8 @@ class RankingScene extends HighscoreScene
 
     enterButtonClickState()
     {
+        this.clickSound.play();
+        
         this.fadeOutText();
 
         this.time.addEvent
