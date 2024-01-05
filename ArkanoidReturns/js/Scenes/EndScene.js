@@ -9,6 +9,7 @@ class EndScene extends HighscoreScene
     {
         this.score = data.score;
         this.round = data.round;
+        this.lives = data.lives;
         highscoreSerializerInstance.pushToScoreArrayAndSave(this.score)
     }
 
@@ -126,7 +127,7 @@ class EndScene extends HighscoreScene
     {
         highscoreSerializerInstance.pushToScoreArrayAndSave(this.score);
 
-        if(this.round < gamePrefs.NUM_LEVELS)
+        if(this.round < gamePrefs.NUM_LEVELS && this.lives != 0)
             super.changeScene('Level');
         else
             this.scene.start('Level', {level: 1, score: 0})

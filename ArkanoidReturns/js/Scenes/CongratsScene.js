@@ -12,6 +12,7 @@ class CongratsScene extends Phaser.Scene
     {
         this.score = data.score;
         this.round = data.round;
+        this.lives = data.lives;
     }
 
     preload()
@@ -43,7 +44,7 @@ class CongratsScene extends Phaser.Scene
     nextButtonClickState()
     {
         this.clickSound.play();
-        this.scene.start("EndScene", {score: this.score, round: this.round})
+        this.scene.start("EndScene", {score: this.score, round: this.round, lives: this.lives})
     }
 
     nextButtonHoverState()
