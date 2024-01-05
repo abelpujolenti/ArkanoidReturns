@@ -96,6 +96,9 @@ class Level extends Phaser.Scene
     LevelStart() {
         this._levelStartSound.play()
         this.fadein.destroy();     
+
+        //Test
+        this.BreakEffect();
     }
 
     LoadSounds()
@@ -122,7 +125,7 @@ class Level extends Phaser.Scene
         if(this.currentLevel < gamePrefs.NUM_LEVELS)
             this.scene.start("Level", {level: this.currentLevel + 1, score: this.pad.score});
         else
-            this.scene.start("EndScene");
+            this.scene.start("CongratsScene", {score: this.pad.score, round: this.currentLevel});
     }
 
     createLevel(size, rootX, rootY, level)

@@ -86,6 +86,5 @@ class HighscoreScene extends Phaser.Scene
     changeScene(_nextScene)
     {
         this.scene.start(_nextScene);
-    }
-    
+    }   
 }
