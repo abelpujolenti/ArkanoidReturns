@@ -8,6 +8,11 @@ class Level extends Phaser.Scene
 
     init(data) {
         this.currentLevel = data.level;
+
+        if(this.currentLevel > 1)
+            this.score = data.score;
+        else
+            this.score = 0;
     }
 
     preload()
@@ -45,7 +50,7 @@ class Level extends Phaser.Scene
         this.LoadUI();
         this.UpdateHighscoreUI(this.highscore);
 
-        this.pad = new Pad(this, gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y, 'pad', 'padAnim', 0, 1, 
+        this.pad = new Pad(this, gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y, 'pad', 'padAnim', this.score, 1, 
                             this.walls, this._ballHitPadSound, this._enlargeSound, this._extraLifeSound, this._gameOverSound).setScale(.75);
 
         this.ballsCounter = 0;
@@ -128,7 +133,7 @@ class Level extends Phaser.Scene
 
     LoadNextLevel() {
         if(this.currentLevel < gamePrefs.NUM_LEVELS)
-            this.scene.start("Level", {level: this.currentLevel + 1});
+            this.scene.start("Level", {level: this.currentLevel + 1, score: this.pad.score});
         else
             this.scene.start("EndScene");
     }
@@ -480,7 +485,7 @@ class Level extends Phaser.Scene
             143,
             config.height / 2 - 30,
             "arkanoidFont",
-            0,
+            this.score,
             24
         ).setOrigin(1)
         .setTint(0xe755b0, 0xe755b0, 0xe7e5f2,  0xe7e5f2);
