@@ -22,6 +22,8 @@ class Preloader extends Phaser.Scene
         this.load.audio("objectAppears", "ObjectAppears.wav")
         this.load.audio("congrats", "Congrats.wav")                 //by xtrgamr: https://freesound.org/people/xtrgamr/sounds/252808/
         this.load.audio("click", "Click.wav")
+        this.load.audio("getPowerUp", "GetPowerUp.wav")
+        this.load.audio("applyPowerUp", "ApplyPowerUp.wav")
 
         this.load.setPath("assets/img");
         this.load.image("fade", "fade.png");

@@ -54,7 +54,7 @@ class Level extends Phaser.Scene
         this.UpdateHighscoreUI(this.highscore);
 
         this.pad = new Pad(this, gamePrefs.INITIAL_PAD_POSITION_X, gamePrefs.INITIAL_PAD_POSITION_Y, 'pad', 'padAnim', this.score, 1, 
-                            this.walls, this._ballHitPadSound, this._enlargeSound, this._extraLifeSound, this._gameOverSound).setScale(.75);
+                            this.walls, this._ballHitPadSound, this._enlargeSound, this._extraLifeSound, this._gameOverSound, this._applyPowerUpSound).setScale(.75);
 
         this.ballsCounter = 0;
         
@@ -100,8 +100,7 @@ class Level extends Phaser.Scene
         this._levelStartSound.play()
         this.fadein.destroy();     
 
-        //Test
-        this.BreakEffect();
+
     }
 
     LoadSounds()
@@ -116,6 +115,8 @@ class Level extends Phaser.Scene
         this._levelStartSound = this.sound.add("levelStart")
         this._objectAppearsSound = this.sound.add("objectAppears")
         this._laserSound = this.sound.add("laser");
+        this._getPowerUpSound = this.sound.add("getPowerUp");
+        this._applyPowerUpSound = this.sound.add("applyPowerUp");
     }
 
     LoadPools()
@@ -236,6 +237,8 @@ class Level extends Phaser.Scene
 
         this.rightOpening0 = new OpeningVerticalPrefab(this, 633, 530, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
         .setScale(0.71);
+
+        this.rightOpening0.collider.active = true;
 
         this.rightOpening1 = new OpeningVerticalPrefab(this, 649, 530, 'openingThingVertical', 'openingThingVerticalOpenAnimation')
         .setScale(0.71);
@@ -549,6 +552,7 @@ class Level extends Phaser.Scene
 
     SpawnPowerup(_block, _type)
     {
+        this._getPowerUpSound.play();
         this.powerups[this.powerups.length] = 
             new PowerupPrefab(this, _block.x, _block.y, "powerup"+ _type, "powerupAnim" + _type, this.ball, this.pad, _type).setScale(this.blockScale);
     }

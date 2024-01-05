@@ -1,6 +1,6 @@
 class Pad extends Phaser.GameObjects.Sprite
 {
-    constructor(_scene, _positionX, _positionY, _spriteTag, _animTag, _score, _multiplier, _walls, ballHitPadSound, enlargeSound, extraLifeSound, gameOverSound){
+    constructor(_scene, _positionX, _positionY, _spriteTag, _animTag, _score, _multiplier, _walls, ballHitPadSound, enlargeSound, extraLifeSound, gameOverSound, applyPowerUpSound){
         
         super(_scene, _positionX, _positionY, _spriteTag);
         _scene.add.existing(this);
@@ -16,6 +16,7 @@ class Pad extends Phaser.GameObjects.Sprite
         this._enlargeSound = enlargeSound
         this._extraLifeSound = extraLifeSound
         this._gameOverSound = gameOverSound
+        this._applyPowerUpSound = applyPowerUpSound
         this.lives = gamePrefs.PLAYER_LIVES;
         this.cursors = _scene.input.keyboard.createCursorKeys();
 
@@ -86,6 +87,7 @@ class Pad extends Phaser.GameObjects.Sprite
     }
 
     ApplyUpgrade(_upgrade) {
+        this._applyPowerUpSound.play();
         _upgrade.deActivate();
         this.ApplyPowerUpEffect[_upgrade.effect](this);
     }
